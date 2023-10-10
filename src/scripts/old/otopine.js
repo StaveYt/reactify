@@ -489,7 +489,6 @@ function CalcAllData(data){
 
 }
 
-
 function OutputToTable(data){
   let container = document.getElementById("calculated")
   data.forEach((el,id)=>{
