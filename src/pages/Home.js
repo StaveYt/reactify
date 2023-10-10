@@ -1,7 +1,8 @@
+import '../main.css'
 function Home(){
  return(
  <>
-    <h1>Home</h1>
+    <h1 className='text-2xl'>Home</h1>
  </>
  )   
 }

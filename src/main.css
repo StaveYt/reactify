@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .navbar {
+      display: flex;
+      padding: theme('spacing.4');
+      border-radius: 0 0 theme('spacing.4') theme('spacing.4');
+      color: theme('colors.white');
+      flex-direction: row;
+      gap: theme('spacing.2');
+      flex: 1 1 grow;
+      height: theme('spacing.16');
+      align-items: center;
+      background-color: theme('colors.slate.800');
+    }
+  
+    .v-line {
+      display: inline-block;
+      min-width: theme('spacing.1');
+      height: 100%;
+      border-radius: theme('borderRadius.lg');
+      background-color: theme('colors.white');
+    }
+  
+    /* ... */
+  }
