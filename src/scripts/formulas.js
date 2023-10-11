@@ -1,5 +1,8 @@
+import axios from "axios";
+
 //Molarna Masa
 let elements;
+await axios.get("http://localhost:3001/table").then(res=>elements=res.data.elements)
 fetch("../json/table.json").then(res=>res.json()).then(data=>elements=data.elements)
 
 function GetFormula(formula){
