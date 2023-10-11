@@ -1,0 +1,2063 @@
+{
+  "units": [
+    {
+      "symbol": "M",
+      "units": [
+        "g/mol"
+      ],
+      "varied": true
+    },
+    {
+      "symbol": "m",
+      "units": [
+        "g",
+        "kg",
+        "mg",
+        "dg",
+        "dag"
+      ],
+      "varied": true
+    },
+    {
+      "symbol": "n",
+      "units": [
+        "mol",
+        "mmol"
+      ],
+      "varied": true
+    },
+    {
+      "symbol": "D",
+      "units": [
+        "g/cm^3"
+      ],
+      "varied": true
+    },
+    {
+      "symbol": "V",
+      "units": [
+        "cm^3",
+        "dm^3",
+        "m^3"
+      ],
+      "varied": true
+    },
+    {
+      "symbol": "c",
+      "units": [
+        "mol/L",
+        "mmol/L"
+      ],
+      "varied": false
+    },
+    {
+      "symbol": "y",
+      "units": [
+        "g/L"
+      ],
+      "varied": false
+    },
+    {
+      "symbol": "b",
+      "units": [
+        "mol/kg"
+      ],
+      "varied": false
+    },
+    {
+      "symbol": "x",
+      "units": [
+        "%"
+      ],
+      "varied": true
+    },
+    {
+      "symbol": "phi",
+      "units": [
+        "%"
+      ],
+      "varied": true
+    },
+    {
+      "symbol": "w",
+      "units": [
+        "%"
+      ],
+      "varied": true
+    }
+  ],
+  "table": {
+    "elements": [
+      {
+        "name": "Hydrogen",
+        "Ar": 1.008,
+        "number": 1,
+        "period": 1,
+        "phase": "Gas",
+        "symbol": "H",
+        "xpos": 1,
+        "shells": [
+          1
+        ]
+      },
+      {
+        "name": "Helium",
+        "Ar": 4.003,
+        "number": 2,
+        "period": 1,
+        "phase": "Gas",
+        "symbol": "He",
+        "xpos": 18,
+        "shells": [
+          2
+        ]
+      },
+      {
+        "name": "Lithium",
+        "Ar": 6.941,
+        "number": 3,
+        "period": 2,
+        "phase": "Solid",
+        "symbol": "Li",
+        "xpos": 1,
+        "shells": [
+          2,
+          1
+        ]
+      },
+      {
+        "name": "Beryllium",
+        "Ar": 9.012,
+        "number": 4,
+        "period": 2,
+        "phase": "Solid",
+        "symbol": "Be",
+        "xpos": 2,
+        "shells": [
+          2,
+          2
+        ]
+      },
+      {
+        "name": "Boron",
+        "Ar": 10.81,
+        "number": 5,
+        "period": 2,
+        "phase": "Solid",
+        "symbol": "B",
+        "xpos": 13,
+        "shells": [
+          2,
+          3
+        ]
+      },
+      {
+        "name": "Carbon",
+        "Ar": 12.01,
+        "number": 6,
+        "period": 2,
+        "phase": "Solid",
+        "symbol": "C",
+        "xpos": 14,
+        "shells": [
+          2,
+          4
+        ]
+      },
+      {
+        "name": "Nitrogen",
+        "Ar": 14.01,
+        "number": 7,
+        "period": 2,
+        "phase": "Gas",
+        "symbol": "N",
+        "xpos": 15,
+        "shells": [
+          2,
+          5
+        ]
+      },
+      {
+        "name": "Oxygen",
+        "Ar": 16.00,
+        "number": 8,
+        "period": 2,
+        "phase": "Gas",
+        "symbol": "O",
+        "xpos": 16,
+        "shells": [
+          2,
+          6
+        ]
+      },
+      {
+        "name": "Fluorine",
+        "Ar": 19.00,
+        "number": 9,
+        "period": 2,
+        "phase": "Gas",
+        "symbol": "F",
+        "xpos": 17,
+        "shells": [
+          2,
+          7
+        ]
+      },
+      {
+        "name": "Neon",
+        "Ar": 20.18,
+        "number": 10,
+        "period": 2,
+        "phase": "Gas",
+        "symbol": "Ne",
+        "xpos": 18,
+        "shells": [
+          2,
+          8
+        ]
+      },
+      {
+        "name": "Sodium",
+        "Ar": 22.99,
+        "number": 11,
+        "period": 3,
+        "phase": "Solid",
+        "symbol": "Na",
+        "xpos": 1,
+        "shells": [
+          2,
+          8,
+          1
+        ]
+      },
+      {
+        "name": "Magnesium",
+        "Ar": 24.31,
+        "number": 12,
+        "period": 3,
+        "phase": "Solid",
+        "symbol": "Mg",
+        "xpos": 2,
+        "shells": [
+          2,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Aluminium",
+        "Ar": 26.98,
+        "number": 13,
+        "period": 3,
+        "phase": "Solid",
+        "symbol": "Al",
+        "xpos": 13,
+        "shells": [
+          2,
+          8,
+          3
+        ]
+      },
+      {
+        "name": "Silicon",
+        "Ar": 28.09,
+        "number": 14,
+        "period": 3,
+        "phase": "Solid",
+        "symbol": "Si",
+        "xpos": 14,
+        "shells": [
+          2,
+          8,
+          4
+        ]
+      },
+      {
+        "name": "Phosphorus",
+        "Ar": 30.97,
+        "number": 15,
+        "period": 3,
+        "phase": "Solid",
+        "symbol": "P",
+        "xpos": 15,
+        "shells": [
+          2,
+          8,
+          5
+        ]
+      },
+      {
+        "name": "Sulfur",
+        "Ar": 32.06,
+        "number": 16,
+        "period": 3,
+        "phase": "Solid",
+        "symbol": "S",
+        "xpos": 16,
+        "ypos": 3,
+        "shells": [
+          2,
+          8,
+          6
+        ]
+      },
+      {
+        "name": "Chlorine",
+        "Ar": 35.45,
+        "number": 17,
+        "period": 3,
+        "phase": "Gas",
+        "symbol": "Cl",
+        "xpos": 17,
+        "shells": [
+          2,
+          8,
+          7
+        ]
+      },
+      {
+        "name": "Argon",
+        "Ar": 39.95,
+        "number": 18,
+        "period": 3,
+        "phase": "Gas",
+        "symbol": "Ar",
+        "xpos": 18,
+        "shells": [
+          2,
+          8,
+          8
+        ]
+      },
+      {
+        "name": "Potassium",
+        "Ar": 39.10,
+        "number": 19,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "K",
+        "xpos": 1,
+        "shells": [
+          2,
+          8,
+          8,
+          1
+        ]
+      },
+      {
+        "name": "Calcium",
+        "Ar": 40.08,
+        "number": 20,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "Ca",
+        "xpos": 2,
+        "shells": [
+          2,
+          8,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Scandium",
+        "Ar": 44.96,
+        "number": 21,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "Sc",
+        "xpos": 3,
+        "shells": [
+          2,
+          8,
+          9,
+          2
+        ]
+      },
+      {
+        "name": "Titanium",
+        "Ar": 47.87,
+        "number": 22,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "Ti",
+        "xpos": 4,
+        "shells": [
+          2,
+          8,
+          10,
+          2
+        ]
+      },
+      {
+        "name": "Vanadium",
+        "Ar": 50.94,
+        "number": 23,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "V",
+        "xpos": 5,
+        "shells": [
+          2,
+          8,
+          11,
+          2
+        ]
+      },
+      {
+        "name": "Chromium",
+        "Ar": 52.00,
+        "number": 24,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "Cr",
+        "xpos": 6,
+        "shells": [
+          2,
+          8,
+          13,
+          1
+        ]
+      },
+      {
+        "name": "Manganese",
+        "Ar": 54.94,
+        "number": 25,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "Mn",
+        "xpos": 7,
+        "shells": [
+          2,
+          8,
+          13,
+          2
+        ]
+      },
+      {
+        "name": "Iron",
+        "Ar": 55.85,
+        "number": 26,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "Fe",
+        "xpos": 8,
+        "shells": [
+          2,
+          8,
+          14,
+          2
+        ]
+      },
+      {
+        "name": "Cobalt",
+        "Ar": 58.93,
+        "number": 27,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "Co",
+        "xpos": 9,
+        "shells": [
+          2,
+          8,
+          15,
+          2
+        ]
+      },
+      {
+        "name": "Nickel",
+        "Ar": 58.69,
+        "number": 28,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "Ni",
+        "xpos": 10,
+        "shells": [
+          2,
+          8,
+          16,
+          2
+        ]
+      },
+      {
+        "name": "Copper",
+        "Ar": 63.55,
+        "number": 29,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "Cu",
+        "xpos": 11,
+        "shells": [
+          2,
+          8,
+          18,
+          1
+        ]
+      },
+      {
+        "name": "Zinc",
+        "Ar": 65.382,
+        "number": 30,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "Zn",
+        "xpos": 12,
+        "shells": [
+          2,
+          8,
+          18,
+          2
+        ]
+      },
+      {
+        "name": "Gallium",
+        "Ar": 69.72,
+        "number": 31,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "Ga",
+        "xpos": 13,
+        "shells": [
+          2,
+          8,
+          18,
+          3
+        ]
+      },
+      {
+        "name": "Germanium",
+        "Ar": 72.63,
+        "number": 32,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "Ge",
+        "xpos": 14,
+        "shells": [
+          2,
+          8,
+          18,
+          4
+        ]
+      },
+      {
+        "name": "Arsenic",
+        "Ar": 74.92,
+        "number": 33,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "As",
+        "xpos": 15,
+        "shells": [
+          2,
+          8,
+          18,
+          5
+        ]
+      },
+      {
+        "name": "Selenium",
+        "Ar": 78.97,
+        "number": 34,
+        "period": 4,
+        "phase": "Solid",
+        "symbol": "Se",
+        "xpos": 16,
+        "shells": [
+          2,
+          8,
+          18,
+          6
+        ]
+      },
+      {
+        "name": "Bromine",
+        "Ar": 79.90,
+        "number": 35,
+        "period": 4,
+        "phase": "Liquid",
+        "symbol": "Br",
+        "xpos": 17,
+        "ypos": 4,
+        "shells": [
+          2,
+          8,
+          18,
+          7
+        ]
+      },
+      {
+        "name": "Krypton",
+        "Ar": 83.80,
+        "number": 36,
+        "period": 4,
+        "phase": "Gas",
+        "symbol": "Kr",
+        "xpos": 18,
+        "shells": [
+          2,
+          8,
+          18,
+          8
+        ]
+      },
+      {
+        "name": "Rubidium",
+        "Ar": 85.47,
+        "number": 37,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Rb",
+        "xpos": 1,
+        "shells": [
+          2,
+          8,
+          18,
+          8,
+          1
+        ]
+      },
+      {
+        "name": "Strontium",
+        "Ar": 87.62,
+        "number": 38,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Sr",
+        "xpos": 2,
+        "shells": [
+          2,
+          8,
+          18,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Yttrium",
+        "Ar": 88.91,
+        "number": 39,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Y",
+        "xpos": 3,
+        "shells": [
+          2,
+          8,
+          18,
+          9,
+          2
+        ]
+      },
+      {
+        "name": "Zirconium",
+        "Ar": 91.22,
+        "number": 40,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Zr",
+        "xpos": 4,
+        "shells": [
+          2,
+          8,
+          18,
+          10,
+          2
+        ]
+      },
+      {
+        "name": "Niobium",
+        "Ar": 92.91,
+        "number": 41,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Nb",
+        "xpos": 5,
+        "shells": [
+          2,
+          8,
+          18,
+          12,
+          1
+        ]
+      },
+      {
+        "name": "Molybdenum",
+        "Ar": 95.94,
+        "number": 42,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Mo",
+        "xpos": 6,
+        "shells": [
+          2,
+          8,
+          18,
+          13,
+          1
+        ]
+      },
+      {
+        "name": "Technetium",
+        "Ar": 98,
+        "number": 43,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Tc",
+        "xpos": 7,
+        "shells": [
+          2,
+          8,
+          18,
+          13,
+          2
+        ]
+      },
+      {
+        "name": "Ruthenium",
+        "Ar": 101.1,
+        "number": 44,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Ru",
+        "xpos": 8,
+        "shells": [
+          2,
+          8,
+          18,
+          15,
+          1
+        ]
+      },
+      {
+        "name": "Rhodium",
+        "Ar": 102.9,
+        "number": 45,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Rh",
+        "xpos": 9,
+        "shells": [
+          2,
+          8,
+          18,
+          16,
+          1
+        ]
+      },
+      {
+        "name": "Palladium",
+        "Ar": 106.4,
+        "number": 46,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Pd",
+        "xpos": 10,
+        "shells": [
+          2,
+          8,
+          18,
+          18
+        ]
+      },
+      {
+        "name": "Silver",
+        "Ar": 107.9,
+        "number": 47,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Ag",
+        "xpos": 11,
+        "shells": [
+          2,
+          8,
+          18,
+          18,
+          1
+        ]
+      },
+      {
+        "name": "Cadmium",
+        "Ar": 112.4,
+        "number": 48,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Cd",
+        "xpos": 12,
+        "shells": [
+          2,
+          8,
+          18,
+          18,
+          2
+        ]
+      },
+      {
+        "name": "Indium",
+        "Ar": 114.8,
+        "number": 49,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "In",
+        "xpos": 13,
+        "shells": [
+          2,
+          8,
+          18,
+          18,
+          3
+        ]
+      },
+      {
+        "name": "Tin",
+        "Ar": 118.7,
+        "number": 50,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Sn",
+        "xpos": 14,
+        "shells": [
+          2,
+          8,
+          18,
+          18,
+          4
+        ]
+      },
+      {
+        "name": "Antimony",
+        "Ar": 121.8,
+        "number": 51,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Sb",
+        "xpos": 15,
+        "shells": [
+          2,
+          8,
+          18,
+          18,
+          5
+        ]
+      },
+      {
+        "name": "Tellurium",
+        "Ar": 127.6,
+        "number": 52,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "Te",
+        "xpos": 16,
+        "shells": [
+          2,
+          8,
+          18,
+          18,
+          6
+        ]
+      },
+      {
+        "name": "Iodine",
+        "Ar": 126.9,
+        "number": 53,
+        "period": 5,
+        "phase": "Solid",
+        "symbol": "I",
+        "xpos": 17,
+        "shells": [
+          2,
+          8,
+          18,
+          18,
+          7
+        ]
+      },
+      {
+        "name": "Xenon",
+        "Ar": 131.3,
+        "number": 54,
+        "period": 5,
+        "phase": "Gas",
+        "symbol": "Xe",
+        "xpos": 18,
+        "shells": [
+          2,
+          8,
+          18,
+          18,
+          8
+        ]
+      },
+      {
+        "name": "Cesium",
+        "Ar": 132.9,
+        "number": 55,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Cs",
+        "xpos": 1,
+        "shells": [
+          2,
+          8,
+          18,
+          18,
+          8,
+          1
+        ]
+      },
+      {
+        "name": "Barium",
+        "appearance": null,
+        "Ar": 137.32,
+        "number": 56,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Ba",
+        "xpos": 2,
+        "shells": [
+          2,
+          8,
+          18,
+          18,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Lanthanum",
+        "Ar": 138.9,
+        "number": 57,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "La",
+        "xpos": 3,
+        "shells": [
+          2,
+          8,
+          18,
+          18,
+          9,
+          2
+        ]
+      },
+      {
+        "name": "Cerium",
+        "Ar": 140.1,
+        "number": 58,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Ce",
+        "xpos": 4,
+        "shells": [
+          2,
+          8,
+          18,
+          19,
+          9,
+          2
+        ]
+      },
+      {
+        "name": "Praseodymium",
+        "Ar": 140.9,
+        "number": 59,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Pr",
+        "xpos": 5,
+        "shells": [
+          2,
+          8,
+          18,
+          21,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Neodymium",
+        "Ar": 144.2,
+        "number": 60,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Nd",
+        "xpos": 6,
+        "shells": [
+          2,
+          8,
+          18,
+          22,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Promethium",
+        "appearance": "metallic",
+        "Ar": 145,
+        "number": 61,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Pm",
+        "xpos": 7,
+        "shells": [
+          2,
+          8,
+          18,
+          23,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Samarium",
+        "Ar": 150.4,
+        "number": 62,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Sm",
+        "xpos": 8,
+        "shells": [
+          2,
+          8,
+          18,
+          24,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Europium",
+        "Ar": 152.0,
+        "number": 63,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Eu",
+        "xpos": 9,
+        "shells": [
+          2,
+          8,
+          18,
+          25,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Gadolinium",
+        "Ar": 157.3,
+        "number": 64,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Gd",
+        "xpos": 10,
+        "shells": [
+          2,
+          8,
+          18,
+          25,
+          9,
+          2
+        ]
+      },
+      {
+        "name": "Terbium",
+        "Ar": 158.9,
+        "number": 65,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Tb",
+        "xpos": 11,
+        "shells": [
+          2,
+          8,
+          18,
+          27,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Dysprosium",
+        "Ar": 162.5,
+        "number": 66,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Dy",
+        "xpos": 12,
+        "shells": [
+          2,
+          8,
+          18,
+          28,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Holmium",
+        "Ar": 164.9,
+        "number": 67,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Ho",
+        "xpos": 13,
+        "shells": [
+          2,
+          8,
+          18,
+          29,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Erbium",
+        "Ar": 167.3,
+        "number": 68,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Er",
+        "xpos": 14,
+        "shells": [
+          2,
+          8,
+          18,
+          30,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Thulium",
+        "Ar": 168.9,
+        "number": 69,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Tm",
+        "xpos": 15,
+        "shells": [
+          2,
+          8,
+          18,
+          31,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Ytterbium",
+        "Ar": 173.0,
+        "number": 70,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Yb",
+        "xpos": 16,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Lutetium",
+        "Ar": 175.0,
+        "number": 71,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Lu",
+        "xpos": 17,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          9,
+          2
+        ]
+      },
+      {
+        "name": "Hafnium",
+        "Ar": 178.5,
+        "number": 72,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Hf",
+        "xpos": 4,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          10,
+          2
+        ]
+      },
+      {
+        "name": "Tantalum",
+        "Ar": 180.9,
+        "number": 73,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Ta",
+        "xpos": 5,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          11,
+          2
+        ]
+      },
+      {
+        "name": "Tungsten",
+        "Ar": 183.8,
+        "number": 74,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "W",
+        "xpos": 6,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          12,
+          2
+        ]
+      },
+      {
+        "name": "Rhenium",
+        "Ar": 186.2,
+        "number": 75,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Re",
+        "xpos": 7,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          13,
+          2
+        ]
+      },
+      {
+        "name": "Osmium",
+        "Ar": 190.23,
+        "number": 76,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Os",
+        "xpos": 8,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          14,
+          2
+        ]
+      },
+      {
+        "name": "Iridium",
+        "Ar": 192.2,
+        "number": 77,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Ir",
+        "xpos": 9,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          15,
+          2
+        ]
+      },
+      {
+        "name": "Platinum",
+        "Ar": 195.1,
+        "number": 78,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Pt",
+        "xpos": 10,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          17,
+          1
+        ]
+      },
+      {
+        "name": "Gold",
+        "Ar": 197.9,
+        "number": 79,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Au",
+        "xpos": 11,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          18,
+          1
+        ]
+      },
+      {
+        "name": "Mercury",
+        "Ar": 200.6,
+        "number": 80,
+        "period": 6,
+        "phase": "Liquid",
+        "symbol": "Hg",
+        "xpos": 12,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          18,
+          2
+        ]
+      },
+      {
+        "name": "Thallium",
+        "Ar": 204.4,
+        "number": 81,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Tl",
+        "xpos": 13,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          18,
+          3
+        ]
+      },
+      {
+        "name": "Lead",
+        "Ar": 207.2,
+        "number": 82,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Pb",
+        "xpos": 14,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          18,
+          4
+        ]
+      },
+      {
+        "name": "Bismuth",
+        "Ar": 209.0,
+        "number": 83,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Bi",
+        "xpos": 15,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          18,
+          5
+        ]
+      },
+      {
+        "name": "Polonij",
+        "Ar": 209,
+        "number": 84,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "Po",
+        "xpos": 16,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          18,
+          6
+        ]
+      },
+      {
+        "name": "Astatine",
+        "Ar": 210,
+        "number": 85,
+        "period": 6,
+        "phase": "Solid",
+        "symbol": "At",
+        "xpos": 17,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          18,
+          7
+        ]
+      },
+      {
+        "name": "Radon",
+        "Ar": 222,
+        "number": 86,
+        "period": 6,
+        "phase": "Gas",
+        "symbol": "Rn",
+        "xpos": 18,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          18,
+          8
+        ]
+      },
+      {
+        "name": "Francium",
+        "Ar": 223,
+        "number": 87,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Fr",
+        "xpos": 1,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          18,
+          8,
+          1
+        ]
+      },
+      {
+        "name": "Radium",
+        "Ar": 226,
+        "number": 88,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Ra",
+        "xpos": 2,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          18,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Actinium",
+        "Ar": 227,
+        "number": 89,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Ac",
+        "xpos": 3,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          18,
+          9,
+          2
+        ]
+      },
+      {
+        "name": "Thorium",
+        "Ar": 232.0,
+        "number": 90,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Th",
+        "xpos": 4,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          18,
+          10,
+          2
+        ]
+      },
+      {
+        "name": "Protactinium",
+        "Ar": 231.0,
+        "named_by": "Otto Hahn",
+        "number": 91,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Pa",
+        "xpos": 5,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          20,
+          9,
+          2
+        ]
+      },
+      {
+        "name": "Uranium",
+        "Ar": 238.0,
+        "number": 92,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "U",
+        "xpos": 6,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          21,
+          9,
+          2
+        ]
+      },
+      {
+        "name": "Neptunium",
+        "Ar": 237,
+        "number": 93,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Np",
+        "xpos": 7,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          22,
+          9,
+          2
+        ]
+      },
+      {
+        "name": "Plutonium",
+        "Ar": 244,
+        "number": 94,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Pu",
+        "xpos": 8,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          24,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Americium",
+        "Ar": 243,
+        "number": 95,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Am",
+        "xpos": 9,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          25,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Curium",
+        "Ar": 247,
+        "number": 96,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Cm",
+        "xpos": 10,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          25,
+          9,
+          2
+        ]
+      },
+      {
+        "name": "Berkelium",
+        "Ar": 247,
+        "number": 97,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Bk",
+        "xpos": 11,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          27,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Californium",
+        "Ar": 251,
+        "number": 98,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Cf",
+        "xpos": 12,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          28,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Einsteinium",
+        "Ar": 252,
+        "number": 99,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Es",
+        "xpos": 13,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          29,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Fermium",
+        "Ar": 257,
+        "number": 100,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Fm",
+        "xpos": 14,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          30,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Mendelevium",
+        "Ar": 258,
+        "number": 101,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Md",
+        "xpos": 15,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          31,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Nobelium",
+        "Ar": 259,
+        "number": 102,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "No",
+        "xpos": 16,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          8,
+          2
+        ]
+      },
+      {
+        "name": "Lawrencium",
+        "Ar": 262,
+        "number": 103,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Lr",
+        "xpos": 17,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          8,
+          3
+        ]
+      },
+      {
+        "name": "Rutherfordium",
+        "Ar": 261,
+        "number": 104,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Rf",
+        "xpos": 4,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          10,
+          2
+        ]
+      },
+      {
+        "name": "Dubnium",
+        "Ar": 262,
+        "number": 105,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Db",
+        "xpos": 5,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          11,
+          2
+        ]
+      },
+      {
+        "name": "Seaborgium",
+        "Ar": 269,
+        "number": 106,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Sg",
+        "xpos": 6,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          12,
+          2
+        ]
+      },
+      {
+        "name": "Bohrium",
+        "Ar": 270,
+        "number": 107,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Bh",
+        "xpos": 7,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          13,
+          2
+        ]
+      },
+      {
+        "name": "Hassium",
+        "Ar": 277,
+        "number": 108,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Hs",
+        "xpos": 8,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          14,
+          2
+        ]
+      },
+      {
+        "name": "Meitnerium",
+        "Ar": 278,
+        "number": 109,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Mt",
+        "xpos": 9,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          15,
+          2
+        ]
+      },
+      {
+        "name": "Darmstadtium",
+        "Ar": 281,
+        "number": 110,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Ds",
+        "xpos": 10,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          16,
+          2
+        ]
+      },
+      {
+        "name": "Roentgenium",
+        "Ar": 281,
+        "number": 111,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Rg",
+        "xpos": 11,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          17,
+          2
+        ]
+      },
+      {
+        "name": "Copernicium",
+        "Ar": 285,
+        "number": 112,
+        "period": 7,
+        "phase": "Gas",
+        "symbol": "Cn",
+        "xpos": 12,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          18,
+          2
+        ]
+      },
+      {
+        "name": "Nihonium",
+        "Ar": 286,
+        "number": 113,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Nh",
+        "xpos": 13,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          18,
+          3
+        ]
+      },
+      {
+        "name": "Flerovium",
+        "Ar": 289,
+        "number": 114,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Fl",
+        "xpos": 14,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          18,
+          4
+        ]
+      },
+      {
+        "name": "Moscovium",
+        "Ar": 290,
+        "number": 115,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Mc",
+        "xpos": 15,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          18,
+          5
+        ]
+      },
+      {
+        "name": "Livermorium",
+        "Ar": 293,
+        "number": 116,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Lv",
+        "xpos": 16,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          18,
+          6
+        ]
+      },
+      {
+        "name": "Tennessine",
+        "Ar": 294,
+        "number": 117,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Ts",
+        "xpos": 17,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          18,
+          7
+        ]
+      },
+      {
+        "name": "Oganesson",
+        "Ar": 294,
+        "number": 118,
+        "period": 7,
+        "phase": "Solid",
+        "symbol": "Og",
+        "xpos": 18,
+        "shells": [
+          2,
+          8,
+          18,
+          32,
+          32,
+          18,
+          8
+        ]
+      }
+    ],
+    "nonmetals": [
+      1,
+      2,
+      6,
+      7,
+      8,
+      9,
+      15,
+      16,
+      17,
+      18,
+      10,
+      34,
+      35,
+      36,
+      53,
+      54,
+      86,
+      118
+    ],
+    "halfmetals": [
+      5,
+      14,
+      32,
+      33,
+      51,
+      52,
+      84,
+      85
+    ],
+    "metals": []
+  },
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

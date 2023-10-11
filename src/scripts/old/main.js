@@ -1,5 +1,5 @@
 
-
+//Prebačeno
 let navbarSideButton = document.getElementById('navbarSideButton');
 navbarSideButton.addEventListener('click', ()=>{
     let navbarSide = document.getElementById('navbarSide')
@@ -16,7 +16,7 @@ function BtnCalc(){
     let M = CalcM(formulaInput.value)
     document.getElementById('anwser').innerText = `Molarna masa je: ${M}`
 }
-//Prebačeno
+
 fetch("../json/table.json").then(res=>res.json()).then(data=>elements=data.elements)
 let elements;
 let M;

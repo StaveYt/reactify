@@ -3,26 +3,91 @@
 @tailwind utilities;
 
 @layer components {
-    .navbar {
-      display: flex;
-      padding: theme('spacing.4');
-      border-radius: 0 0 theme('spacing.4') theme('spacing.4');
-      color: theme('colors.white');
-      flex-direction: row;
-      gap: theme('spacing.2');
-      flex: 1 1 grow;
-      height: theme('spacing.16');
-      align-items: center;
-      background-color: theme('colors.slate.800');
-    }
-  
-    .v-line {
-      display: inline-block;
-      min-width: theme('spacing.1');
-      height: 100%;
-      border-radius: theme('borderRadius.lg');
-      background-color: theme('colors.white');
-    }
-  
-    /* ... */
+  .navbar {
+    display: flex;
+    padding: theme('spacing.4');
+    border-radius: 0 0 theme('spacing.4') theme('spacing.4');
+    color: theme('colors.white');
+    flex-direction: row;
+    gap: theme('spacing.2');
+    flex: 1 1 grow;
+    height: theme('spacing.16');
+    align-items: center;
+    background-color: theme('colors.slate.800');
   }
+
+  .v-line {
+    display: inline-block;
+    min-width: theme('spacing.1');
+    height: 100%;
+    border-radius: theme('borderRadius.lg');
+    background-color: theme('colors.white');
+  }
+
+  .background-img {
+    display: block;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-attachment: fixed;
+    background-image: linear-gradient(to bottom, #511FED, #2e2e2e 75%);
+    text-align: center;
+    color: white;
+    z-index: 1;
+  }
+
+  .element {
+    font-family: Arial;
+    border: silver solid 2px;
+    box-shadow: 2px 3px #2e2e2e;
+
+
+    border-radius: 5px;
+    text-align: center;
+    transition: all 0.5s;
+    transform-style: preserve-3d;
+    background-color: transparent;
+  }
+
+  .element-inner>p{
+    margin-bottom: 0;
+}
+
+.element-back>p{
+    margin-bottom: 1px;
+}
+
+.element:hover{
+    transform: rotateY(180deg);
+
+}
+.element-inner, .element-back{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.element-inner {
+    background-color: #bbb;
+    color: black;
+  }
+.element-back {
+    background-color: #2980b9;
+    color: white;
+    transform: rotateY(180deg);
+    overflow-wrap: break-word;
+}
+
+
+.nonmetal{
+    background-color: #2980b9;
+}
+.halfmetal{
+    background-color: #16c783;
+}
+.metal{
+    background-color: #c09402;
+}
+  /* ... */
+}
