@@ -1,6 +1,5 @@
 //Molarna Masa
 let elements;
-let M;
 fetch("../json/table.json").then(res=>res.json()).then(data=>elements=data.elements)
 
 function GetFormula(formula){
@@ -24,8 +23,8 @@ function GetFormula(formula){
 
 function CalcM(formula){
     let dijeloviFormule = GetFormula(formula);
-    M = 0;
-    
+    let M = 0;
+    let tempDio = ""
     for(let i = 0; i < dijeloviFormule.length; i++){
         tempDio = dijeloviFormule[i].split("/");
         for(let j = 0; j < elements.length; j++){
@@ -41,7 +40,7 @@ function CalcM(formula){
     }
     M = M.toFixed(3); 
     
-    return parseInt(M)
+    return M
 }
 
 //Razlicite formule
@@ -75,6 +74,14 @@ function dCalc(m, v) {
 // };
 
 let nRows = 0;
+
+function KnownInfo(id, symbol, chem, quantity, unit) {
+  this.id = id;
+  this.symbol = symbol;
+  this.chem = chem;
+  this.quantity = quantity;
+  this.unit = unit;
+}
 
 function CalcSameData(data, chem, type){
   let tempData = {}
@@ -466,7 +473,7 @@ function Calc(known, formulaOtapStr, formulaOtvStr, container, plinCheck) {
     if(M!="ne"){data.otap.M = new KnownInfo(nRows,"M","otap",M,"g/mol"); nRows++}
   }
   if (formulaOtvStr != "") { 
-    data.otv.M = CalcM(formulaOtvStr);
+    let M = CalcM(formulaOtvStr);
     data.otv.M = new KnownInfo(nRows,"M","otv",M,"g/mol"); 
     nRows++
   }else{
@@ -560,11 +567,13 @@ function Calc(known, formulaOtapStr, formulaOtvStr, container, plinCheck) {
     CalcAllData(data)
   }
 
-  OutputToTable([otv,otap,otp,ext])
   console.log(data);
+  return [otv,otap,otp,ext]
+  
 }
 
 //Dinamička ravnoteža
 
 
-export default {CalcM, Calc}
+export default CalcM
+export const solutionCalc = Calc

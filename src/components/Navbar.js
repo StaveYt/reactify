@@ -26,10 +26,10 @@ function Navbar() {
                             </a>
                             <ul ref={dropdownRef} className="hidden absolute rounded-lg t-0 mt-4 bg-slate-900 p-2" id="dropdownMenu">
                                 <li className="">
-                                    <a className="text-lg" href="src/pages/kalkulatorM.html">Molarna Masa</a>
+                                    <Link className="text-lg" to="/calculators/molarmass">Molarna Masa</Link>
                                 </li>
                                 <li className="">
-                                    <a className="text-lg" href="src/pages/kalkulatorOtp.html">Otopine</a>
+                                    <Link className="text-lg" to="/calculators/solutions">Otopine</Link>
                                 </li>
                             </ul>
                         </li>

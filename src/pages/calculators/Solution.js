@@ -59,6 +59,7 @@ function SolutionCalc() {
           varied: true
         },
     ];
+    let nRows
     function AddKnown() {
         let tbody = document.getElementById("tKnown");
         let trow = document.createElement("tr");
