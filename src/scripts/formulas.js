@@ -77,7 +77,7 @@ function dCalc(m, v) {
 // };
 
 let nRows = 0;
-
+let changed = false
 function KnownInfo(id, symbol, chem, quantity, unit) {
   this.id = id;
   this.symbol = symbol;
@@ -86,11 +86,9 @@ function KnownInfo(id, symbol, chem, quantity, unit) {
   this.unit = unit;
 }
 
-function CalcSameData(data, chem, type){
-  let tempData = {}
+function CalcSameData(data, chem, type,nRows){
   console.log(chem)
-  while(tempData != data){
-    tempData = {...data}
+  for(let i = 0; i<3; i++){
     if(chem.m!=0){
       if(chem.V!=0&&chem.D==0){
         let calculated = chem.m.quantity/(chem.V.quantity*1000)
@@ -361,31 +359,33 @@ function CalcSameData(data, chem, type){
   }
 }
 
-function CalcAllData(data){
+function CalcAllData(data,nRows){
   if(data.ext.b==0&&data.otap.m!=0&&data.otv.n!=0){
     let motap = data.otap.m.quantity/1000
     let b = bCalc(data.otv.n.quantity, motap)
     data.ext.b=new KnownInfo(nRows,"b","ext",b,"mol/kg")
     nRows++
+    changed = true
   }
   if(data.otp.V!=0){
     if(data.ext.c==0&&data.otv.n!=0){
       let c = cCalc(data.otv.n.quantity, data.otp.V.quantity)
       data.ext.c=new KnownInfo(nRows,"c","ext",c,"mol/L")
       nRows++
-
+      changed = true
     }
     if(data.ext.y==0&&data.otv.m!=0){
       let y = yCalc(data.otv.m.quantity, data.otp.V.quantity)
       data.ext.y=new KnownInfo(nRows,"y","ext",y,"m/L")
       nRows++
-
+      changed = true
     }
   }
   if(data.ext.c==0&&data.otp.D!=0&&data.otv.M!=0&&data.otv.w!=0){
     let c = (data.otp.D.quantity*data.otv.w.quantity*10)/data.otv.M.quantity
     data.ext.c=new KnownInfo(nRows,"c","ext",c,"mol/L")
     nRows++
+    changed = true
   }
 
 }
@@ -423,9 +423,9 @@ function ConvertData(chem){
   }
 }
 
-function Calc(known, formulaOtapStr, formulaOtvStr, container, plinCheck) {
+function CalcSolution(known, formulaOtapStr, formulaOtvStr, plinCheck, nRows) {
 
-  let otap = {
+let otap = {
     V:0,
     n:0,
     m:0,
@@ -457,7 +457,6 @@ function Calc(known, formulaOtapStr, formulaOtvStr, container, plinCheck) {
     y:0,
     b:0,
   }
-
   let data = {
     otap: otap,
     otv: otv,
@@ -483,7 +482,6 @@ function Calc(known, formulaOtapStr, formulaOtvStr, container, plinCheck) {
     let M = prompt("Unesite molarnu masu otopljene tvari, ako je nemate upišite ne")
     if(M!="ne"){data.otv.M = new KnownInfo(nRows,"M","otv",M,"g/mol"); nRows++}
   }
-
   console.log(data)
   known.forEach(el => {
     console.log(el)
@@ -540,7 +538,6 @@ function Calc(known, formulaOtapStr, formulaOtvStr, container, plinCheck) {
   ConvertData(otv)
   ConvertData(otap)
   ConvertData(otp)
-
   for(const prop in data.ext){
     if(typeof data.ext[prop] == "object"){
       switch(prop){
@@ -553,30 +550,26 @@ function Calc(known, formulaOtapStr, formulaOtvStr, container, plinCheck) {
       }
     }
   }
-
-  let tempData = {
-    otap: "",
-    otv: "",
-    otp: "",
-    ext:"",
-    len: "",
+  for(let i = 0; i< 3; i++){
+    CalcSameData(data,data.otap,"otap",nRows)
+    CalcSameData(data,data.otv,"otv",nRows)
+    CalcSameData(data,data.otp,"otp",nRows)
   }
-
-  while(tempData != data){
-    tempData = {...data}
-    CalcSameData(data,data.otap,"otap")
-    CalcSameData(data,data.otv,"otv")
-    CalcSameData(data,data.otp,"otp")
+  for(let i = 0; i<3;i++){
     CalcAllData(data)
+    if(changed){
+      for(let i = 0; i< 3; i++){
+        CalcSameData(data,data.otap,"otap",nRows)
+        CalcSameData(data,data.otv,"otv",nRows)
+        CalcSameData(data,data.otp,"otp",nRows)
+      }
+    }
   }
-
-  console.log(data);
-  return [otv,otap,otp,ext]
-  
+  return[[otv,"otv"],[otap,"otap"],[otp,"otp"],[ext,"ext"]]
 }
 
 //Dinamička ravnoteža
 
 
-export default CalcM
-export const solutionCalc = Calc
+export const calcM = CalcM
+export const calcSolution = CalcSolution

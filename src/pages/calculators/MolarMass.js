@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CalcM from "../../scripts/formulas.js"
+import {calcM} from "../../scripts/formulas.js"
 
 function MolarMassCalc() {
     const [formula, setFormula] = useState("")
@@ -8,7 +8,7 @@ function MolarMassCalc() {
         setFormula(event.target.value)
     }
     function BtnCalc(){
-        setCalculatedM(CalcM(formula))
+        setCalculatedM(calcM(formula))
     }
     return (
         <div className="container">
