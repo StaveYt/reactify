@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Option from "../../components/form/Option.js";
+import Select from "../../components/form/Select.js";
+import Table from "../../components/table/Table.js";
 import { calcSolution } from "../../scripts/formulas.js";
 function SolutionCalc() {
   const [known, setKnown] = useState([]);
@@ -73,7 +76,9 @@ function SolutionCalc() {
     calculated: false
   });
 
+  useEffect(()=>{
 
+  },[])
 
   function HandleTextChange(event) {
     if (event.target.type == "checkbox") {
@@ -83,10 +88,6 @@ function SolutionCalc() {
     console.log(formulas);
   }
   function AddKnown() {
-    let tbody = document.getElementById("tKnown");
-    let trow = document.createElement("tr");
-    trow.setAttribute("id", nRows);
-    tbody.appendChild(trow);
     setKnown([...known, new KnownInfo(nRows, "V", "otap", 0, "m^3")]);
     setNRows(nRows + 1);
   }
@@ -99,9 +100,7 @@ function SolutionCalc() {
   }
   function DelKnown(event) {
     let targetRow = event.target.parentElement.parentElement;
-    targetRow.remove();
-    let arrEl = known.filter(el => el.id == targetRow.id ? true : false)[0];
-    setKnown(known.splice(known.indexOf(arrEl), 1));
+    setKnown(known => known.filter(el => el.id !== parseInt(targetRow.id) ? true : false));
   }
   function SymbolChange(event) {
     let targetRow = event.target.parentElement.parentElement;
@@ -149,10 +148,10 @@ function SolutionCalc() {
 
   async function Calculate() {
     let data = calcSolution(known, formulas.otap, formulas.otv, formulas.plin);
-    console.log(data)
-    await data.forEach(el => {console.log(el);return(setCalculated({ ...calculated, [el[1]]: el[0] }))});
+    console.log(data);
+    await data.forEach(el => { console.log(el); return (setCalculated({ ...calculated, [el[1]]: el[0] })); });
     await setCalculated({ ...calculated, ["calculated"]: true });
-    console.log(calculated)
+    console.log(calculated);
   }
 
   return (
@@ -175,157 +174,120 @@ function SolutionCalc() {
         </div>
 
         <button id="add-known" className="px-3 py-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={AddKnown}>+</button>
-        <table className="bg-slate-700 w-full">
-          <thead className="border-b-2 border-white">
-            <th>Podatak</th>
-            <th>Tvar</th>
-            <th>Količina</th>
-            <th>Mjerna Jedinica</th>
-            <th>Izbriši</th>
-          </thead>
-          <tbody id="tKnown">
-            {known.map(el => (
-              <tr id={el.id}>
-                <td>
-                  <select className="bg-slate-800 text-white border border-slate-500" onChange={SymbolChange}>
-                    <option value="V">V</option>
-                    <option value="D">ρ</option>
-                    <option value="n">n</option>
-                    <option value="m">m</option>
-                    <option value="phi">φ</option>
-                    <option value="w">w</option>
-                    <option value="x">x</option>
-                    <option value="y">y</option>
-                    <option value="c">c</option>
-                    <option value="b">b</option>
-                  </select>
-                </td>
-                <td>
-                  <select className="bg-slate-800 text-white border border-slate-500" onChange={ChemChange}>
-                    <option value="otap">otap</option>
-                    <option value="otv">otv</option>
-                    <option value="otp">otp</option>
-                  </select>
-                </td>
-                <td>
-                  <input className="rounded-sm bg-slate-700 text-white p-1 border border-slate-500" onChange={QuanChange} type="number" />
-                </td>
-                <td>
-                  <select className="bg-slate-800 text-white border border-slate-500" onChange={UnitChange}>
-                    <option value="m^3">m^3</option>
-                    <option value="cm^3">cm^3</option>
-                    <option value="dm^3">dm^3</option>
-                  </select>
-                </td>
-                <td>
-                  <button onClick={DelKnown} className="p-1 rounded-sm bg-red-600 text-white border border-red-500">-</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Table columns={["Podatak", "Tvar", "Količina", "Mjerna Jedinica", "Izbriši"]}>
+          {known.map(el => (
+            <tr id={el.id} key={el.id}>
+              <td>
+                <Select onChange={SymbolChange}>
+                  <Option value="V"/>
+                  <Option value="D"/>
+                  <Option value="n"/>
+                  <Option value="m"/>
+                  <Option value="phi"/>
+                  <Option value="w"/>
+                  <Option value="x"/>
+                  <Option value="y"/>
+                  <Option value="c"/>
+                  <Option value="b"/>
+                </Select>
+              </td>
+              <td>
+                <Select onChange={ChemChange}>
+                  <Option value="otap"/>
+                  <Option value="otv/"/>
+                  <Option value="otp/"/>
+                </Select>
+              </td>
+              <td>
+                <input className="rounded-sm bg-slate-700 text-white p-1 border border-slate-500" onChange={QuanChange} type="number" />
+              </td>
+              <td>
+                <Select onChange={UnitChange}>
+                  <Option value="m^3"/>
+                  <Option value="cm^3"/>
+                  <Option value="dm^3"/>
+                </Select>
+              </td>
+              <td>
+                <button onClick={DelKnown} className="p-1 rounded-sm bg-red-600 text-white border border-red-500">-</button>
+              </td>
+            </tr>
+          ))}
+        </Table>
       </div>
       <hr />
       <div id="calculated">
         <h3>Dobiveno:</h3>
-        {!calculated.calculated?(
-        <button className="p-1 rounded-sm bg-blue-600 text-white border border-blue-500" id="calcBtn" onClick={Calculate}>Izračunaj</button>
-        ):false}
-        
+        {!calculated.calculated ? (
+          <button className="p-1 rounded-sm bg-blue-600 text-white border border-blue-500" id="calcBtn" onClick={Calculate}>Izračunaj</button>
+        ) : false}
+
         {calculated.calculated ? (<>
           <h4>Otopljena tvar</h4>
-          <table className="bg-slate-700 w-full">
-            <thead className="border-b-2 border-white">
-              <th>Podatak</th>
-              <th>Količina</th>
-              <th>Mjerna Jedinica</th>
-            </thead>
-            <tbody id="tKnown">
-              {Object.keys(calculated.otv).map((key, index) => (
-                <tr key={index}>
-                  <td>
-                    {key}
-                  </td>
-                  <td>
-                    {calculated.otv[key].quantity}
-                  </td>
-                  <td>
-                    {calculated.otv[key].unit}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <Table columns={["Podatak", "Količina", "Mjerna Jedinica"]}>
+            {Object.keys(calculated.otv).map((key, index) => (
+              <tr key={index}>
+                <td>
+                  {key}
+                </td>
+                <td>
+                  {calculated.otv[key].quantity}
+                </td>
+                <td>
+                  {calculated.otv[key].unit}
+                </td>
+              </tr>
+            ))}
+          </Table>
+
           <h4>Otapalo</h4>
-          <table className="bg-slate-700 w-full">
-            <thead className="border-b-2 border-white">
-              <th>Podatak</th>
-              <th>Količina</th>
-              <th>Mjerna Jedinica</th>
-            </thead>
-            <tbody id="tKnown">
-              {Object.keys(calculated.otap)}
-              {Object.keys(calculated.otap).map((key, index) => (calculated.otap[key] != 0 && calculated.otap[key] != Infinity) ? (
-                <tr key={index}>
-                  <td>
-                    {key}
-                  </td>
-                  <td>
-                    {calculated.otap[key].quantity}
-                  </td>
-                  <td>
-                    {calculated.otap[key].unit}
-                  </td>
-                </tr>
-              ) : false)}
-            </tbody>
-          </table>
+          <Table columns={["Podatak", "Količina", "Mjerna Jedinica"]}>
+            {Object.keys(calculated.otap).map((key, index) => (calculated.otap[key] != 0 && calculated.otap[key] != Infinity) ? (
+              <tr key={index}>
+                <td>
+                  {key}
+                </td>
+                <td>
+                  {calculated.otap[key].quantity}
+                </td>
+                <td>
+                  {calculated.otap[key].unit}
+                </td>
+              </tr>
+            ) : false)}
+          </Table>
           <h4>Otopina</h4>
-          <table className="bg-slate-700 w-full">
-            <thead className="border-b-2 border-white">
-              <th>Podatak</th>
-              <th>Količina</th>
-              <th>Mjerna Jedinica</th>
-            </thead>
-            <tbody id="tKnown">
-              {Object.keys(calculated.otp).map((key, index) => (calculated.otp[key] != 0 && key != "M" && calculated.otp[key] != Infinity) ? (
-                <tr key={index}>
-                  <td>
-                    {key}
-                  </td>
-                  <td>
-                    {calculated.otp[key].quantity}
-                  </td>
-                  <td>
-                    {calculated.otp[key].unit}
-                  </td>
-                </tr>
-              ) : false)}
-            </tbody>
-          </table>
+          <Table>
+            {Object.keys(calculated.otp).map((key, index) => (calculated.otp[key] != 0 && key != "M" && calculated.otp[key] != Infinity) ? (
+              <tr key={index}>
+                <td>
+                  {key}
+                </td>
+                <td>
+                  {calculated.otp[key].quantity}
+                </td>
+                <td>
+                  {calculated.otp[key].unit}
+                </td>
+              </tr>
+            ) : false)}
+          </Table>
           <h4>Koncentracije</h4>
-          <table className="bg-slate-700 w-full">
-            <thead className="border-b-2 border-white">
-              <th>Podatak</th>
-              <th>Količina</th>
-              <th>Mjerna Jedinica</th>
-            </thead>
-            <tbody id="tKnown">
-              {Object.keys(calculated.ext).map((key, index) => (calculated.ext[key] != 0 && calculated.ext[key] != Infinity) ? (
-                <tr key={index}>
-                  <td>
-                    {key}
-                  </td>
-                  <td>
-                    {calculated.ext[key].quantity}
-                  </td>
-                  <td>
-                    {calculated.ext[key].unit}
-                  </td>
-                </tr>
-              ) : false)}
-            </tbody>
-          </table>
+          <Table>
+            {Object.keys(calculated.otp).map((key, index) => (calculated.otp[key] != 0 && key != "M" && calculated.otp[key] != Infinity) ? (
+              <tr key={index}>
+                <td>
+                  {key}
+                </td>
+                <td>
+                  {calculated.otp[key].quantity}
+                </td>
+                <td>
+                  {calculated.otp[key].unit}
+                </td>
+              </tr>
+            ) : false)}
+          </Table>
         </>) : false}
 
       </div>
