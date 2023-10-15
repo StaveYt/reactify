@@ -565,7 +565,7 @@ let otap = {
       }
     }
   }
-  return[[otv,"otv"],[otap,"otap"],[otp,"otp"],[ext,"ext"]]
+  return data
 }
 
 //Dinamička ravnoteža

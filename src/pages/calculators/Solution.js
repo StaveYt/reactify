@@ -69,7 +69,7 @@ function SolutionCalc() {
     plin: false
   });
   const [calculated, setCalculated] = useState({
-    otp: {},
+    otp: {},  
     otv: {},
     otap: {},
     ext: {},
@@ -148,10 +148,9 @@ function SolutionCalc() {
 
   async function Calculate() {
     let data = calcSolution(known, formulas.otap, formulas.otv, formulas.plin);
-    console.log(data);
-    await data.forEach(el => { console.log(el); return (setCalculated({ ...calculated, [el[1]]: el[0] })); });
-    await setCalculated({ ...calculated, ["calculated"]: true });
-    console.log(calculated);
+    // console.log(data);
+    setCalculated({ ...data, calculated:true })
+    // console.log(calculated)
   }
 
   return (
@@ -172,8 +171,8 @@ function SolutionCalc() {
           <input onChange={HandleTextChange} id="plin" type="checkbox" />
           <label htmlFor="plin">Plin</label>
         </div>
-
         <button id="add-known" className="px-3 py-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={AddKnown}>+</button>
+        
         <Table columns={["Podatak", "Tvar", "Količina", "Mjerna Jedinica", "Izbriši"]}>
           {known.map(el => (
             <tr id={el.id} key={el.id}>
@@ -194,8 +193,8 @@ function SolutionCalc() {
               <td>
                 <Select onChange={ChemChange}>
                   <Option value="otap"/>
-                  <Option value="otv/"/>
-                  <Option value="otp/"/>
+                  <Option value="otv"/>
+                  <Option value="otp"/>
                 </Select>
               </td>
               <td>
@@ -216,16 +215,15 @@ function SolutionCalc() {
         </Table>
       </div>
       <hr />
-      <div id="calculated">
+      <div>
         <h3>Dobiveno:</h3>
-        {!calculated.calculated ? (
+        { !calculated.calculated ? (
           <button className="p-1 rounded-sm bg-blue-600 text-white border border-blue-500" id="calcBtn" onClick={Calculate}>Izračunaj</button>
-        ) : false}
-
+          ):false}
         {calculated.calculated ? (<>
           <h4>Otopljena tvar</h4>
           <Table columns={["Podatak", "Količina", "Mjerna Jedinica"]}>
-            {Object.keys(calculated.otv).map((key, index) => (
+            {Object.keys(calculated.otv).map((key, index) => (calculated.otv[key] != 0 && calculated.otv[key] != Infinity) ? (
               <tr key={index}>
                 <td>
                   {key}
@@ -237,7 +235,7 @@ function SolutionCalc() {
                   {calculated.otv[key].unit}
                 </td>
               </tr>
-            ))}
+            ):false)}
           </Table>
 
           <h4>Otapalo</h4>
@@ -257,7 +255,7 @@ function SolutionCalc() {
             ) : false)}
           </Table>
           <h4>Otopina</h4>
-          <Table>
+          <Table columns={["Podatak", "Količina", "Mjerna Jedinica"]}>
             {Object.keys(calculated.otp).map((key, index) => (calculated.otp[key] != 0 && key != "M" && calculated.otp[key] != Infinity) ? (
               <tr key={index}>
                 <td>
@@ -273,17 +271,17 @@ function SolutionCalc() {
             ) : false)}
           </Table>
           <h4>Koncentracije</h4>
-          <Table>
-            {Object.keys(calculated.otp).map((key, index) => (calculated.otp[key] != 0 && key != "M" && calculated.otp[key] != Infinity) ? (
+          <Table columns={["Podatak", "Količina", "Mjerna Jedinica"]}>
+            {Object.keys(calculated.ext).map((key, index) => (calculated.ext[key] != 0 && key != "M" && calculated.ext[key] != Infinity) ? (
               <tr key={index}>
                 <td>
                   {key}
                 </td>
                 <td>
-                  {calculated.otp[key].quantity}
+                  {calculated.ext[key].quantity}
                 </td>
                 <td>
-                  {calculated.otp[key].unit}
+                  {calculated.ext[key].unit}
                 </td>
               </tr>
             ) : false)}
@@ -294,12 +292,4 @@ function SolutionCalc() {
     </div>
   );
 }
-// if(el[prop] != 0 && !(prop=="M"&&id==2) && el[prop]!=Infinity){
-//   tr.innerHTML+=`<td>${prop}</td>
-//   <td>
-//     ${el[prop].quantity}
-//   </td>
-//   <td>
-//     ${el[prop].unit}
-//   </td>`
 export default SolutionCalc;
