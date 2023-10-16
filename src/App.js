@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MolarMassCalc from './pages/calculators/MolarMass';
 import SolutionCalc from './pages/calculators/Solution';
+import EquilibriumCalc from './pages/calculators/Equilibrium';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="aboutus" element={<AboutUs />} />
             <Route path="calculators/molarmass" element={<MolarMassCalc/>} />
             <Route path="calculators/solutions" element={<SolutionCalc/>} />
+            <Route path="calculators/equlibriumconstant" element={<EquilibriumCalc/>} />
           </Route>
         </Routes>
       </BrowserRouter>
