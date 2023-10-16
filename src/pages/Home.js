@@ -2,17 +2,18 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import '../main.css';
 import '../Home.css'
-// import FetchElements from '../scripts/loadElements';
+
 function Home() {
    const [elements, setElements] = useState([]);
    const [elementTypes, setElementTypes] = useState({ nonmetals: [], halfmetals: [] });
+
    useEffect(() => {
       axios.get("http://localhost:3001/table").then(res => {
          setElements(res.data.elements);
          setElementTypes({ ...elementTypes, nonmetals: res.data.nonmetals, halfmetals: res.data.halfmetals });
       });
    }, []);
-   console.log(elements);
+
    return (
       <div className=''>
          <div className=" mx-auto mt-4 flex flex-col" id="">

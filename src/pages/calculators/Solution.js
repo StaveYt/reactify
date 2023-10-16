@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Input from "../../components/form/Input.js";
 import Option from "../../components/form/Option.js";
 import Select from "../../components/form/Select.js";
 import Table from "../../components/table/Table.js";
@@ -163,12 +164,12 @@ function SolutionCalc() {
         <h3>Poznato:</h3>
         <div className="flex gap-2 mb-1 mt-1">
           <label htmlFor="otap">Formula Otapala (otap)</label>
-          <input onChange={HandleTextChange} className="rounded-sm bg-slate-700 text-white p-1 border border-slate-500" id="otap" />
+          <Input onChange={HandleTextChange} id="otap" />
         </div>
         <div className="flex gap-2 mb-1 mt-1">
           <label htmlFor="otv">Formula Otopljene tvari (otv)</label>
-          <input onChange={HandleTextChange} className="rounded-sm bg-slate-700 text-white p-1 border border-slate-500" id="otv" />
-          <input onChange={HandleTextChange} id="plin" type="checkbox" />
+          <Input onChange={HandleTextChange} id="otv" />
+          <Input onChange={HandleTextChange} id="plin" type="checkbox" />
           <label htmlFor="plin">Plin</label>
         </div>
         <button id="add-known" className="px-3 py-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={AddKnown}>+</button>
