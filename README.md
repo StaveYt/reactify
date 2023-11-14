@@ -7,5 +7,7 @@ Website for learning chemistry and for solving chemistry tasks!
 ### Molar mass calculator
 ### Solution calculator
 
-## Upcoming features
+## Upcoming features (ORDER OF IMPORTANCE)
 ### Equlibrium constant calculator
+### pH calculator
+### Reaction speed calculator
