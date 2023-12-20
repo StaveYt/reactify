@@ -91,6 +91,8 @@ function SolutionCalc() {
   function AddKnown() {
     setKnown([...known, new KnownInfo(nRows, "V", "otap", 0, "m^3")]);
     setNRows(nRows + 1);
+    
+    console.log(nRows)
   }
   function KnownInfo(id, symbol, chem, quantity, unit) {
     this.id = id;

@@ -69,13 +69,6 @@ function dCalc(m, v) {
   return m / v;
 }
 
-//Otopine
-
-// let consts = {
-//     K: 273.15,
-//     R: 8.314
-// };
-
 let nRows = 0;
 let changed = false;
 function KnownInfo(id, symbol, chem, quantity, unit) {
