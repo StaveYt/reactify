@@ -8,11 +8,10 @@ function calConstant (reactants, products, known){
     /*products =[
         {state: 'g', element: 'HI', coefficient: '2', id: 0, type: 'product', known:[{id:0,symbol:c,chem:'HI',quantity:1.56,ext:'final',unit:'mol/dm3}]}
     ]*/
-
-    reactants = reactants.filter(el=>el.state!=='l'&&el.state!=='s'?true:false)
-    products = products.filter(el=>el.state!=='l'&&el.state!=='s'?true:false)
+    let reactantsC = reactants.filter(el=>el.state!=='l'&&el.state!=='s'?true:false)
+    let productsC = products.filter(el=>el.state!=='l'&&el.state!=='s'?true:false)
     
-    let eqConst = products.reduce((acc,el)=>(acc*=el.known[0]**el.coefficient),1)/reactants.reduce((acc,el)=>(acc*=el.known[0]**el.coefficient),1)
+    let eqConst = productsC.reduce((acc,el)=>(acc*=el.known[0].quantity**el.coefficient),1)/reactantsC.reduce((acc,el)=>(acc*=el.known[0].quantity**el.coefficient),1)
     return eqConst
 }
 

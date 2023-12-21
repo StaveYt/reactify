@@ -54,7 +54,7 @@ function ReactionParticipants(props) {
                 participant.element = input.value
                 break;
             case 'coefficientInput':
-                participant.coefficient = input.value
+                participant.coefficient = parseInt(input.value)
                 break;
         }
         participantTemp[participantInd] = participant

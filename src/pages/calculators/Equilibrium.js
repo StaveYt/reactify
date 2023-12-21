@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import ReactionParticipants from "../../components/equation/ReactionParticipants";
 import { calcConstant } from "../../scripts/equilibriumcalc";
-import Input from "../../components/form/Input.js";
-import Option from "../../components/form/Option.js";
-import Select from "../../components/form/Select.js";
-import Table from "../../components/table/Table.js";
+import DataInput from "../../components/dataInput/DataInput";
 function EquilibriumCalc() {
   const [reactants, setReactants] = useState([]);
   const [nReactants, setNReactants] = useState(0);
@@ -47,12 +44,11 @@ function EquilibriumCalc() {
       varied: false
     }
   ]);
-  const [known, setKnown] = useState([])
-  const [nKnown, setNKnown] = useState(0)
-  const [equationEntered, setEquationEntered] = useState(false)
-  const [equation, setEquation] = useState([])
+  const [known, setKnown] = useState([]);
+  const [nKnown, setNKnown] = useState(0);
+  const [equation, setEquation] = useState([]);
   function handleAddReactant(event) {
-    event.target.className += " hidden"
+    event.target.className += " hidden";
     setNReactants(nReactants + 1);
     setReactants([...reactants, new Participant('reactant', nReactants)]);
   }
@@ -69,13 +65,17 @@ function EquilibriumCalc() {
     this.type = type;
   }
   function handleCalc() {
-    let reactantsInput;
-    let productsInput;
 
-    calcConstant(reactants, products);
+    let reactantsInput = [...reactants];
+    let productsInput = [...products];
+    let knownTemp = [];
+    reactants.forEach((el,ind) => { knownTemp = known.filter(knownEl => knownEl.chem === el.element ? true : false); el.known=[...knownTemp]; reactantsInput[ind]=el});
+    products.forEach((el,ind) => { knownTemp = known.filter(knownEl => knownEl.chem === el.element ? true : false); el.known=[...knownTemp];productsInput[ind]=el });
+    console.log(calcConstant(reactantsInput, productsInput));
   }
-  function AddKnown(){
-    setKnown([...known, new KnownInfo(nKnown, "c", "HI", 0, "mol/dm3", "final")])
+  function AddKnown() {
+    setKnown([...known, new KnownInfo(nKnown, "c", "HI", 0, "mol/dm3", "final")]);
+    setNKnown(nKnown+1)
   }
   function KnownInfo(id, symbol, chem, quantity, unit, ext) {
     this.id = id;
@@ -83,61 +83,12 @@ function EquilibriumCalc() {
     this.chem = chem;
     this.quantity = quantity;
     this.unit = unit;
-    this.ext = ext
+    this.ext = ext;
   }
   function handleShowKnownForm() {
-    setEquation([...reactants, "equilibrium", ...products])
-    setEquationEntered(true)
+    setEquation([...reactants, "equilibrium", ...products]);
   }
-  useEffect(()=>console.log(products))
-  function DelKnown(event) {
-    let targetRow = event.target.parentElement.parentElement; //shit working
-    setKnown(known => known.filter(el => el.id !== parseInt(targetRow.id) ? true : false));
-  }
-  function SymbolChange(event) {
-    let targetRow = event.target.parentElement.parentElement;
-    let unitSel = targetRow.children[3].children[0];
-    let chemSel = targetRow.children[1].children[0];
-    let selected = symbols.filter(el => el.symbol === event.target.value ? true : false)[0];
-    console.log(event.target.value, targetRow.id, known);
-    let data = known.filter(el => el.id === targetRow.id ? true : false)[0];
-    console.log(data);
-    data.symbol = event.target.value;
-    unitSel.innerHTML = "";
-    selected.units.forEach(el => {
-      unitSel.innerHTML += `
-        <option value="${el}">${el}</option>`;
-      data.unit = unitSel.value;
-    });
-    if (!selected.varied) {
-      chemSel.innerHTML = `<option>/</option>`;
-      chemSel.setAttribute('disabled', "true");
-      data.chem = "/";
-    } else {
-      chemSel.innerHTML = `<option value="otap">otap</option>
-        <option value="otv">otv</option>
-        <option value="otp">otp</option>`;
-      data.chem = "otap";
-      chemSel.removeAttribute("disabled");
-    }
-    console.log(known);
-  }
-  function ChemChange(event) {
-    let targetRow = event.target.parentElement.parentElement;
-    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
-    console.log(targetRow,)
-    data.chem = event.target.value; //ne radi
-  }
-  function QuanChange(event) {
-    let targetRow = event.target.parentElement.parentElement;
-    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
-    data.quantity = parseFloat(event.target.value);
-  }
-  function UnitChange(event) {
-    let targetRow = event.target.parentElement.parentElement;
-    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
-    data.unit = event.target.value;
-  }
+  useEffect(() => console.log(equation.map(el => el !== 'equilibrium' ? el.element : false)));
   return (
     <div id="0" className="flex flex-col mx-4">
       <div>
@@ -162,40 +113,10 @@ function EquilibriumCalc() {
         <button className="p-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={handleShowKnownForm}>Submit</button>
       </div>
       <div>
-        {equationEntered ? (<><button id="add-known" className="px-3 py-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={AddKnown}>+</button><Table columns={["Podatak", "Tvar", "Količina", "Mjerna Jedinica", "Izbriši"]}>
-          {known.map(el => (
-            <tr id={el.id} key={el.id}>
-              <td>
-                <Select onChange={SymbolChange}>
-                  <Option value="V" />
-                  <Option value="D" />
-                  <Option value="n" />
-                  <Option value="m" />
-                  <Option value="y" />
-                  <Option value="c" />
-                </Select>
-              </td>
-              <td>
-                <Select onChange={ChemChange}>
-                  {equation.map(el => el !== 'equlibrium' ? (<Option value={el.element} />) : (<></>))}
-                </Select>
-              </td>
-              <td>
-                <input className="rounded-sm bg-slate-700 text-white p-1 border border-slate-500" onChange={QuanChange} type="number" />
-              </td>
-              <td>
-                <Select onChange={UnitChange}>
-                  <Option value="m^3" />
-                  <Option value="cm^3" />
-                  <Option value="dm^3" />
-                </Select>
-              </td>
-              <td>
-                <button onClick={DelKnown} className="p-1 rounded-sm bg-red-600 text-white border border-red-500">-</button>
-              </td>
-            </tr>
-          ))}
-        </Table></>) : (<></>)}
+        {equation.length !== 0 ? (<>
+          <button id="add-known" className="px-3 py-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={AddKnown}>+</button>
+          <DataInput vars={{ known: known, setKnown: setKnown, nKnown: nKnown, setNKnown: setNKnown, chemicals: equation.filter(el => el !== 'equilibrium' ? true : false).map(el => el.element) }} />
+        </>) : (<></>)}
       </div>
       <button className="p-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={handleCalc}>Izračunaj</button>
       <div></div>

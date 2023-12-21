@@ -111,7 +111,7 @@ function SolutionCalc() {
     let chemSel = targetRow.children[1].children[0];
     let selected = symbols.filter(el => el.symbol === event.target.value ? true : false)[0];
     console.log(event.target.value, targetRow.id, known);
-    let data = known.filter(el => el.id === targetRow.id ? true : false)[0];
+    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
     console.log(data);
     data.symbol = event.target.value;
     unitSel.innerHTML = "";
@@ -135,17 +135,17 @@ function SolutionCalc() {
   }
   function ChemChange(event) {
     let targetRow = event.target.parentElement.parentElement;
-    let data = known.filter(el => el.id === targetRow.id ? true : false)[0];
+    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
     data.chem = event.target.value;
   }
   function QuanChange(event) {
     let targetRow = event.target.parentElement.parentElement;
-    let data = known.filter(el => el.id === targetRow.id ? true : false)[0];
+    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
     data.quantity = parseFloat(event.target.value);
   }
   function UnitChange(event) {
     let targetRow = event.target.parentElement.parentElement;
-    let data = known.filter(el => el.id === targetRow.id ? true : false)[0];
+    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
     data.unit = event.target.value;
   }
 

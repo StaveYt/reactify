@@ -80,7 +80,7 @@ function KnownInfo(id, symbol, chem, quantity, unit) {
 }
 
 function CalcSameData(data, chem, type, nRows) {
-  console.log(chem);
+  // console.log(chem);
   for (let i = 0; i < 3; i++) {
     if (chem.m != 0) {
       if (chem.V != 0 && chem.D == 0) {
@@ -350,6 +350,7 @@ function CalcSameData(data, chem, type, nRows) {
       }
     }
   }
+  // console.log(chem,data)
 }
 
 function CalcAllData(data, nRows) {
@@ -475,9 +476,9 @@ function CalcSolution(known, formulaOtapStr, formulaOtvStr, plinCheck, nRows) {
     let M = prompt("Unesite molarnu masu otopljene tvari, ako je nemate upišite ne");
     if (M != "ne") { data.otv.M = new KnownInfo(nRows, "M", "otv", M, "g/mol"); nRows++; }
   }
-  console.log(data);
+  // console.log(data);
   known.forEach(el => {
-    console.log(el);
+    // console.log(el);
     switch (el.symbol) {
       case "V":
         if (el.chem == "otap") {
