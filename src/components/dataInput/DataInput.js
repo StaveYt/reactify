@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "../form/Select";
 import Table from "../table/Table";
 import Option from "../form/Option";
@@ -8,80 +8,77 @@ function DataInput(props) {
       symbol: "M",
       units: ["g/mol"],
       varied: true,
-      env:false
 
     },
     {
       symbol: "m",
       units: ["g", "kg", "mg", "dg", "dag"],
       varied: true,
-      env:false
     },
     {
       symbol: "n",
       units: ["mol", "mmol"],
       varied: true,
-      env:false
     },
     {
       symbol: "D",
       units: ["g/cm^3",],
       varied: true,
-      env:false
     },
     {
       symbol: "V",
       units: ["cm^3", "dm^3", "m^3"],
       varied: true,
-      env:false
     },
     {
       symbol: "c",
       units: ["mol/L", "mmol/L"],
       varied: false,
-      env:false
     },
     {
       symbol: "y",
       units: ["g/L"],
       varied: false,
-      env:false
     },
     {
       symbol: "b",
       units: ["mol/kg"],
       varied: false,
-      env:false
     },
     {
       symbol: "x",
       units: ["%"],
       varied: true,
-      env:false
     },
     {
       symbol: "phi",
       units: ["%"],
       varied: true,
-      env:false
     },
     {
       symbol: "w",
       units: ["%"],
       varied: true,
-      env:false
     },
     {
       symbol: "p",
       units: ["Pa", "kPa", "bar"],
       varied: true,
-      env:false
     },
     {
       symbol: "T",
       units: ["K", "C"],
       varied: false,
-      env:true
+    },
+    {
+      symbol: "Kc",
+      units: undefined,
+      varied: false,
+    },
+    {
+      symbol: "Kp",
+      units: undefined,
+      varied: false,
     },
   ]);
   const [selectedSymbol, setSelectedSymbol] = useState({
@@ -89,14 +86,20 @@ function DataInput(props) {
     units: ["g/mol"],
     varied: true
   });
+  useEffect(() => {
+    let selected = symbols.filter(el => el.symbol === props.usedSymbols[0].symbol ? true : false)[0];
+    let data = props.vars.known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
+    data.symbol = props.usedSymbols[0].symbol;
+    setSelectedSymbol({ ...selected, ext: props.usedSymbols[0].ext, env: props.usedSymbols[0].env, evnOnly: props.usedSymbols[0].envOnly });
+  }, []);
+
   function SymbolChange(event) {
     let targetRow = event.target.parentElement.parentElement;
     let selected = symbols.filter(el => el.symbol === event.target.value ? true : false)[0];
+    let symbolInd = props.usedSymbols[props.usedSymbols.length - 1].indexOf(event.target.value);
     let data = props.vars.known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
-    console.log(data);
     data.symbol = event.target.value;
-    setSelectedSymbol(selected);
-    console.log(props.vars.known);
+    setSelectedSymbol({ ...selected, ext: props.usedSymbols[symbolInd].ext, env: props.usedSymbols[symbolInd].env, evnOnly: props.usedSymbols[symbolInd].envOnly });
   }
   function handleInputChange(event) {
     let targetRow = event.target.parentElement.parentElement;
@@ -113,25 +116,28 @@ function DataInput(props) {
       case 'unit':
         data.unit = event.target.value;
         break;
+      case 'ext':
+        data.ext = event.target.value
     }
   }
   function DelKnown(event) {
     let targetRow = event.target.parentElement.parentElement;
     props.vars.setKnown(known => known.filter(el => el.id !== parseInt(targetRow.id) ? true : false));
   }
-  return (<Table columns={["Podatak", "Tvar", "Količina", "Izbriši"]}>
+  return (<Table columns={["Podatak", "Tvar", "Količina", "Dodatak", "Izbriši"]}>
     {props.vars.known.map(el => (
       <tr id={el.id} key={el.id}>
         <td>
           <Select id='symbol' onChange={SymbolChange}>
-            {symbols.map((el) => {if(props.usedSymbols.indexOf(el.symbol)!=-1){return(<Option value={el.symbol} />)}})}
+            {symbols.map((el) => { if (props.usedSymbols[props.usedSymbols.length - 1].indexOf(el.symbol) != -1) { return (<Option value={el.symbol} />); } })}
           </Select>
         </td>
         <td>
-          <Select disabled={props.vars.chemicals[0] === 'otap' || selectedSymbol.env ? !selectedSymbol.varied : false} id='chem' onChange={handleInputChange}>
+          <Select disabled={selectedSymbol.envOnly ? true : false} id='chem' onChange={handleInputChange}>
             {props.vars.chemicals.map((el) => (
               <Option value={el} />
             ))}
+            {selectedSymbol.env===true && <Option value={'mixture'} />}
           </Select>
         </td>
         <td>
@@ -140,6 +146,11 @@ function DataInput(props) {
         <td>
           <Select id='unit' onChange={handleInputChange}>
             {selectedSymbol.units.map((el) => (<Option value={el} />))}
+          </Select>
+        </td>
+        <td>
+          <Select id='ext' onChange={handleInputChange}>
+            {selectedSymbol.ext.map((el) => { if (ext != []) { (<Option value={el} />); } })}
           </Select>
         </td>
         <td>

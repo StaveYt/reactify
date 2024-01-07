@@ -7,47 +7,21 @@ function EquilibriumCalc() {
   const [nReactants, setNReactants] = useState(0);
   const [nProducts, setNProducts] = useState(0);
   const [products, setProducts] = useState([]);
-  const [symbols, setSymbols] = useState([
-    {
-      symbol: "M",
-      units: ["g/mol"],
-      varied: true
-    },
-    {
-      symbol: "m",
-      units: ["g", "kg", "mg", "dg", "dag"],
-      varied: true
-    },
-    {
-      symbol: "n",
-      units: ["mol", "mmol"],
-      varied: true
-    },
-    {
-      symbol: "D",
-      units: ["g/cm^3",],
-      varied: true
-    },
-    {
-      symbol: "V",
-      units: ["cm^3", "dm^3", "m^3"],
-      varied: true
-    },
-    {
-      symbol: "c",
-      units: ["mol/L", "mmol/L"],
-      varied: false
-    },
-    {
-      symbol: "y",
-      units: ["g/L"],
-      varied: false
-    }
+  const [usedSymbols, setUsedSymbols] = useState([
+    { symbol: 'c', envOnly: false, env: false, ext:['final','start'] }, 
+    { symbol: 'V', envOnly: false, env: true, ext:[] }, 
+    { symbol: 'n', envOnly: false, env: false, ext:['final','start'] }, 
+    { symbol: 'T', envOnly: true, env: true, ext:[] },
+    { symbol: 'p', envOnly: false, env: true, ext:[] }, 
+    { symbol: 'm', envOnly: false, env: false, ext:['final','start'] },
+    { symbol: 'Kc', envOnly: true, env: true, ext:[] },
+    { symbol: 'Kp', envOnly: true, env: true, ext:[] },
+    ['c','V','n','T','p','m','Kc','Kp']
   ]);
   const [known, setKnown] = useState([]);
   const [nKnown, setNKnown] = useState(0);
   const [equation, setEquation] = useState([]);
-  const [calculated,setCalculated]=useState(undefined)
+  const [calculated, setCalculated] = useState(undefined);
   function handleAddReactant(event) {
     event.target.className += " hidden";
     setNReactants(nReactants + 1);
@@ -70,15 +44,16 @@ function EquilibriumCalc() {
     let reactantsInput = [...reactants];
     let productsInput = [...products];
     let knownTemp = [];
-    reactants.forEach((el,ind) => { knownTemp = known.filter(knownEl => knownEl.chem === el.element ? true : false); el.known=[...knownTemp]; reactantsInput[ind]=el});
-    products.forEach((el,ind) => { knownTemp = known.filter(knownEl => knownEl.chem === el.element ? true : false); el.known=[...knownTemp];productsInput[ind]=el });
-    let calculatedConstant = calcConstant(reactantsInput, productsInput)
+    reactants.forEach((el, ind) => { knownTemp = known.filter(knownEl => knownEl.chem === el.element ? true : false); el.known = [...knownTemp]; reactantsInput[ind] = el; });
+    products.forEach((el, ind) => { knownTemp = known.filter(knownEl => knownEl.chem === el.element ? true : false); el.known = [...knownTemp]; productsInput[ind] = el; });
+    let extra = known.filter((el)=>el.chem==='mixture')
+    let calculatedConstant = calcConstant(reactantsInput, productsInput, extra, nKnown);
     console.log(calculatedConstant);
-    setCalculated(calculatedConstant)
+    setCalculated(calculatedConstant);
   }
   function AddKnown() {
     setKnown([...known, new KnownInfo(nKnown, "c", "HI", 0, "mol/dm3", "final")]);
-    setNKnown(nKnown+1)
+    setNKnown(nKnown + 1);
   }
   function KnownInfo(id, symbol, chem, quantity, unit, ext) {
     this.id = id;
@@ -118,12 +93,12 @@ function EquilibriumCalc() {
       <div>
         {equation.length !== 0 ? (<>
           <button id="add-known" className="px-3 py-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={AddKnown}>+</button>
-          <DataInput usedSymbols={['c','n','T','p']} vars={{ known: known, setKnown: setKnown, nKnown: nKnown, setNKnown: setNKnown, chemicals: equation.filter(el => el !== 'equilibrium' ? true : false).map(el => el.element) }} />
+          <DataInput usedSymbols={usedSymbols} vars={{ known: known, setKnown: setKnown, nKnown: nKnown, setNKnown: setNKnown, chemicals: equation.filter(el => el !== 'equilibrium' ? true : false).map(el => el.element) }} />
         </>) : (<></>)}
       </div>
       <button className="p-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={handleCalc}>Izračunaj</button>
       <div>
-        {calculated!==undefined?(<><h1>Kc: {calculated.Kc}</h1><h1>Kp: {calculated.Kp}</h1></>):(<></>)}
+        {calculated !== undefined ? (<><h1>Kc: {calculated.Kc}</h1><h1>Kp: {calculated.Kp}</h1></>) : (<></>)}
       </div>
     </div>
   );
