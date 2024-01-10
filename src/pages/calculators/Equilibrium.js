@@ -33,7 +33,7 @@ function EquilibriumCalc() {
     setProducts([...products, new Participant('product', nProducts)]);
   }
   function Participant(type, id) {
-    this.state = 'gas';
+    this.state = 'g';
     this.element = '';
     this.coefficient = 1;
     this.id = id;
@@ -98,7 +98,7 @@ function EquilibriumCalc() {
       </div>
       <button className="p-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={handleCalc}>Izračunaj</button>
       <div>
-        {calculated !== undefined ? (<><h1>Kc: {calculated.Kc}</h1><h1>Kp: {calculated.Kp}</h1></>) : (<></>)}
+        {calculated !== undefined ? (<><h1>Kc: {calculated.Kc.quantity}</h1><h1>Kp: {calculated.Kp.quantity}</h1></>) : (<></>)}
       </div>
     </div>
   );

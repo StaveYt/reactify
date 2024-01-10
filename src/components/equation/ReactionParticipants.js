@@ -1,3 +1,5 @@
+import Option from "../form/Option";
+
 function ReactionParticipants(props) {
     function handleAddParticipant(event) {
         if(props.type=='reactant'){
@@ -23,7 +25,7 @@ function ReactionParticipants(props) {
         lastChildButton.className = lastChildButton.className.replace(' hidden', '');
     }
     function Participant(type, id) {
-        this.state = 'gas';
+        this.state = 'g';
         this.element = '';
         this.coefficient = 1;
         this.id = id;
@@ -67,10 +69,10 @@ function ReactionParticipants(props) {
             <div className="flex flex-col  justify-center">
                 <button onClick={handleDeleteParticipant} className="flex-1 rounded-sm bg-green-600 text-white border border-green-500">-</button>
                 <select onClick={handleInputChange} id='stateInput' className="flex-1">
-                    <option>g</option>
-                    <option>s</option>
-                    <option>l</option>
-                    <option>aq</option>
+                    <Option value={'g'}/>
+                    <Option value={'l'}/>
+                    <Option value={'aq'}/>
+                    <Option value={'s'}/>
                 </select>
             </div>
             <button onClick={handleAddParticipant} className="flex-1 p-1 rounded-sm bg-green-600 text-white border border-green-500">+</button>

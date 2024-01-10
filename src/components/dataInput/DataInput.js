@@ -82,17 +82,17 @@ function DataInput(props) {
     },
   ]);
   const [selectedSymbol, setSelectedSymbol] = useState({
-    symbol: "M",
-    units: ["g/mol"],
-    varied: true
+    symbol: "Kp",
+    units: undefined,
+    varied: false,
   });
   useEffect(() => {
     let selected = symbols.filter(el => el.symbol === props.usedSymbols[0].symbol ? true : false)[0];
-    let data = props.vars.known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
-    data.symbol = props.usedSymbols[0].symbol;
     setSelectedSymbol({ ...selected, ext: props.usedSymbols[0].ext, env: props.usedSymbols[0].env, evnOnly: props.usedSymbols[0].envOnly });
   }, []);
-
+  useEffect(() => {
+    console.log(selectedSymbol)
+  });
   function SymbolChange(event) {
     let targetRow = event.target.parentElement.parentElement;
     let selected = symbols.filter(el => el.symbol === event.target.value ? true : false)[0];
@@ -124,7 +124,7 @@ function DataInput(props) {
     let targetRow = event.target.parentElement.parentElement;
     props.vars.setKnown(known => known.filter(el => el.id !== parseInt(targetRow.id) ? true : false));
   }
-  return (<Table columns={["Podatak", "Tvar", "Količina", "Dodatak", "Izbriši"]}>
+  return (<Table columns={["Podatak", "Tvar", "Količina", "Mjerna Jedinica", "Dodatak", "Izbriši"]}>
     {props.vars.known.map(el => (
       <tr id={el.id} key={el.id}>
         <td>
@@ -150,7 +150,7 @@ function DataInput(props) {
         </td>
         <td>
           <Select id='ext' onChange={handleInputChange}>
-            {selectedSymbol.ext.map((el) => { if (ext != []) { (<Option value={el} />); } })}
+            {selectedSymbol.ext.map((el) => { if (selectedSymbol.ext != []) { return(<Option value={el} />); } })}
           </Select>
         </td>
         <td>

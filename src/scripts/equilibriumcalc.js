@@ -426,7 +426,7 @@ function CalcSameData(env, chem, type, nRows) {
                 } else if (env.X != 0) {
 
                     let calculated = (env.X.quantity / chem.n1) * 100;
-                    chem.x = new KnownInfo(nRows, "x", type, calculated, "%");
+                    chem.x = new KnownInfo(nRows, "x", chem.element, calculated, "%");
                     nRows++;
                 }
             }
@@ -531,16 +531,89 @@ function CalcSameData(env, chem, type, nRows) {
             //     }
             // }
         }
+        if(chem.c0 != 0 &&chem.c1 != 0 && env.X==0){
+            let calculated
+            if(chem.type=='product'){
+                calculated = (chem.c1.quantity-chem.c0.quantity)/chem.coefficient;
+            } else if(chem.type=='reactant'){
+                calculated = (chem.c0.quantity-chem.c1.quantity)/chem.coefficient;
+            }
+            
+            env.X = new KnownInfo(nRows, "n", 'mixture', calculated, "mol");
+            nRows++;
+        }
+        if(chem.c0==0&&chem.c1!=0&&env.X!=0){
+            let calculated;
+            if(chem.type=='product'){
+                calculated = chem.c1.quantity-env.X.quantity;
+            } else if(chem.type=='reactant'){
+                calculated = chem.c1.quantity+env.X.quantity;
+            }
+            chem.c0 = new KnownInfo(nRows, "c", chem.element, calculated, "mol/dm3");
+            nRows++;
+        } 
+        console.log(chem,chem.c1,chem.c0,env.X)
+        if(chem.c1==0&&chem.c0!=0&&env.X!=0){
+            console.log("whae")
+            let calculated;
+            if(chem.type=='product'){
+                calculated = chem.c0.quantity+env.X.quantity;
+            } else if(chem.type=='reactant'){
+                calculated = chem.c0.quantity-env.X.quantity;
+            }
+            chem.c1 = new KnownInfo(nRows, "c", chem.element, calculated, "mol/dm3");
+            nRows++;
+        }
+        
     }
 
 }
 
-function ElementInfo(element, ind, id, type, M, coefficient) {
+function CalcKc(reactants,products,data,allC, nRows){
+    if(data.Kp!=0&&data.T!=0){
+        let calculated=data.Kp.quantity/(data.T.quantity*R)**data.dCoef
+        data.Kc=new KnownInfo(nRows, "Kc", 'mixture', calculated, 'mol/dm3');
+        nRows++
+    } else if(allC){
+        let calculated=products.reduce((acc, el) => (acc *= el.c1.quantity ** el.coefficient), 1) / reactants.reduce((acc, el) => (acc *= el.c1.quantity ** el.coefficient), 1)
+        console.log(products,reactants)
+        products.reduce((acc, el) =>{ console.log(el);return (acc *= el.c1.quantity ** el.coefficient)}, 1)
+        data.Kc=new KnownInfo(nRows, "Kc", 'mixture', calculated, 'mol/dm3');
+        nRows++
+        if(data.Kp==0&&data.T!=0){
+            let kP = calculated*(data.T.quantity*R)**data.dCoef
+            data.Kp=new KnownInfo(nRows, "Kp", 'mixture', kP, 'Pa');
+            nRows++
+        }
+    }
+}
+
+function CalcUnit(){}
+
+function CalcKp(reactants,products,data,allP,nRows){
+    if(data.Kc!=0&&data.T!=0){
+        let calculated=data.Kc.quantity*(data.T.quantity*R)**data.dCoef
+        data.Kp=new KnownInfo(nRows, "Kp", 'mixture', calculated, 'Pa');
+        nRows++
+    } else if(allP){
+        let calculated=products.reduce((acc, el) => (acc *= el.c1.quantity ** el.coefficient), 1) / reactants.reduce((acc, el) => (acc *= el.c1.quantity ** el.coefficient), 1)
+        data.Kp=new KnownInfo(nRows, "Kp", 'mixture',calculated, 'Pa');
+        nRows++
+        if(data.Kc==0&&data.T!=0){
+            let kC =calculated/(data.T.quantity*R)**data.dCoef
+            data.Kc=new KnownInfo(nRows, "Kc", 'mixture', kC, 'mol/dm3');
+            nRows++
+        }
+    }
+}
+
+function ElementInfo(element, ind, id, type, M, coefficient,state) {
     this.element = element;
     this.ind = ind;
     this.id = id;
     this.type = type;
     this.coefficient = coefficient;
+    this.state = state
     this.c0 = 0;//done
     this.c1 = 0;//done
     this.n0 = 0;//done
@@ -576,20 +649,44 @@ function calConstant(reactants, products, extra, nRows) {
 
     // let productsTest = reactants.map(el=>{let newEl = {element:el.element,c:el.known,p:0,}})
     let elementsFinal = [];
-
-    allElements.forEach((el, ind) => {
-        elementsFinal.push(new ElementInfo(el.element, ind, el.id, el.type, calcM(el.element), el.coefficient));
-        el.known.forEach((el, ind) => {
+    let reactantsC = [];
+    let productsC = [];
+    let allC = false;
+    let reactantsP = [];
+    let productsP = [];
+    let allP = false;
+    let extraFinal = {
+        V: 0,
+        T: 0,
+        p: 0,
+        X: 0,
+        dCoef:0,
+        Kc: 0,
+        Kp: 0
+    };
+    let tempInd = -1
+    allElements.forEach((elementEl, ind) => {
+        elementsFinal.push(new ElementInfo(elementEl.element, ind, elementEl.id, elementEl.type, calcM(elementEl.element), elementEl.coefficient, elementEl.state));
+        elementEl.known.forEach((el, ind) => {
+            console.log(el)
             let element = elementsFinal[elementsFinal.length - 1];
             switch (el.symbol) {
                 case "V":
                     element.V = el;
                     break;
                 case "m":
-                    element.m = el;
+                    if (el.ext == "final") {
+                        element.m1 = el;
+                    } else {
+                        element.m0 = el;
+                    }
                     break;
                 case "n":
-                    element.n = el;
+                    if (el.ext == "final") {
+                        element.n1 = el;
+                    } else {
+                        element.n0 = el;
+                    }
                     break;
                 case "w":
                     element.w = el;
@@ -598,26 +695,23 @@ function calConstant(reactants, products, extra, nRows) {
                     element.x = el;
                     break;
                 case "c":
-                    if (element.c.ext.includes == "final") {
-                        element.c1 = 0;
+                    if (el.ext == "final") {
+                        element.c1 = el;
                     } else {
                         element.c0 = el;
                     }
                     break;
             }
         });
-
+        if(elementEl.type=='reactants'){
+            extraFinal.dCoef-=elementEl.coefficient
+        } else if (elementEl.type=='products'){
+            extraFinal.dCoef+=elementEl.coefficient
+        }
     });
-    let extraFinal = {
-        V: 0,
-        T: 0,
-        p: 0,
-        X: 0,
-        Kc: 0,
-        Kp: 0
-    };
 
-    extra.forEach(() => {
+
+    extra.forEach((el) => {
         switch (el.symbol) {
             case "V":
                 extraFinal.V = el;
@@ -638,18 +732,36 @@ function calConstant(reactants, products, extra, nRows) {
     }
     );
 
+    let allReqElC = elementsFinal.filter(el => el.state == 'g' || el.state == 'aq' ? true : false).map(el => el.element);
+    let allReqElP = elementsFinal.filter(el => el.state == 'g' ? true : false).map(el => el.element);
+    elementsFinal.forEach((el)=>{console.log('bro why u not playin');CalcSameData(extraFinal, el, el.type, newNRows)})
     elementsFinal.forEach((el) => {
-        while (el.c1 == 0 && (el.type == 'reactants' && (reactants[el.ind].state == 'aq' || reactants[el.ind].state == 'g') || (el.type == 'products' && (products[el.ind].state == 'aq' || products[el.ind].state == 'g')))){
+        let i = 0;
+        while ((el.c1 == 0 && i < 3)) {
+            console.log('is bro ever here');
             CalcSameData(extraFinal, el, el.type, newNRows);
+            i++;
+        }
+        
+        if (el.type == 'reactant') {
+            console.log(el,reactants[el.ind].state )
+            if (el.c1 != 0 && (reactants[el.ind].state == 'g' || reactants[el.ind].state == 'aq')) { console.log("test"); reactantsC.push(el); }
+            if (el.p != 0 && reactants[el.ind].state == 'g') { reactantsP.push(el.p.quantity); }
+        }
+        else if (el.type == 'product') {
+            console.log(el,)
+            if (el.c1 != 0 && (el.state == 'g' || el.state == 'aq')) { productsC.push(el); }
+            if (el.p != 0 && el.state == 'g') { productsP.push(el.p.quantity); }
         }
     });
+    if(allReqElC.length === (reactantsC.length+productsC.length)){allC=true}
+    if(allReqElP.length === (reactantsP.length+productsP.length)){allP=true}
+    console.log(reactantsC, productsC)
+    CalcKc(reactantsC, productsC, extraFinal, allC, newNRows)
+    // CalcKp(reactantsP, productsP, extraFinal,allP, newNRows)
 
-    // let reactantsC = reactants.filter(el => el.state !== 'l' && el.state !== 's' ? true : false);
-    // let productsC = products.filter(el => el.state !== 'l' && el.state !== 's' ? true : false);
-
-    let eqConst = productsC.reduce((acc, el) => (acc *= el.known[0].quantity ** el.coefficient), 1) / reactantsC.reduce((acc, el) => (acc *= el.known[0].quantity ** el.coefficient), 1);
-    return eqConst;
+    console.log(extraFinal.Kc, extraFinal.Kp)
+    return extraFinal
 }
-
 
 export const calcConstant = calConstant;
