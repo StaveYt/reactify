@@ -596,7 +596,7 @@ function CalcKp(reactants,products,data,allP,nRows){
         data.Kp=new KnownInfo(nRows, "Kp", 'mixture', calculated, 'Pa');
         nRows++
     } else if(allP){
-        let calculated=products.reduce((acc, el) => (acc *= el.c1.quantity ** el.coefficient), 1) / reactants.reduce((acc, el) => (acc *= el.c1.quantity ** el.coefficient), 1)
+        let calculated=products.reduce((acc, el) => (acc *= el.p.quantity ** el.coefficient), 1) / reactants.reduce((acc, el) => (acc *= el.p.quantity ** el.coefficient), 1)
         data.Kp=new KnownInfo(nRows, "Kp", 'mixture',calculated, 'Pa');
         nRows++
         if(data.Kc==0&&data.T!=0){
@@ -694,13 +694,9 @@ function calConstant(reactants, products, extra, nRows) {
                 case "x":
                     element.x = el;
                     break;
-                case "c":
-                    if (el.ext == "final") {
-                        element.c1 = el;
-                    } else {
-                        element.c0 = el;
-                    }
-                    break;
+                case "p":
+                    element.p = el;
+                    break;  
             }
         });
         if(elementEl.type=='reactants'){
@@ -746,19 +742,19 @@ function calConstant(reactants, products, extra, nRows) {
         if (el.type == 'reactant') {
             console.log(el,reactants[el.ind].state )
             if (el.c1 != 0 && (reactants[el.ind].state == 'g' || reactants[el.ind].state == 'aq')) { console.log("test"); reactantsC.push(el); }
-            if (el.p != 0 && reactants[el.ind].state == 'g') { reactantsP.push(el.p.quantity); }
+            if (el.p != 0 && reactants[el.ind].state == 'g') { reactantsP.push(el); }
         }
         else if (el.type == 'product') {
-            console.log(el,)
+            console.log(el,el.state)
             if (el.c1 != 0 && (el.state == 'g' || el.state == 'aq')) { productsC.push(el); }
-            if (el.p != 0 && el.state == 'g') { productsP.push(el.p.quantity); }
+            if (el.p != 0 && el.state == 'g') { console.log('test');productsP.push(el); }
         }
     });
     if(allReqElC.length === (reactantsC.length+productsC.length)){allC=true}
     if(allReqElP.length === (reactantsP.length+productsP.length)){allP=true}
-    console.log(reactantsC, productsC)
+    console.log(reactantsP, productsP)
     CalcKc(reactantsC, productsC, extraFinal, allC, newNRows)
-    // CalcKp(reactantsP, productsP, extraFinal,allP, newNRows)
+    CalcKp(reactantsP, productsP, extraFinal,allP, newNRows)
 
     console.log(extraFinal.Kc, extraFinal.Kp)
     return extraFinal

@@ -43,7 +43,7 @@ function CalcM(formula) {
   }
   M = M.toFixed(3);
 
-  return M;
+  return parseFloat(M);
 }
 
 //Razlicite formule

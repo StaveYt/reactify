@@ -72,34 +72,54 @@ function DataInput(props) {
     },
     {
       symbol: "Kc",
-      units: undefined,
+      units: ['mol/dm3'],
       varied: false,
     },
     {
       symbol: "Kp",
-      units: undefined,
+      units: ['kPa'],
       varied: false,
     },
   ]);
-  const [selectedSymbol, setSelectedSymbol] = useState({
+  const [selectedSymbols, setSelectedSymbols] = useState([{
     symbol: "Kp",
     units: undefined,
     varied: false,
-  });
+  }]);
+  const [newUsedSymbols, setNewUsedSymbols] = useState(props.usedSymbols.map((el,ind)=>{
+    if(ind<props.usedSymbols.length-1){
+    let filteredSymbols = symbols.filter(symbol=>symbol.symbol==el.symbol?true:false)[0]
+    console.log(symbols.filter(symbol=>symbol.symbol==el.symbol?true:false)[0])
+    return({...el, units: filteredSymbols.units, varied: filteredSymbols.varied})}else{
+    return(el)}
+  }))
   useEffect(() => {
     let selected = symbols.filter(el => el.symbol === props.usedSymbols[0].symbol ? true : false)[0];
-    setSelectedSymbol({ ...selected, ext: props.usedSymbols[0].ext, env: props.usedSymbols[0].env, evnOnly: props.usedSymbols[0].envOnly });
+    let selectedSymbolsTemp = [...selectedSymbols]
+    selectedSymbolsTemp[0] = {...selected, ext: props.usedSymbols[0].ext, env: props.usedSymbols[0].env, envOnly: props.usedSymbols[0].envOnly }
+    setSelectedSymbols([...selectedSymbolsTemp]);
+    // let newUsedSymbols = 
+    
+    // setNewUsedSymbols([...newUsedSymbols])
+    // props.vars.addButton.current.addEventListener('click', addSelectedSymbol)
+    console.log(newUsedSymbols)
   }, []);
   useEffect(() => {
-    console.log(selectedSymbol)
+    console.log(selectedSymbols)
+    
   });
+  function addSelectedSymbol(){
+    setSelectedSymbols([...selectedSymbols, {}])
+  }
   function SymbolChange(event) {
     let targetRow = event.target.parentElement.parentElement;
     let selected = symbols.filter(el => el.symbol === event.target.value ? true : false)[0];
     let symbolInd = props.usedSymbols[props.usedSymbols.length - 1].indexOf(event.target.value);
     let data = props.vars.known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
     data.symbol = event.target.value;
-    setSelectedSymbol({ ...selected, ext: props.usedSymbols[symbolInd].ext, env: props.usedSymbols[symbolInd].env, evnOnly: props.usedSymbols[symbolInd].envOnly });
+    let selectedSymbolsTemp = selectedSymbols
+    selectedSymbolsTemp[targetRow.id] = { ...selected, ext: props.usedSymbols[symbolInd].ext, env: props.usedSymbols[symbolInd].env, envOnly: props.usedSymbols[symbolInd].envOnly }
+    setSelectedSymbols([...selectedSymbolsTemp]);
   }
   function handleInputChange(event) {
     let targetRow = event.target.parentElement.parentElement;
@@ -129,15 +149,15 @@ function DataInput(props) {
       <tr id={el.id} key={el.id}>
         <td>
           <Select id='symbol' onChange={SymbolChange}>
-            {symbols.map((el) => { if (props.usedSymbols[props.usedSymbols.length - 1].indexOf(el.symbol) != -1) { return (<Option value={el.symbol} />); } })}
+            {symbols.map((symbolEl) => { if (props.usedSymbols[props.usedSymbols.length - 1].indexOf(symbolEl.symbol) != -1) { return (<Option selected={symbolEl.symbol==props.vars.known[el.id].symbol} value={symbolEl.symbol} />); } })}
           </Select>
         </td>
         <td>
-          <Select disabled={selectedSymbol.envOnly ? true : false} id='chem' onChange={handleInputChange}>
+          <Select disabled={newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(props.vars.known[el.id].symbol)].envOnly ? true : false} id='chem' onChange={handleInputChange}>
             {props.vars.chemicals.map((el) => (
               <Option value={el} />
             ))}
-            {selectedSymbol.env===true && <Option value={'mixture'} />}
+            {newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(props.vars.known[el.id].symbol)].env===true && <Option value={'mixture'} />}
           </Select>
         </td>
         <td>
@@ -145,12 +165,12 @@ function DataInput(props) {
         </td>
         <td>
           <Select id='unit' onChange={handleInputChange}>
-            {selectedSymbol.units.map((el) => (<Option value={el} />))}
+            {newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(props.vars.known[el.id].symbol)].units.map((unit) => (<Option value={unit} />))}
           </Select>
         </td>
         <td>
           <Select id='ext' onChange={handleInputChange}>
-            {selectedSymbol.ext.map((el) => { if (selectedSymbol.ext != []) { return(<Option value={el} />); } })}
+            {newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(props.vars.known[el.id].symbol)].ext.map((extra) => { if (newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(props.vars.known[el.id].symbol)].ext != []) { return(<Option value={extra} />); } })}
           </Select>
         </td>
         <td>

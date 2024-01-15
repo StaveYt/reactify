@@ -93,7 +93,7 @@ function EquilibriumCalc() {
       <div>
         {equation.length !== 0 ? (<>
           <button id="add-known" className="px-3 py-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={AddKnown}>+</button>
-          <DataInput usedSymbols={usedSymbols} vars={{ known: known, setKnown: setKnown, nKnown: nKnown, setNKnown: setNKnown, chemicals: equation.filter(el => el !== 'equilibrium' ? true : false).map(el => el.element) }} />
+          <DataInput usedSymbols={usedSymbols} vars={{ setUsedSymbols:setUsedSymbols, known: known, setKnown: setKnown, nKnown: nKnown, setNKnown: setNKnown, chemicals: equation.filter(el => el !== 'equilibrium' ? true : false).map(el => el.element) }} />
         </>) : (<></>)}
       </div>
       <button className="p-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={handleCalc}>Izračunaj</button>
