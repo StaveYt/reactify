@@ -82,7 +82,7 @@ function SolutionCalc() {
   },[])
 
   function HandleTextChange(event) {
-    if (event.target.type == "checkbox") {
+    if (event.target.type === "checkbox") {
       setFormulas({ ...formulas, [event.target.id]: event.target.checked });
     }
     else { setFormulas({ ...formulas, [event.target.id]: event.target.value }); }
@@ -91,6 +91,8 @@ function SolutionCalc() {
   function AddKnown() {
     setKnown([...known, new KnownInfo(nRows, "V", "otap", 0, "m^3")]);
     setNRows(nRows + 1);
+    
+    console.log(nRows)
   }
   function KnownInfo(id, symbol, chem, quantity, unit) {
     this.id = id;
@@ -100,16 +102,16 @@ function SolutionCalc() {
     this.unit = unit;
   }
   function DelKnown(event) {
-    let targetRow = event.target.parentElement.parentElement;
+    let targetRow = event.target.parentElement.parentElement; //shit working
     setKnown(known => known.filter(el => el.id !== parseInt(targetRow.id) ? true : false));
   }
   function SymbolChange(event) {
     let targetRow = event.target.parentElement.parentElement;
     let unitSel = targetRow.children[3].children[0];
     let chemSel = targetRow.children[1].children[0];
-    let selected = symbols.filter(el => el.symbol == event.target.value ? true : false)[0];
+    let selected = symbols.filter(el => el.symbol === event.target.value ? true : false)[0];
     console.log(event.target.value, targetRow.id, known);
-    let data = known.filter(el => el.id == targetRow.id ? true : false)[0];
+    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
     console.log(data);
     data.symbol = event.target.value;
     unitSel.innerHTML = "";
@@ -133,17 +135,17 @@ function SolutionCalc() {
   }
   function ChemChange(event) {
     let targetRow = event.target.parentElement.parentElement;
-    let data = known.filter(el => el.id == targetRow.id ? true : false)[0];
+    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
     data.chem = event.target.value;
   }
   function QuanChange(event) {
     let targetRow = event.target.parentElement.parentElement;
-    let data = known.filter(el => el.id == targetRow.id ? true : false)[0];
+    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
     data.quantity = parseFloat(event.target.value);
   }
   function UnitChange(event) {
     let targetRow = event.target.parentElement.parentElement;
-    let data = known.filter(el => el.id == targetRow.id ? true : false)[0];
+    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
     data.unit = event.target.value;
   }
 

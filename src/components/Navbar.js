@@ -31,6 +31,9 @@ function Navbar() {
                                 <li className="">
                                     <Link className="text-lg" to="/calculators/solutions">Otopine</Link>
                                 </li>
+                                <li className="">
+                                    <Link className="text-lg" to="/calculators/equlibriumconstant">Konstanta Kemijske Ravnoteže</Link>
+                                </li>
                             </ul>
                         </li>
 

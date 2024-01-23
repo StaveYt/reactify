@@ -1,4 +1,6 @@
 import axios from "axios";
+import { convertUnit } from "./convertUnit";
+
 
 //Molarna Masa
 let elements;
@@ -43,7 +45,7 @@ function CalcM(formula) {
   }
   M = M.toFixed(3);
 
-  return M;
+  return parseFloat(M);
 }
 
 //Razlicite formule
@@ -69,13 +71,6 @@ function dCalc(m, v) {
   return m / v;
 }
 
-//Otopine
-
-// let consts = {
-//     K: 273.15,
-//     R: 8.314
-// };
-
 let nRows = 0;
 let changed = false;
 function KnownInfo(id, symbol, chem, quantity, unit) {
@@ -87,7 +82,7 @@ function KnownInfo(id, symbol, chem, quantity, unit) {
 }
 
 function CalcSameData(data, chem, type, nRows) {
-  console.log(chem);
+  // console.log(chem);
   for (let i = 0; i < 3; i++) {
     if (chem.m != 0) {
       if (chem.V != 0 && chem.D == 0) {
@@ -357,6 +352,7 @@ function CalcSameData(data, chem, type, nRows) {
       }
     }
   }
+  // console.log(chem,data)
 }
 
 function CalcAllData(data, nRows) {
@@ -388,39 +384,6 @@ function CalcAllData(data, nRows) {
     changed = true;
   }
 
-}
-
-function ConvertData(chem) {
-  for (const prop in chem) {
-    if (typeof chem[prop] == "object") {
-      switch (prop) {
-        case "V":
-          if (chem[prop].unit == "cm^3") {
-            chem[prop].quantity /= 1000;
-            chem[prop].unit = "dm^3";
-          } else if (chem[prop].unit == "m^3") {
-            chem[prop].quantity *= 1000;
-            chem[prop].unit = "dm^3";
-          }
-          break;
-        case "m":
-          if (chem[prop].unit == "mg") {
-            chem[prop].quantity /= 1000;
-            chem[prop].unit = "g";
-          } else if (chem[prop].unit == "dg") {
-            chem[prop].quantity /= 10;
-            chem[prop].unit = "g";
-          } else if (chem[prop].unit == "dag") {
-            chem[prop].quantity *= 10;
-            chem[prop].unit = "g";
-          } else if (chem[prop].unit == "kg") {
-            chem[prop].quantity *= 1000;
-            chem[prop].unit = "g";
-          }
-          break;
-      }
-    }
-  }
 }
 
 function CalcSolution(known, formulaOtapStr, formulaOtvStr, plinCheck, nRows) {
@@ -482,9 +445,9 @@ function CalcSolution(known, formulaOtapStr, formulaOtvStr, plinCheck, nRows) {
     let M = prompt("Unesite molarnu masu otopljene tvari, ako je nemate upišite ne");
     if (M != "ne") { data.otv.M = new KnownInfo(nRows, "M", "otv", M, "g/mol"); nRows++; }
   }
-  console.log(data);
+  // console.log(data);
   known.forEach(el => {
-    console.log(el);
+    // console.log(el);
     switch (el.symbol) {
       case "V":
         if (el.chem == "otap") {
@@ -535,9 +498,9 @@ function CalcSolution(known, formulaOtapStr, formulaOtvStr, plinCheck, nRows) {
     }
   });
 
-  ConvertData(otv);
-  ConvertData(otap);
-  ConvertData(otp);
+  convertUnit(otv);
+  convertUnit(otap);
+  convertUnit(otp);
   for (const prop in data.ext) {
     if (typeof data.ext[prop] == "object") {
       switch (prop) {
