@@ -47,6 +47,7 @@ function EquilibriumCalc() {
     reactants.forEach((el, ind) => { knownTemp = known.filter(knownEl => knownEl.chem === el.element ? true : false); el.known = [...knownTemp]; reactantsInput[ind] = el; });
     products.forEach((el, ind) => { knownTemp = known.filter(knownEl => knownEl.chem === el.element ? true : false); el.known = [...knownTemp]; productsInput[ind] = el; });
     let extra = known.filter((el)=>el.chem==='mixture')
+    console.log('extra: ',known)
     let calculatedConstant = calcConstant(reactantsInput, productsInput, extra, nKnown);
     console.log(calculatedConstant);
     setCalculated(calculatedConstant);

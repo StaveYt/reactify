@@ -1,4 +1,6 @@
 import axios from "axios";
+import { convertUnit } from "./convertUnit";
+
 
 //Molarna Masa
 let elements;
@@ -384,39 +386,6 @@ function CalcAllData(data, nRows) {
 
 }
 
-function ConvertData(chem) {
-  for (const prop in chem) {
-    if (typeof chem[prop] == "object") {
-      switch (prop) {
-        case "V":
-          if (chem[prop].unit == "cm^3") {
-            chem[prop].quantity /= 1000;
-            chem[prop].unit = "dm^3";
-          } else if (chem[prop].unit == "m^3") {
-            chem[prop].quantity *= 1000;
-            chem[prop].unit = "dm^3";
-          }
-          break;
-        case "m":
-          if (chem[prop].unit == "mg") {
-            chem[prop].quantity /= 1000;
-            chem[prop].unit = "g";
-          } else if (chem[prop].unit == "dg") {
-            chem[prop].quantity /= 10;
-            chem[prop].unit = "g";
-          } else if (chem[prop].unit == "dag") {
-            chem[prop].quantity *= 10;
-            chem[prop].unit = "g";
-          } else if (chem[prop].unit == "kg") {
-            chem[prop].quantity *= 1000;
-            chem[prop].unit = "g";
-          }
-          break;
-      }
-    }
-  }
-}
-
 function CalcSolution(known, formulaOtapStr, formulaOtvStr, plinCheck, nRows) {
 
   let otap = {
@@ -529,9 +498,9 @@ function CalcSolution(known, formulaOtapStr, formulaOtvStr, plinCheck, nRows) {
     }
   });
 
-  ConvertData(otv);
-  ConvertData(otap);
-  ConvertData(otp);
+  convertUnit(otv);
+  convertUnit(otap);
+  convertUnit(otp);
   for (const prop in data.ext) {
     if (typeof data.ext[prop] == "object") {
       switch (prop) {

@@ -81,45 +81,22 @@ function DataInput(props) {
       varied: false,
     },
   ]);
-  const [selectedSymbols, setSelectedSymbols] = useState([{
-    symbol: "Kp",
-    units: undefined,
-    varied: false,
-  }]);
+  const [refresh, setRefresh] = useState(false)
   const [newUsedSymbols, setNewUsedSymbols] = useState(props.usedSymbols.map((el,ind)=>{
     if(ind<props.usedSymbols.length-1){
     let filteredSymbols = symbols.filter(symbol=>symbol.symbol==el.symbol?true:false)[0]
-    console.log(symbols.filter(symbol=>symbol.symbol==el.symbol?true:false)[0])
     return({...el, units: filteredSymbols.units, varied: filteredSymbols.varied})}else{
     return(el)}
   }))
   useEffect(() => {
-    let selected = symbols.filter(el => el.symbol === props.usedSymbols[0].symbol ? true : false)[0];
-    let selectedSymbolsTemp = [...selectedSymbols]
-    selectedSymbolsTemp[0] = {...selected, ext: props.usedSymbols[0].ext, env: props.usedSymbols[0].env, envOnly: props.usedSymbols[0].envOnly }
-    setSelectedSymbols([...selectedSymbolsTemp]);
-    // let newUsedSymbols = 
-    
-    // setNewUsedSymbols([...newUsedSymbols])
-    // props.vars.addButton.current.addEventListener('click', addSelectedSymbol)
-    console.log(newUsedSymbols)
   }, []);
-  useEffect(() => {
-    console.log(selectedSymbols)
-    
-  });
-  function addSelectedSymbol(){
-    setSelectedSymbols([...selectedSymbols, {}])
-  }
+
   function SymbolChange(event) {
     let targetRow = event.target.parentElement.parentElement;
-    let selected = symbols.filter(el => el.symbol === event.target.value ? true : false)[0];
-    let symbolInd = props.usedSymbols[props.usedSymbols.length - 1].indexOf(event.target.value);
     let data = props.vars.known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
     data.symbol = event.target.value;
-    let selectedSymbolsTemp = selectedSymbols
-    selectedSymbolsTemp[targetRow.id] = { ...selected, ext: props.usedSymbols[symbolInd].ext, env: props.usedSymbols[symbolInd].env, envOnly: props.usedSymbols[symbolInd].envOnly }
-    setSelectedSymbols([...selectedSymbolsTemp]);
+    if(newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(data.symbol)].envOnly===true){data.chem='mixture'}
+    setRefresh(!refresh)
   }
   function handleInputChange(event) {
     let targetRow = event.target.parentElement.parentElement;
@@ -154,10 +131,10 @@ function DataInput(props) {
         </td>
         <td>
           <Select disabled={newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(props.vars.known[el.id].symbol)].envOnly ? true : false} id='chem' onChange={handleInputChange}>
-            {props.vars.chemicals.map((el) => (
-              <Option value={el} />
+            {props.vars.chemicals.map((chem) => (
+              <Option selected={chem===props.vars.known[el.id].chem} value={chem} />
             ))}
-            {newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(props.vars.known[el.id].symbol)].env===true && <Option value={'mixture'} />}
+            {newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(props.vars.known[el.id].symbol)].env===true && <Option selected={'mixture'===props.vars.known[el.id].chem} value={'mixture'} />}
           </Select>
         </td>
         <td>
@@ -165,12 +142,12 @@ function DataInput(props) {
         </td>
         <td>
           <Select id='unit' onChange={handleInputChange}>
-            {newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(props.vars.known[el.id].symbol)].units.map((unit) => (<Option value={unit} />))}
+            {newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(props.vars.known[el.id].symbol)].units.map((unit) => (<Option selected={unit===props.vars.known[el.id].unit} value={unit} />))}
           </Select>
         </td>
         <td>
           <Select id='ext' onChange={handleInputChange}>
-            {newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(props.vars.known[el.id].symbol)].ext.map((extra) => { if (newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(props.vars.known[el.id].symbol)].ext != []) { return(<Option value={extra} />); } })}
+            {newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(props.vars.known[el.id].symbol)].ext.map((extra) => { if (newUsedSymbols[newUsedSymbols[newUsedSymbols.length-1].indexOf(props.vars.known[el.id].symbol)].ext != []) { return(<Option selected={extra===props.vars.known[el.id].ext} value={extra} />); } })}
           </Select>
         </td>
         <td>
