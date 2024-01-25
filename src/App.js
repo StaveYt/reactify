@@ -12,7 +12,7 @@ import EquilibriumCalc from './pages/calculators/Equilibrium';
 function App() {
   return (
     <>
-      <BrowserRouter className="h-full background-img font-mono">
+      <BrowserRouter className="font-red-hat block relative text-center z-[1] h-full w-full bg-[#F0EEEE]">
         <Routes>
           <Route path="/" element={<Navbar />}>
             <Route index element={<Home />} />

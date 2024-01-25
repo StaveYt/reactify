@@ -18,12 +18,12 @@ function Home() {
       <div className=''>
          <div className=" mx-auto mt-4 flex flex-col" id="">
             <img className="mx-auto" src="assets\img\logo.svg" />
-            <h1 className="main-text brand-name">Reactify</h1>
+            <h1 className="main-text">Reactify</h1>
             <h3 className="brand-slogan">Kemija koja inspirira</h3>
          </div>
          <div className=" flex flex-col mx-4 items-center mt-4">
             <div
-               className="bg-[#cc00ff21] border-[#cc00ff50] border-4 rounded-xl p-3 text-white grid grid-rows-[repeat(9,45px)] gap-1 grid-cols-[repeat(18,45px)]"
+               className="rounded-xl p-3 text-white grid grid-rows-[repeat(9,45px)] gap-1 grid-cols-[repeat(18,45px)]"
                id="periodicTable">
                {elements.map(el => (
                   <div className='element' style={{

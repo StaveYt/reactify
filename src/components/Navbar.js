@@ -14,17 +14,17 @@ function Navbar() {
     }
     return (
         <>
-            <nav className="navbar w-full">
-                <Link className="text-2xl font-bold font-brand" to="/">Reactify</Link>
-                <hr className="v-line">
-                </hr>
-                <div className="max-lg:hidden">
+            <nav className="navbar w-full flex text-2xl flex-row justify-center justify-between font-red-hat">
+                
+                {/* <div className="max-lg:hidden"> */}
+                <div className="">
                     <ul className="flex flex-row items-center gap-4">
+                        <li><Link className=" font-bold font-brand" to="/">Home</Link></li>
                         <li className="">
                             <a className="text-lg" href="#" role="button" id="dropdownToggle" onClick={Dropdown}>
                                 Kalkulatori
                             </a>
-                            <ul ref={dropdownRef} className="hidden absolute rounded-lg t-0 mt-4 bg-slate-900 p-2" id="dropdownMenu">
+                            <ul ref={dropdownRef} className="hidden absolute rounded-lg t-0 mt-4 bg-white p-2" id="dropdownMenu">
                                 <li className="">
                                     <Link className="text-lg" to="/calculators/molarmass">Molarna Masa</Link>
                                 </li>
@@ -36,8 +36,13 @@ function Navbar() {
                                 </li>
                             </ul>
                         </li>
-
-                        <li>
+                    </ul>
+                </div>
+                <h2 className="font-bold font-brand" to="/">Reactify</h2>
+                {/* <div className="max-lg:hidden"> */}
+                <div className="">
+                    <ul className="flex flex-row items-center gap-4">
+                    <li>
                             <a href="" className="text-lg">Tečajevi</a>
                         </li>
                         <li className="">
@@ -45,27 +50,6 @@ function Navbar() {
                         </li>
                     </ul>
                 </div>
-                {/* <button class="border-2 rounded-lg p-2 lg:hidden ml-auto" id="navbarSideButton">=</button>
-                <div id="navbarSide" class="lg:hidden top-0 mt-16 hidden absolute p-4 rounded-lg bg-slate-900 right-0 text-white mr-4">
-                    <ul class="navbar-nav flex flex-col items-center gap-4">
-                        <li class=" dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Kalkulatori
-                            </a>
-                            <ul class="">
-                                <li class="">
-                                    <a class="" href="src/pages/kalkulatorM.html">Kalkulator Molarne Mase</a>
-                                </li>
-                                <li class="">
-                                    <a class="" href="src/pages/kalkulatorOtp.html">Kalkulator Za Otopine</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="text-lg">
-                            <a class="" href="src/pages/walter.html">About Walter White</a>
-                        </li>
-                    </ul>
-                </div> */}
             </nav>
             <Outlet />
         </>

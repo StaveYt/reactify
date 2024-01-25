@@ -7,41 +7,18 @@
     display: flex;
     padding: theme('spacing.4');
     border-radius: 0 0 theme('spacing.4') theme('spacing.4');
-    color: theme('colors.white');
+    color: #464648;
     flex-direction: row;
     gap: theme('spacing.2');
-    flex: 1 1 grow;
+    /* flex: 1 1 grow; */
     height: theme('spacing.16');
     align-items: center;
-    background-color: theme('colors.slate.800');
-  }
-
-  .v-line {
-    display: inline-block;
-    min-width: theme('spacing.1');
-    height: 100%;
-    border-radius: theme('borderRadius.lg');
-    background-color: theme('colors.white');
-  }
-
-  .background-img {
-    display: block;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    background-attachment: fixed;
-    background-image: linear-gradient(to bottom, #511FED, #2e2e2e 75%);
-    text-align: center;
-    color: white;
-    z-index: 1;
   }
 
   .element {
     font-family: Arial;
     border: silver solid 2px;
     box-shadow: 2px 3px #2e2e2e;
-
-
     border-radius: 5px;
     text-align: center;
     transition: all 0.5s;
