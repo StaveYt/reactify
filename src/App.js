@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import './main.css'
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
@@ -12,7 +10,7 @@ import EquilibriumCalc from './pages/calculators/Equilibrium';
 function App() {
   return (
     <>
-      <BrowserRouter className="font-red-hat block relative text-center z-[1] h-full w-full bg-[#F0EEEE]">
+      <BrowserRouter className="font-red-hat block relative text-center z-[1]  bg-[#F0EEEE]">
         <Routes>
           <Route path="/" element={<Navbar />}>
             <Route index element={<Home />} />

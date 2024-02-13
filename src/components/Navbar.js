@@ -24,7 +24,7 @@ function Navbar() {
                             <a className="text-lg" href="#" role="button" id="dropdownToggle" onClick={Dropdown}>
                                 Kalkulatori
                             </a>
-                            <ul ref={dropdownRef} className="hidden absolute rounded-lg t-0 mt-4 bg-white p-2" id="dropdownMenu">
+                            <ul ref={dropdownRef} className="hidden absolute rounded-lg z-10 t-0 mt-4 bg-white p-2" id="dropdownMenu">
                                 <li className="">
                                     <Link className="text-lg" to="/calculators/molarmass">Molarna Masa</Link>
                                 </li>
