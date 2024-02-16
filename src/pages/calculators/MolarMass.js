@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { calcM } from "../../scripts/formulas.js";
-import check from "../../assets/imgs/check.svg"
 import send from "../../assets/imgs/send.svg"
 import StepProgressBar from "../../components/stepProgress/StepProgressBar.js";
 function MolarMassCalc() {
@@ -19,7 +18,7 @@ function MolarMassCalc() {
     return (
         <div className="flex flex-col h-full mx-5 items-center">
             <div className="flex flex-col min-w-[300px] gap-10">
-                <h1 className="">Kalkulator Molarne Mase</h1>
+                <h1 className="text-[#464648] font-bold text-lg">Kalkulator Molarne Mase</h1>
                 <StepProgressBar currStep={currStep} stepLength={[1,2]}/>
                 <div className="bg-white min-h-[150px] min-w-[300px] flex flex-col m-auto self-center p-10 justify-center shadow-sm shadow-[#222] gap-5 rounded-sm">
                     {
