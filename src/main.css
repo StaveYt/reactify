@@ -112,4 +112,21 @@
     height: 2.5rem;
     transition: 0.5s all;}
   /* ... */
+
+  .clip-t{
+    clip-path: inset(0px -10px -10px -10px);
+  }
+  .clip-tl{
+    clip-path: 0px -10px -10px 0px;
+  }
+
+  .cl-disabled{
+    pointer-events: none;
+    cursor:default;
+    color:#909093
+  }
+  
+}
+.shadow-sm{
+  box-shadow: 0 1px 2px 0 #222;
 }

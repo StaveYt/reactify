@@ -1,6 +1,6 @@
 import { createRef } from "react";
 import { Outlet, Link } from "react-router-dom";
-
+import hamburger from "../assets/imgs/hamburger.svg"
 function Navbar() {
     let dropdownRef = createRef()
     function Dropdown(){
@@ -14,12 +14,12 @@ function Navbar() {
     }
     return (
         <>
-            <nav className="navbar w-full flex text-2xl flex-row justify-center justify-between font-red-hat">
+            <nav className="navbar w-full flex text-2xl flex-row justify-between font-red-hat">
                 
-                {/* <div className="max-lg:hidden"> */}
-                <div className="">
+                
+                <div className="max-sm:hidden">
                     <ul className="flex flex-row items-center gap-4">
-                        <li><Link className=" font-bold font-brand" to="/">Home</Link></li>
+                        <li><Link className=" font-bold" to="/">Home</Link></li>
                         <li className="">
                             <a className="text-lg" href="#" role="button" id="dropdownToggle" onClick={Dropdown}>
                                 Kalkulatori
@@ -38,18 +38,22 @@ function Navbar() {
                         </li>
                     </ul>
                 </div>
-                <h2 className="font-bold font-brand" to="/">Reactify</h2>
-                {/* <div className="max-lg:hidden"> */}
-                <div className="">
-                    <ul className="flex flex-row items-center gap-4">
+                <h2 className="font-bold" to="/">Reactify</h2>
+                
+                <div className="relative max-sm:hidden">
+                    <ul className="max-sm:hidden flex flex-row items-center gap-4">
                     <li>
-                            <a href="" className="text-lg">Tečajevi</a>
+                            <a href="" className="text-lg cl-disabled">Tečajevi</a>
                         </li>
                         <li className="">
                             <Link className="text-lg" to="/aboutus">O Nama</Link>
                         </li>
                     </ul>
+                    
                 </div>
+                <button className="relative aspect-square border border-x-2 border-y-2 rounded-sm border-light-gray">
+                    <img className="w-7" src={hamburger}/>
+                </button>
             </nav>
             <Outlet />
         </>

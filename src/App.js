@@ -4,7 +4,7 @@ import AboutUs from './pages/AboutUs';
 import Navbar from './components/Navbar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MolarMassCalc from './pages/calculators/MolarMass';
-import SolutionCalc from './pages/calculators/solutionTemp';
+import SolutionCalc from './pages/calculators/Solution';
 import EquilibriumCalc from './pages/calculators/Equilibrium';
 
 function App() {
