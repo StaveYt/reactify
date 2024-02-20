@@ -73,21 +73,21 @@ function SolutionCalc() {
   return (
     <div className="flex flex-col h-full mx-5 items-center">
       <h1 className="text-[#464648] font-bold text-lg">Kalkultor za otopine</h1>
-      <div className="flex flex-col min-w-[300px] gap-10">
+      <div className="flex flex-col max-sm:w-[90%] min-w-[300px] gap-10">
         <StepProgressBar currStep={currStep} stepLength={[1, 2, 3]} />
-        <div id={currStep < 3 ? "known" : ""} className="bg-white min-h-[150px] min-w-[300px] flex flex-col m-auto self-center p-10 justify-center shadow-sm shadow-[#222] gap-5 rounded-sm">
+        <div id={currStep < 3 ? "known" : ""} className="bg-white max-sm:w-[90%]  min-h-[150px] min-w-[300px] flex flex-col m-auto self-center p-10 justify-center shadow-sm shadow-[#222] gap-5 rounded-sm">
           {currStep == 1 ? <>
             <p>Unesite kemijske formule za otapalo i otopljenu tvar.</p>
 
-            <div className="flex gap-2 mb-1 mt-1">
+            <div className="flex gap-2 mb-1 mt-1 max-sm:flex-col">
               <label htmlFor="otap">Formula Otapala (otap)</label>
               <Input onChange={HandleTextChange} id="otap" />
             </div>
-            <div className="flex gap-2 mb-1 mt-1">
+            <div className="flex gap-2 mb-1 mt-1 max-sm:flex-col">
               <label htmlFor="otv">Formula Otopljene tvari (otv)</label>
-              <Input onChange={HandleTextChange} id="otv" />
-              <Input onChange={HandleTextChange} id="plin" type="checkbox" />
-              <label htmlFor="plin">Plin</label>
+              <div className="flex gap-2"><Input onChange={HandleTextChange} id="otv" />
+              <input onChange={HandleTextChange} id="plin" type="checkbox"></input>
+              <label htmlFor="plin">Plin</label></div>
 
             </div>
             <button onClick={() => { setCurrStep(currStep + 1); }} id="submit" className="flex p-1 items-center justify-center rounded-sm bg-[#92FF9F] [clip-path:inset(0_0_-10px_0)] [box-shadow:0_1px_2px_0_#222]">
