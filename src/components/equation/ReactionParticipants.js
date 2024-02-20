@@ -1,17 +1,8 @@
+import Input from "../form/Input";
 import Option from "../form/Option";
+import Select from "../form/Select";
 
 function ReactionParticipants(props) {
-    function handleAddParticipant(event) {
-        if(props.type=='reactant'){
-            event.target.className += " hidden"
-            props.vars.setNReactants(props.vars.nReactants+1);
-            props.vars.setReactants([...props.vars.reactants, new Participant('reactant', props.vars.nReactants)]);
-        }else if(props.type=='product'){
-            event.target.className += " hidden";
-            props.vars.setNProducts(props.vars.nProducts + 1);
-            props.vars.setProducts([...props.vars.products, new Participant('product', props.vars.nProducts)]);
-        }
-    }
     function handleDeleteParticipant(event) { //shit aint working
         let participant = event.target.parentNode.parentNode;
         let parentChildren = event.target.parentNode.parentNode.parentNode.children;
@@ -63,19 +54,19 @@ function ReactionParticipants(props) {
         // props.vars.setReactants([...participantTemp]);
     }
     return (
-        <div id={props.id} className="border border-rose-600 text-black flex flex-row justify-center">
-            <input id='coefficientInput' onClick={handleInputChange} className="w-10" type="number" min={1} />
-            <input id='elementInput' onChange={handleInputChange} className="inline-flex" type="text" />
+        <div id={props.id} className=" text-black flex flex-row justify-center">
+            <Input id='coefficientInput' onClick={handleInputChange} className="w-10" type="number" min={1} />
+            <Input id='elementInput' onChange={handleInputChange} className="max-w-[100px]" type="text" />
             <div className="flex flex-col  justify-center">
-                <button onClick={handleDeleteParticipant} className="flex-1 rounded-sm bg-green-600 text-white border border-green-500">-</button>
-                <select onClick={handleInputChange} id='stateInput' className="flex-1">
+                <button onClick={handleDeleteParticipant} className="flex-1 bg-green-600 text-white">-</button>
+                <Select onClick={handleInputChange} id='stateInput' className="flex-1">
                     <Option value={'g'}/>
                     <Option value={'l'}/>
                     <Option value={'aq'}/>
                     <Option value={'s'}/>
-                </select>
+                </Select>
             </div>
-            <button onClick={handleAddParticipant} className="flex-1 p-1 rounded-sm bg-green-600 text-white border border-green-500">+</button>
+        
         </div>
     )
 }

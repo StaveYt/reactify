@@ -2,66 +2,24 @@ import { useEffect, useState } from "react";
 import Input from "../../components/form/Input.js";
 import Option from "../../components/form/Option.js";
 import Select from "../../components/form/Select.js";
-import Table from "../../components/table/Table.js";
 import { calcSolution } from "../../scripts/formulas.js";
+import StepProgressBar from "../../components/stepProgress/StepProgressBar.js";
+import DataInput from "../../components/dataInput/DataInput.js";
+import ShowTabledData from "../../components/dataInput/ShowTabledData.js";
 function SolutionCalc() {
   const [known, setKnown] = useState([]);
-  const [symbols, setSymbols] = useState([
-    {
-      symbol: "M",
-      units: ["g/mol"],
-      varied: true
-    },
-    {
-      symbol: "m",
-      units: ["g", "kg", "mg", "dg", "dag"],
-      varied: true
-    },
-    {
-      symbol: "n",
-      units: ["mol", "mmol"],
-      varied: true
-    },
-    {
-      symbol: "D",
-      units: ["g/cm^3",],
-      varied: true
-    },
-    {
-      symbol: "V",
-      units: ["cm^3", "dm^3", "m^3"],
-      varied: true
-    },
-    {
-      symbol: "c",
-      units: ["mol/L", "mmol/L"],
-      varied: false
-    },
-    {
-      symbol: "y",
-      units: ["g/L"],
-      varied: false
-    },
-    {
-      symbol: "b",
-      units: ["mol/kg"],
-      varied: false
-    },
-    {
-      symbol: "x",
-      units: ["%"],
-      varied: true
-    },
-    {
-      symbol: "phi",
-      units: ["%"],
-      varied: true
-    },
-    {
-      symbol: "w",
-      units: ["%"],
-      varied: true
-    },
+  const [usedSymbols, setUsedSymbols] = useState([
+    { symbol: 'c', envOnly: true, env: true, ext: [] },
+    { symbol: 'V', envOnly: false, env: false, ext: [] },
+    { symbol: 'n', envOnly: false, env: false, ext: [] },
+    { symbol: 'm', envOnly: false, env: false, ext: [] },
+    { symbol: 'phi', envOnly: false, env: false, ext: [] },
+    { symbol: 'w', envOnly: false, env: false, ext: [] },
+    { symbol: 'x', envOnly: false, env: false, ext: [] },
+    { symbol: 'b', envOnly: true, env: true, ext: [] },
+    { symbol: 'y', envOnly: true, env: true, ext: [] },
+    { symbol: 'D', envOnly: false, env: false, ext: [] },
+    ['c', 'V', 'n', 'm', 'phi', 'w', 'x', 'b', 'y', 'D']
   ]);
   const [nRows, setNRows] = useState(0);
   const [formulas, setFormulas] = useState({
@@ -70,16 +28,18 @@ function SolutionCalc() {
     plin: false
   });
   const [calculated, setCalculated] = useState({
-    otp: {},  
+    otp: {},
     otv: {},
     otap: {},
     ext: {},
     calculated: false
   });
+  const [currStep, setCurrStep] = useState(1);
+  const [selectedChem, setSelectedChem] = useState("Otopljena tvar");
 
-  useEffect(()=>{
-
-  },[])
+  // useEffect(() => {
+  //   console.log(known);
+  // });
 
   function HandleTextChange(event) {
     if (event.target.type === "checkbox") {
@@ -89,10 +49,10 @@ function SolutionCalc() {
     console.log(formulas);
   }
   function AddKnown() {
-    setKnown([...known, new KnownInfo(nRows, "V", "otap", 0, "m^3")]);
+    setKnown([...known, new KnownInfo(nRows, "V", "otap", 0, "m^3", "")]);
     setNRows(nRows + 1);
-    
-    console.log(nRows)
+
+    console.log(nRows);
   }
   function KnownInfo(id, symbol, chem, quantity, unit) {
     this.id = id;
@@ -101,196 +61,66 @@ function SolutionCalc() {
     this.quantity = quantity;
     this.unit = unit;
   }
-  function DelKnown(event) {
-    let targetRow = event.target.parentElement.parentElement; //shit working
-    setKnown(known => known.filter(el => el.id !== parseInt(targetRow.id) ? true : false));
+  function Calculate() {
+    let data = calcSolution(known, formulas.otap, formulas.otv, formulas.plin);
+    setCalculated({ ...data, calculated: true });
   }
-  function SymbolChange(event) {
-    let targetRow = event.target.parentElement.parentElement;
-    let unitSel = targetRow.children[3].children[0];
-    let chemSel = targetRow.children[1].children[0];
-    let selected = symbols.filter(el => el.symbol === event.target.value ? true : false)[0];
-    console.log(event.target.value, targetRow.id, known);
-    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
-    console.log(data);
-    data.symbol = event.target.value;
-    unitSel.innerHTML = "";
-    selected.units.forEach(el => {
-      unitSel.innerHTML += `
-    <option value="${el}">${el}</option>`;
-      data.unit = unitSel.value;
-    });
-    if (!selected.varied) {
-      chemSel.innerHTML = `<option>/</option>`;
-      chemSel.setAttribute('disabled', "true");
-      data.chem = "/";
-    } else {
-      chemSel.innerHTML = `<option value="otap">otap</option>
-    <option value="otv">otv</option>
-    <option value="otp">otp</option>`;
-      data.chem = "otap";
-      chemSel.removeAttribute("disabled");
-    }
-    console.log(known);
-  }
-  function ChemChange(event) {
-    let targetRow = event.target.parentElement.parentElement;
-    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
-    data.chem = event.target.value;
-  }
-  function QuanChange(event) {
-    let targetRow = event.target.parentElement.parentElement;
-    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
-    data.quantity = parseFloat(event.target.value);
-  }
-  function UnitChange(event) {
-    let targetRow = event.target.parentElement.parentElement;
-    let data = known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
-    data.unit = event.target.value;
+  function ShownChemChange(event) {
+    setSelectedChem(event.target.value);
   }
 
-  async function Calculate() {
-    let data = calcSolution(known, formulas.otap, formulas.otv, formulas.plin);
-    // console.log(data);
-    setCalculated({ ...data, calculated:true })
-    // console.log(calculated)
-  }
 
   return (
-    <div className="text-white flex flex-col mx-8">
-      <h1 className="center mb-5 mt-2">Kalkultor za otopine</h1>
-      <p>Unesite kemijske formule za otapalo i otopljenu tvar.</p>
-      <p> Kliknite + za dodavat poznate podatke. Ako se podatak odnosi na otopljenu tvar koristite otv, ako se odnosi na otapalo otap, ako se odnosi na otopinu koristite, otp</p>
-      <p></p>
-      <div id="known">
-        <h3>Poznato:</h3>
-        <div className="flex gap-2 mb-1 mt-1">
-          <label htmlFor="otap">Formula Otapala (otap)</label>
-          <Input onChange={HandleTextChange} id="otap" />
-        </div>
-        <div className="flex gap-2 mb-1 mt-1">
-          <label htmlFor="otv">Formula Otopljene tvari (otv)</label>
-          <Input onChange={HandleTextChange} id="otv" />
-          <Input onChange={HandleTextChange} id="plin" type="checkbox" />
-          <label htmlFor="plin">Plin</label>
-        </div>
-        <button id="add-known" className="px-3 py-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={AddKnown}>+</button>
-        
-        <Table columns={["Podatak", "Tvar", "Količina", "Mjerna Jedinica", "Izbriši"]}>
-          {known.map(el => (
-            <tr id={el.id} key={el.id}>
-              <td>
-                <Select onChange={SymbolChange}>
-                  <Option value="V"/>
-                  <Option value="D"/>
-                  <Option value="n"/>
-                  <Option value="m"/>
-                  <Option value="phi"/>
-                  <Option value="w"/>
-                  <Option value="x"/>
-                  <Option value="y"/>
-                  <Option value="c"/>
-                  <Option value="b"/>
-                </Select>
-              </td>
-              <td>
-                <Select onChange={ChemChange}>
-                  <Option value="otap"/>
-                  <Option value="otv"/>
-                  <Option value="otp"/>
-                </Select>
-              </td>
-              <td>
-                <input className="rounded-sm bg-slate-700 text-white p-1 border border-slate-500" onChange={QuanChange} type="number" />
-              </td>
-              <td>
-                <Select onChange={UnitChange}>
-                  <Option value="m^3"/>
-                  <Option value="cm^3"/>
-                  <Option value="dm^3"/>
-                </Select>
-              </td>
-              <td>
-                <button onClick={DelKnown} className="p-1 rounded-sm bg-red-600 text-white border border-red-500">-</button>
-              </td>
-            </tr>
-          ))}
-        </Table>
-      </div>
-      <hr />
-      <div>
-        <h3>Dobiveno:</h3>
-        { !calculated.calculated ? (
-          <button className="p-1 rounded-sm bg-blue-600 text-white border border-blue-500" id="calcBtn" onClick={Calculate}>Izračunaj</button>
-          ):false}
-        {calculated.calculated ? (<>
-          <h4>Otopljena tvar</h4>
-          <Table columns={["Podatak", "Količina", "Mjerna Jedinica"]}>
-            {Object.keys(calculated.otv).map((key, index) => (calculated.otv[key] != 0 && calculated.otv[key] != Infinity) ? (
-              <tr key={index}>
-                <td>
-                  {key}
-                </td>
-                <td>
-                  {calculated.otv[key].quantity}
-                </td>
-                <td>
-                  {calculated.otv[key].unit}
-                </td>
-              </tr>
-            ):false)}
-          </Table>
+    <div className="flex flex-col h-full mx-5 items-center">
+      <h1 className="text-[#464648] font-bold text-lg">Kalkultor za otopine</h1>
+      <div className="flex flex-col max-sm:w-[90%] min-w-[300px] gap-10">
+        <StepProgressBar currStep={currStep} stepLength={[1, 2, 3]} />
+        <div id={currStep < 3 ? "known" : ""} className="bg-white max-sm:w-[90%]  min-h-[150px] min-w-[300px] flex flex-col m-auto self-center p-10 justify-center shadow-sm shadow-[#222] gap-5 rounded-sm">
+          {currStep == 1 ? <>
+            <p>Unesite kemijske formule za otapalo i otopljenu tvar.</p>
 
-          <h4>Otapalo</h4>
-          <Table columns={["Podatak", "Količina", "Mjerna Jedinica"]}>
-            {Object.keys(calculated.otap).map((key, index) => (calculated.otap[key] != 0 && calculated.otap[key] != Infinity) ? (
-              <tr key={index}>
-                <td>
-                  {key}
-                </td>
-                <td>
-                  {calculated.otap[key].quantity}
-                </td>
-                <td>
-                  {calculated.otap[key].unit}
-                </td>
-              </tr>
-            ) : false)}
-          </Table>
-          <h4>Otopina</h4>
-          <Table columns={["Podatak", "Količina", "Mjerna Jedinica"]}>
-            {Object.keys(calculated.otp).map((key, index) => (calculated.otp[key] != 0 && key != "M" && calculated.otp[key] != Infinity) ? (
-              <tr key={index}>
-                <td>
-                  {key}
-                </td>
-                <td>
-                  {calculated.otp[key].quantity}
-                </td>
-                <td>
-                  {calculated.otp[key].unit}
-                </td>
-              </tr>
-            ) : false)}
-          </Table>
-          <h4>Koncentracije</h4>
-          <Table columns={["Podatak", "Količina", "Mjerna Jedinica"]}>
-            {Object.keys(calculated.ext).map((key, index) => (calculated.ext[key] != 0 && key != "M" && calculated.ext[key] != Infinity) ? (
-              <tr key={index}>
-                <td>
-                  {key}
-                </td>
-                <td>
-                  {calculated.ext[key].quantity}
-                </td>
-                <td>
-                  {calculated.ext[key].unit}
-                </td>
-              </tr>
-            ) : false)}
-          </Table>
-        </>) : false}
+            <div className="flex gap-2 mb-1 mt-1 max-sm:flex-col">
+              <label htmlFor="otap">Formula Otapala (otap)</label>
+              <Input onChange={HandleTextChange} id="otap" />
+            </div>
+            <div className="flex gap-2 mb-1 mt-1 max-sm:flex-col">
+              <label htmlFor="otv">Formula Otopljene tvari (otv)</label>
+              <div className="flex gap-2"><Input onChange={HandleTextChange} id="otv" />
+              <input onChange={HandleTextChange} id="plin" type="checkbox"></input>
+              <label htmlFor="plin">Plin</label></div>
 
+            </div>
+            <button onClick={() => { setCurrStep(currStep + 1); }} id="submit" className="flex p-1 items-center justify-center rounded-sm bg-[#92FF9F] [clip-path:inset(0_0_-10px_0)] [box-shadow:0_1px_2px_0_#222]">
+              <span className="text-[#464648]">Sljedeće</span>
+            </button>
+          </> : currStep == 2 ? <>
+            <p>Kliknite + za dodavati poznate podatke</p>
+            <button id="add-known" className="flex p-1 items-center justify-center rounded-sm bg-[#92FF9F] [clip-path:inset(0_0_-10px_0)] [box-shadow:0_1px_2px_0_#222]" onClick={AddKnown}>+</button>
+            <DataInput usedSymbols={usedSymbols} vars={{ setUsedSymbols: setUsedSymbols, known: known, setKnown: setKnown, nKnown: nRows, setNKnown: setNRows, chemicals: ["otap", "otv", "otp"] }} />
+
+            <button className="flex p-1 items-center justify-center rounded-sm bg-[#92FF9F] [clip-path:inset(0_0_-10px_0)] [box-shadow:0_1px_2px_0_#222]" id="calcBtn" onClick={() => { setCurrStep(currStep + 1); Calculate(); }}>Izračunaj</button>
+          </> : <>
+            <h3>Dobiveno:</h3>
+
+            <Select onChange={ShownChemChange}>
+              <Option value="Otopljena tvar" />
+              <Option value="Otapalo" />
+              <Option value="Otopina" />
+              <Option value="Koncentracije" />
+            </Select>
+
+            {selectedChem == "Otopljena tvar" ? <><h4>Otopljena tvar</h4>
+              <ShowTabledData calculatedData={calculated.otv} /></> : selectedChem == "Otapalo" ? <>
+                <h4>Otapalo</h4>
+                <ShowTabledData calculatedData={calculated.otap} /></> : selectedChem == "Otopina" ? <>
+                  <h4>Otopina</h4>
+                  <ShowTabledData calculatedData={calculated.otp} /></> : <>
+              <h4>Koncentracije</h4>
+              <ShowTabledData calculatedData={calculated.ext} /></>}
+
+          </>
+          }
+        </div>
       </div>
     </div>
   );

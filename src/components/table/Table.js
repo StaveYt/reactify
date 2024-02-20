@@ -1,6 +1,6 @@
 function Table(props){
     return(
-        <table className="bg-slate-700 w-full">
+        <div className="overflow-x-auto"><table className="bg-[#90909394]  relative overflow-auto  sm:min-w-[470px] min-h-[70px] text-[#FFF] w-full">
         <thead className="border-b-2 border-white">
           {props.columns.map(el=>(
             <th>{el}</th>
@@ -10,6 +10,7 @@ function Table(props){
           {props.children}
         </tbody>
       </table>
+      </div>
     )
 }
 
