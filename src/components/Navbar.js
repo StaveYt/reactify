@@ -57,7 +57,7 @@ function Navbar() {
                                 <span>Kalkulatori</span>
                                 <img className={dropDownShow?"transition-250ms flip-y mx-2 w-3 inline":"inline w-3 mx-2 transition-250ms"} src={dropdown}/>
                             </a>
-                            <ul ref={dropdownRef} className="hidden absolute rounded-lg z-10 t-0 mt-4 bg-white p-2" id="dropdownMenu">
+                            <ul ref={dropdownRef} className="border border-light-gray hidden shadow-sm absolute rounded-lg z-10 t-0 mt-4 bg-white p-2" id="dropdownMenu">
                                 <li className="">
                                     <Link className="text-lg" to="/calculators/molarmass">Molarna Masa</Link>
                                 </li>
@@ -87,7 +87,7 @@ function Navbar() {
                 <button ref={hamBtnRef} onClick={MobNavbar} className="sm:hidden relative aspect-square">
                     <img className={mobNavShow?"w-[31px] transition-250ms flip-x":"w-[31px] transition-250ms"} src={hamburger} />
                 </button>
-                <div ref={mobNavRef} className="sm:hidden hidden transition-500ms min-w-[252px] border border-light-gray shadow-sm rounded-sm absolute z-10 right-0 mr-3 top-[95%] flex flex-col right bg-white p-1">
+                <div ref={mobNavRef} className="sm:hidden hidden transition-500ms min-w-[252px] shadow-sm border border-light-gray rounded-sm absolute z-10 right-0 mr-3 top-[95%] flex flex-col right bg-white p-1">
                     <ul className="relative flex flex-col items-center gap-2">
                         <li className="">
                             <a className="text-lg" href="#" role="button" id="dropdownToggle" onClick={MobDropdown}>

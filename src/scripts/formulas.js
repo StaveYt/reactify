@@ -150,7 +150,7 @@ function CalcSameData(data, chem, type, nRows) {
 
     } else {
       if (type != "otp" && chem.w != 0 && data.otp.m != 0) {
-        let calculated = chem.w.quantity * data.otp.m.quantity;
+        let calculated = (chem.w.quantity/100) * data.otp.m.quantity;
         chem.m = new KnownInfo(nRows, "m", type, calculated, "g");
         nRows++;
       } else if (type == "otp" && data.otv.m != 0 && data.otap.m != 0) {
@@ -179,24 +179,24 @@ function CalcSameData(data, chem, type, nRows) {
           let bX = 1 - (chem.x.quantity / 100);
           let bN = otpN * bX;
           if (data.otp.n == 0) {
-            data.otp.n = new KnownInfo(nRows, "n", "otp", otpN, "g");
+            data.otp.n = new KnownInfo(nRows, "n", "otp", otpN, "mol");
             nRows++;
           } else {
             bN = data.otp.n.quantity - chem.n.quantity;
           }
           if (type == "otap") {
             if (data.otv.n == 0) {
-              data.otv.n = new KnownInfo(nRows, "n", "otv", bN, "g");
+              data.otv.n = new KnownInfo(nRows, "n", "otv", bN, "mol");
               nRows++;
             }
-            data.otv.x = new KnownInfo(nRows, "w", "otv", bX * 100, "%");
+            data.otv.x = new KnownInfo(nRows, "x", "otv", bX * 100, "%");
             nRows++;
           } else {
             if (data.otap.n == 0) {
-              data.otap.n = new KnownInfo(nRows, "n", "otap", bN, "g");
+              data.otap.n = new KnownInfo(nRows, "n", "otap", bN, "mol");
               nRows++;
             }
-            data.otap.x = new KnownInfo(nRows, "w", "otap", bX * 100, "%");
+            data.otap.x = new KnownInfo(nRows, "x", "otap", bX * 100, "%");
             nRows++;
           }
         } else {
@@ -252,21 +252,21 @@ function CalcSameData(data, chem, type, nRows) {
           let bPhi = 1 - (chem.phi.quantity / 100);
           let bV = otpV * bPhi;
           if (data.otp.V == 0) {
-            data.otp.V = new KnownInfo(nRows, "n", "otp", otpV, "g");
+            data.otp.V = new KnownInfo(nRows, "V", "otp", otpV, "dm^3");
             nRows++;
           } else {
             bV = data.otp.V.quantity - chem.V.quantity;
           }
           if (type == "otap") {
             if (data.otv.V == 0) {
-              data.otv.V = new KnownInfo(nRows, "n", "otv", bV, "g");
+              data.otv.V = new KnownInfo(nRows, "V", "otv", bV, "dm^3");
               nRows++;
             }
             data.otv.phi = new KnownInfo(nRows, "phi", "otv", bPhi * 100, "%");
             nRows++;
           } else {
             if (data.otap.V == 0) {
-              data.otap.V = new KnownInfo(nRows, "n", "otap", bV, "g");
+              data.otap.V = new KnownInfo(nRows, "V", "otap", bV, "dm^3");
               nRows++;
             }
             data.otap.phi = new KnownInfo(nRows, "phi", "otap", bPhi * 100, "%");
@@ -378,7 +378,7 @@ function CalcAllData(data, nRows) {
     }
   }
   if (data.ext.c == 0 && data.otp.D != 0 && data.otv.M != 0 && data.otv.w != 0) {
-    let c = (data.otp.D.quantity * data.otv.w.quantity * 10) / data.otv.M.quantity;
+    let c = (data.otp.D.quantity * (data.otv.w.quantity/100)) / data.otv.M.quantity;
     data.ext.c = new KnownInfo(nRows, "c", "ext", c, "mol/L");
     nRows++;
     changed = true;

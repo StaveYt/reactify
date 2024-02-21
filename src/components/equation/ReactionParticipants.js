@@ -58,7 +58,7 @@ function ReactionParticipants(props) {
             <Input id='coefficientInput' onClick={handleInputChange} className="w-10" type="number" min={1} />
             <Input id='elementInput' onChange={handleInputChange} className="max-w-[100px]" type="text" />
             <div className="flex flex-col  justify-center">
-                <button onClick={handleDeleteParticipant} className="flex-1 bg-green-600 text-white">-</button>
+                <button onClick={handleDeleteParticipant} className="flex-1 bg-red-400 text-white">-</button>
                 <Select onClick={handleInputChange} id='stateInput' className="flex-1">
                     <Option value={'g'}/>
                     <Option value={'l'}/>

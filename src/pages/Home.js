@@ -26,6 +26,7 @@ function Home() {
       "electron_affinity": 72.769,
    });
    const [clicked, setClicked] = useState(false);
+   const [notFound, setNotFound] = useState(false)
    const periodicTableRef = useRef();
    const elCardRef = useRef();
    const elSearchRef = useRef();
@@ -61,23 +62,33 @@ function Home() {
    }
 
    function HandleSearch() {
+      setNotFound(false)
       let searchValue = elSearchRef.current.value;
       let searchType = !isNaN(parseInt(searchValue))?"number":searchValue.length<3?"symbol":"name"
       console.log(searchType, searchValue, parseInt(searchValue), !isNaN(parseInt(searchValue))?"number":searchValue.length<3?"symbol":"name")
       let searchedElement = elements.filter(el=>searchType=="name"?el.name.split(", ")[0].toLowerCase()==searchValue.toLowerCase() || el.name.split(", ")[1].toLowerCase()==searchValue.toLowerCase()?true:false:el[searchType]==searchValue?true:false)[0]
       console.log(searchedElement)
-      setClickedEl(searchedElement)
-      setClicked(true)
-      let classList = elCardRef.current.className.split(" ");
-      const defaultClasses = "text-black shadow-sm border-black border rounded-md b max-sm:w-[300px] max-w-[450px] grow p-2 gap-2 items-center absolute transform-center flex flex-col";
-      classList = defaultClasses.split(" ");
-      if (searchedElement.type.split(", ")[0] == "metalloid") {
-         classList.push("halfmetal");
-      } else {
-         classList.push(searchedElement.type.split(", ")[0]);
+      if(searchedElement!==undefined){
+         setClickedEl(searchedElement)
+         setClicked(true)
+         let classList = elCardRef.current.className.split(" ");
+         const defaultClasses = "text-black shadow-sm border-black border rounded-md b max-sm:w-[300px] max-w-[450px] grow p-2 gap-2 items-center absolute transform-center flex flex-col";
+         classList = defaultClasses.split(" ");
+         if (searchedElement.type.split(", ")[0] == "metalloid") {
+            classList.push("halfmetal");
+         } else {
+            classList.push(searchedElement.type.split(", ")[0]);
+         }
+         elCardRef.current.className = classList.join(" ");
+      }else{
+         setNotFound(true)
+
       }
-      elCardRef.current.className = classList.join(" ");
    }
+
+   function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
    return (
       <div className=' '>
@@ -105,9 +116,9 @@ function Home() {
                   </div>)
                )}
             </div>
-            <div className='flex flex-col'>
+            <div className={`flex md:hidden flex-col ${clicked ? "blur-sm" : ""}`}>
                <label htmlFor='formulaInput text-xl'>Unesite protonski broj, ime ili simbol elementa</label>
-               <div className="w-full flex md:hidden text-black md:text-xl">
+               <div className="w-full flex text-black md:text-xl">
 
                   <input id="formulaInput" placeholder='1, H ili vodik' ref={elSearchRef} className="shadow-[#222] text-xl bg-white w-[90%] [clip-path:inset(0_0px_-10px_-10px)] p-1 shadow-sm rounded-l-sm" />
 
@@ -125,7 +136,7 @@ function Home() {
                <div className='flex flex-row border-b-2 border-black justify-between grow w-[95%]'>
                   <h2 className='text-5xl self-start'>{clickedEl.symbol}</h2>
                   <div className='flex flex-col justify-center'>
-                     <h2 className='font-bold'>Nemetal ({clickedEl.phase})</h2>
+                     <h2 className='font-bold'>{capitalizeFirstLetter(clickedEl.type.split(", ")[1])} ({clickedEl.phase})</h2>
                      <h2 className='font-bold'>{clickedEl.xpos}. Skupina {clickedEl.category != null ? `(${clickedEl.category.split(", ")[1]})` : ""}</h2>
                   </div>
                   <div className='flex flex-col self-end'>
@@ -142,9 +153,8 @@ function Home() {
                   <h2>Ljuske: <strong>{clickedEl.shells.join(" ")}</strong></h2>
                   <h2>Afinitet: <strong>{clickedEl.electron_affinity}</strong></h2>
                </div>
-
-
             </div>
+            <h2 className={`text-2xl text-red-400 ${notFound?"":"hidden"}`}>Taj element ne postoji</h2>
          </div>
       </div>
    );

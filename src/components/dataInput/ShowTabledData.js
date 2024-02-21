@@ -9,7 +9,7 @@ function ShowTabledData(props) {
             {key}
           </td>
           <td>
-            {props.calculatedData[key].quantity}
+            {Number(props.calculatedData[key].quantity.toFixed(4))}
           </td>
           <td>
             {props.calculatedData[key].unit}
