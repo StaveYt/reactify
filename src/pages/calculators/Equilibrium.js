@@ -25,6 +25,7 @@ function EquilibriumCalc() {
   const [known, setKnown] = useState([]);
   const [nKnown, setNKnown] = useState(0);
   const [equation, setEquation] = useState([]);
+  const [simpleEquation, setSimpleEquation]=useState([])
   const [calculated, setCalculated] = useState(undefined);
   const [currStep, setCurrStep] = useState(1);
 
@@ -56,7 +57,9 @@ function EquilibriumCalc() {
     setCalculated(calculatedConstant);
   }
   function AddKnown() {
-    setKnown([...known, new KnownInfo(nKnown, "c", "HI", 0, "mol/dm3", "final")]);
+    let defaultChem = simpleEquation.filter(el => el !== false ? true : false)[0]
+
+    setKnown([...known, new KnownInfo(nKnown, "c", defaultChem, 0, "mol/dm3", "final")]);
     setNKnown(nKnown + 1);
   }
   function KnownInfo(id, symbol, chem, quantity, unit, ext) {
@@ -68,9 +71,11 @@ function EquilibriumCalc() {
     this.ext = ext;
   }
   function handleShowKnownForm() {
-    setEquation([...reactants, "equilibrium", ...products]);
+    let tempEquation = [...reactants, "equilibrium", ...products]
+    setSimpleEquation(tempEquation.map(el => el !== 'equilibrium' ? el.element : false))
+    setEquation([...tempEquation]);
+
   }
-  useEffect(() => console.log(equation.map(el => el !== 'equilibrium' ? el.element : false)));
   return (
     <div className="flex flex-col h-full mx-5">
       <h2 className="text-[#464648] font-bold text-lg">Kalkulator ravnotežne konstante</h2>
@@ -159,7 +164,7 @@ function EquilibriumCalc() {
             </> : currStep == 2 ? <>
               {equation.length !== 0 ? (<>
                 <button id="add-known" className="flex p-1 items-center justify-center rounded-sm bg-light-green shadow-sm clip-t" onClick={AddKnown}>+</button>
-                  <DataInput usedSymbols={usedSymbols} vars={{ setUsedSymbols: setUsedSymbols, known: known, setKnown: setKnown, nKnown: nKnown, setNKnown: setNKnown, chemicals: equation.filter(el => el !== 'equilibrium' ? true : false).map(el => el.element) }} />
+                  <DataInput usedSymbols={usedSymbols} vars={{ setUsedSymbols: setUsedSymbols, known: known, setKnown: setKnown, nKnown: nKnown, setNKnown: setNKnown, chemicals: simpleEquation.filter(el => el !==false? true : false) }} />
               </>) : (<></>)}
               <button className="flex p-1 items-center justify-center rounded-sm bg-light-green clip-t shadow-sm" onClick={() => { setCurrStep(currStep + 1); Calculate(); }}>Izračunaj</button>
             </> : <>

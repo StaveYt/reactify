@@ -91,10 +91,6 @@ function DataInput(props) {
       return (el);
     }
   }));
-  useEffect(() => {
-    console.log(symbols);
-    if (props.vars.known.length != 0) { console.log(newUsedSymbols[newUsedSymbols[newUsedSymbols.length - 1].indexOf(props.vars.known[0].symbol)]); }
-  });
 
   function SymbolChange(event) {
     let targetRow = event.target.parentElement.parentElement;
@@ -108,12 +104,11 @@ function DataInput(props) {
   function handleInputChange(event) {
     let targetRow = event.target.parentElement.parentElement;
     let data = props.vars.known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
+    console.log(data)
     switch (event.target.id) {
       case 'chem':
-        // console.log(event.target.value)
         data.chem = event.target.value;
         break;
-
       case 'quantity':
         data.quantity = parseFloat(event.target.value);
         break;

@@ -15,13 +15,6 @@ function ReactionParticipants(props) {
         }
         lastChildButton.className = lastChildButton.className.replace(' hidden', '');
     }
-    function Participant(type, id) {
-        this.state = 'g';
-        this.element = '';
-        this.coefficient = 1;
-        this.id = id;
-        this.type = type;
-    }
     function handleInputChange(event) {
         let input = event.target;
         let participantId = event.target.parentNode.parentNode.id !== 'reactantsContainer' && event.target.parentNode.parentNode.id !== 'productsContainer' ? event.target.parentNode.parentNode.id.split(' ') : event.target.parentNode.id.split(' ');
@@ -35,7 +28,7 @@ function ReactionParticipants(props) {
             participant = props.vars.products.filter(el=>el.id == parseInt(participantId[0])?true:false)[0]
             participantTemp = [...props.vars.products]
         }
-        console.log(participant, parseInt(participantId[0]));
+        // console.log(participant, parseInt(participantId[0]));
 
         let participantInd = participantTemp.indexOf(participant)
         switch (input.id) {
@@ -55,7 +48,7 @@ function ReactionParticipants(props) {
     }
     return (
         <div id={props.id} className=" text-black flex flex-row justify-center">
-            <Input id='coefficientInput' onClick={handleInputChange} className="w-10" type="number" min={1} />
+            <Input id='coefficientInput' onChange={handleInputChange} className="w-10" type="number" min={1} />
             <Input id='elementInput' onChange={handleInputChange} className="max-w-[100px]" type="text" />
             <div className="flex flex-col  justify-center">
                 <button onClick={handleDeleteParticipant} className="flex-1 bg-red-400 text-white">-</button>

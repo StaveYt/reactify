@@ -8,7 +8,7 @@ function StepProgressBar(props) {
       </span>*/}
       {
         props.stepLength.map(el => (
-          <Step id={el} currStep={props.currStep}/>
+          <Step id={el} key={props.stepLength.indexOf(el)} currStep={props.currStep}/>
         ))
       }
 
