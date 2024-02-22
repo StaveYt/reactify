@@ -12,14 +12,14 @@ function GetFormula(formula) {
 
   for (let i = 0; i <= formula.length; i++) {
     //ako smo dosli na sljedeci atom u formuli, prijasnji atom sa indeksom se sprema u niz
-    if (isNaN(parseInt(formula[i])) && tempDio != "" && formula[i] != String(formula[i]).toLowerCase()) {
+    if (isNaN(parseInt(formula[i])) && tempDio !== "" && formula[i] !== String(formula[i]).toLowerCase()) {
       dijeloviFormule.push(tempDio);
       tempDio = "";
       tempDio += formula[i];
     }
     else {
       //ako je trenutni dio formule broj dodaje se / kako bi se odvojio indeks od atoma
-      if (isNaN(tempDio[tempDio.length - 1]) && isNaN(parseInt(formula[i])) != true) {
+      if (isNaN(tempDio[tempDio.length - 1]) && isNaN(parseInt(formula[i])) !== true) {
         tempDio += "/";
       }
       tempDio += formula[i];
@@ -37,7 +37,7 @@ function CalcM(formula) {
     tempDio = dijeloviFormule[i].split("/"); //odvaja se atom od indeksa
 
     for (let j = 0; j < elements.length; j++) {
-      if (tempDio[0] == elements[j].symbol) {
+      if (tempDio[0] === elements[j].symbol) {
         //ako imamo indeks (imamo ga ako nije 1) onda mnozimo sa indeksom
         if (tempDio.length > 1) {
           M += elements[j].Ar * parseInt(tempDio[1]);

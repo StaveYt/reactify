@@ -8,9 +8,9 @@ function ReactionParticipants(props) {
     let parentChildren = event.target.parentNode.parentNode.parentNode.children;
     let lastChild = parentChildren[parentChildren.length - 2] === undefined ? parentChildren[parentChildren.length - 1] : parentChildren[parentChildren.length - 2];
     let lastChildButton = lastChild.children[lastChild.children.length - 1];
-    if (props.type == 'reactant') {
+    if (props.type === 'reactant') {
       props.vars.setReactants((reactants) => reactants.filter(el => el.id !== parseInt(participant.id.split(' ')[0]) ? true : false));
-    } else if (props.type == 'product') {
+    } else if (props.type === 'product') {
       props.vars.setProducts((products) => products.filter(el => el.id !== parseInt(participant.id.split(' ')[0]) ? true : false));
     }
     lastChildButton.className = lastChildButton.className.replace(' hidden', '');
@@ -21,11 +21,11 @@ function ReactionParticipants(props) {
     let participant;
     let participantTemp;
     if (participantId[1] === 'reactant') {
-      participant = props.vars.reactants.filter(el => el.id == parseInt(participantId[0]) ? true : false)[0];
+      participant = props.vars.reactants.filter(el => el.id === parseInt(participantId[0]) ? true : false)[0];
       participantTemp = [...props.vars.reactants];
 
     } else if (participantId[1] === 'product') {
-      participant = props.vars.products.filter(el => el.id == parseInt(participantId[0]) ? true : false)[0];
+      participant = props.vars.products.filter(el => el.id === parseInt(participantId[0]) ? true : false)[0];
       participantTemp = [...props.vars.products];
     }
     // console.log(participant, parseInt(participantId[0]));

@@ -29,13 +29,13 @@ function EquilibriumCalc() {
       <h2>Upiši kemijsku jednadžbu</h2>
       <div className="h-20 grid grid-cols-7" id="equationContainer">
         <div className="border overflow-auto border-rose-600 flex flex-row" id='reactantsContainer' style={{ gridColumnStart: "1", gridColumnEnd: "4" }}>
-          {known.length != 0 ? known.map((el) => (
+          {known.length !== 0 ? known.map((el) => (
             <ReactionParticipants vars={{ nRows: nRows, setNRows: setNRows, known: known, setKnown: setKnown }} id={`${el.id} ${el.type}`} />
           )) : (<button className="flex-1 p-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={AddKnown}>+</button>)}
         </div>
         <div className="border-green-600 border"></div>
         <div className="border-rose-600 overflow-auto flex flex-row border" id='productsContainer' style={{ gridColumnStart: "5", gridColumnEnd: "8" }}>
-          {products.length != 0 ? products.map((el) => (
+          {products.length !== 0 ? products.map((el) => (
             <ReactionParticipants vars={{ nRows: nRows, setNRows: setNRows, known: known, setKnown: setKnown }} id={`${el.id} ${el.type}`} />
           )) : (<button className="flex-1 p-1 rounded-sm bg-green-600 text-white border border-green-500" onClick={AddKnown} >+</button>)}
         </div>

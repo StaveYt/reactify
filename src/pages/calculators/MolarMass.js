@@ -23,7 +23,7 @@ function MolarMassCalc() {
         <StepProgressBar currStep={currStep} stepLength={[1, 2]} />
         <div className="bg-white min-h-[150px] min-w-[300px] flex flex-col m-auto self-center p-10 justify-center shadow-sm shadow-[#222] gap-5 rounded-sm">
           {
-            currStep == 1 ? (<><div>
+            currStep === 1 ? (<><div>
               <p className="">Unesite kemijsku formulu tvari:</p>
               <div className="flex">
                 <input id="formulaInput" onChange={HandleTextChange} className="shadow-[#222] bg-white [clip-path:inset(0_0px_-10px_-10px)] p-1 shadow-sm rounded-l-sm" />

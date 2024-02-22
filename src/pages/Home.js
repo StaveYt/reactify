@@ -55,7 +55,7 @@ function Home() {
       classList.push("hidden");
     } else {
       classList = defaultClasses.split(" ");
-      if (el.type.split(", ")[0] == "metalloid") {
+      if (el.type.split(", ")[0] === "metalloid") {
         classList.push("halfmetal");
       } else {
         classList.push(el.type.split(", ")[0]);
@@ -70,7 +70,7 @@ function Home() {
     setNotFound(false);
     let searchValue = elSearchRef.current.value;
     let searchType = !isNaN(parseInt(searchValue)) ? "number" : searchValue.length < 3 ? "symbol" : "name";
-    let searchedElement = elements.filter(el => searchType == "name" ? el.name.split(", ")[0].toLowerCase() == searchValue.toLowerCase() || el.name.split(", ")[1].toLowerCase() == searchValue.toLowerCase() ? true : false : el[searchType] == searchValue ? true : false)[0];
+    let searchedElement = elements.filter(el => searchType === "name" ? el.name.split(", ")[0].toLowerCase() === searchValue.toLowerCase() || el.name.split(", ")[1].toLowerCase() === searchValue.toLowerCase() ? true : false : el[searchType] === searchValue ? true : false)[0];
 
     //prikazuje povecani element
     if (searchedElement !== undefined) {
@@ -81,7 +81,7 @@ function Home() {
       let classList = elCardRef.current.className.split(" ");
       const defaultClasses = "text-black shadow-sm border-black border rounded-md b max-sm:w-[300px] max-w-[450px] grow p-2 gap-2 items-center absolute transform-center flex flex-col";
       classList = defaultClasses.split(" ");
-      if (searchedElement.type.split(", ")[0] == "metalloid") {
+      if (searchedElement.type.split(", ")[0] === "metalloid") {
         classList.push("halfmetal");
       } else {
         classList.push(searchedElement.type.split(", ")[0]);
@@ -149,7 +149,7 @@ function Home() {
             <h2 className='text-5xl self-start'>{clickedEl.symbol}</h2>
             <div className='flex flex-col justify-center'>
               <h2 className='font-bold'>{CapitalizeFirstLetter(clickedEl.type.split(", ")[1])} ({clickedEl.phase})</h2>
-              <h2 className='font-bold'>{clickedEl.xpos}. Skupina {clickedEl.category != null ? `(${clickedEl.category.split(", ")[1]})` : ""}</h2>
+              <h2 className='font-bold'>{clickedEl.xpos}. Skupina {clickedEl.category !== null ? `(${clickedEl.category.split(", ")[1]})` : ""}</h2>
             </div>
             <div className='flex flex-col self-end'>
               <h2>Broj: <strong>{clickedEl.number}</strong></h2>
