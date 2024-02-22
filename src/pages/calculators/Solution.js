@@ -86,8 +86,8 @@ function SolutionCalc() {
             <div className="flex gap-2 mb-1 mt-1 max-sm:flex-col">
               <label htmlFor="otv">Formula Otopljene tvari (otv)</label>
               <div className="flex gap-2"><Input onChange={HandleTextChange} id="otv" />
-              <input onChange={HandleTextChange} id="plin" type="checkbox"></input>
-              <label htmlFor="plin">Plin</label></div>
+                <input onChange={HandleTextChange} id="plin" type="checkbox"></input>
+                <label htmlFor="plin">Plin</label></div>
 
             </div>
             <button onClick={() => { setCurrStep(currStep + 1); }} id="submit" className="flex p-1 items-center justify-center rounded-sm bg-[#92FF9F] [clip-path:inset(0_0_-10px_0)] [box-shadow:0_1px_2px_0_#222]">

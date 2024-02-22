@@ -1,5 +1,5 @@
 import { convertUnit } from "./convertUnit";
-import { calcM } from "./formulas";
+import CalcM from "./molarmassCalc";
 
 const R = 8.314;
 
@@ -216,16 +216,16 @@ function ElementInfo(element, ind, id, type, M, coefficient, state) {
     this.type = type;
     this.coefficient = coefficient;
     this.state = state;
-    this.c0 = 0;//done
-    this.c1 = 0;//done
-    this.n0 = 0;//done
-    this.n1 = 0; //done
-    this.V = 0; //done
-    this.m0 = 0;//done
-    this.m1 = 0;//done
-    this.M = M; //done
-    this.x = 0;//done
-    this.p = 0;//done
+    this.c0 = 0;
+    this.c1 = 0;
+    this.n0 = 0;
+    this.n1 = 0; 
+    this.V = 0; 
+    this.m0 = 0;
+    this.m1 = 0;
+    this.M = M; 
+    this.x = 0;
+    this.p = 0;
 }
 
 function KnownInfo(id, symbol, chem, quantity, unit) {
@@ -237,10 +237,7 @@ function KnownInfo(id, symbol, chem, quantity, unit) {
 }
 
 function CalcConstant(reactants, products, extra, nRows) {
-    let newNRows = nRows;
     console.log(reactants, products);
-    let allElements = [...reactants, ...products];
-
     /*reactants =[
         {state: 'g', element: 'I2', coefficient: '1', id: 0, type: 'reactant', known:[{id:0,symbol:c,chem:'H2',quantity:0.222,ext:'final',unit:'mol/dm3}]}
         {state: 'g', element: 'H2', coefficient: '1', id: 1, type: 'reactant', known:[{id:0,symbol:c,chem:'I2',quantity:0.222,ext:'final',unit:'mol/dm3}]}
@@ -249,6 +246,8 @@ function CalcConstant(reactants, products, extra, nRows) {
         {state: 'g', element: 'HI', coefficient: '2', id: 0, type: 'product', known:[{id:0,symbol:c,chem:'HI',quantity:1.56,ext:'final',unit:'mol/dm3}]}
     ]*/
 
+    let newNRows = nRows;
+    let allElements = [...reactants, ...products];
     let elementsFinal = [];
     let reactantsC = [];
     let productsC = [];
@@ -265,9 +264,9 @@ function CalcConstant(reactants, products, extra, nRows) {
         Kc: 0,
         Kp: 0
     };
-    let tempInd = -1;
+    
     allElements.forEach((elementEl, ind) => {
-        elementsFinal.push(new ElementInfo(elementEl.element, ind, elementEl.id, elementEl.type, calcM(elementEl.element), elementEl.coefficient, elementEl.state));
+        elementsFinal.push(new ElementInfo(elementEl.element, ind, elementEl.id, elementEl.type, CalcM(elementEl.element), elementEl.coefficient, elementEl.state));
         elementEl.known.forEach((el, ind) => {
             console.log(el);
             let element = elementsFinal[elementsFinal.length - 1];
@@ -350,7 +349,7 @@ function CalcConstant(reactants, products, extra, nRows) {
 
         if (el.type == 'reactant') {
             // console.log(el, reactants[el.ind].state);
-            if (el.c1 != 0 && (reactants[el.ind].state == 'g' || reactants[el.ind].state == 'aq')) { console.log("test"); reactantsC.push(el); }
+            if (el.c1 != 0 && (reactants[el.ind].state == 'g' || reactants[el.ind].state == 'aq')) { reactantsC.push(el); }
             if (el.p != 0 && reactants[el.ind].state == 'g') { reactantsP.push(el); }
         }
         else if (el.type == 'product') {

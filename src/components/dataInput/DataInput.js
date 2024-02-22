@@ -95,16 +95,16 @@ function DataInput(props) {
   function SymbolChange(event) {
     let targetRow = event.target.parentElement.parentElement;
     let data = props.vars.known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
-    let defaultUnit = symbols.filter(el=>el.symbol==event.target.value?true:false)[0].units[0]
+    let defaultUnit = symbols.filter(el => el.symbol == event.target.value ? true : false)[0].units[0];
     data.symbol = event.target.value;
-    data.unit = defaultUnit
+    data.unit = defaultUnit;
     if (newUsedSymbols[newUsedSymbols[newUsedSymbols.length - 1].indexOf(data.symbol)].envOnly === true) { data.chem = 'mixture'; }
     setBlank(!blank);
   }
   function handleInputChange(event) {
     let targetRow = event.target.parentElement.parentElement;
     let data = props.vars.known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
-    console.log(data)
+    console.log(data);
     switch (event.target.id) {
       case 'chem':
         data.chem = event.target.value;
@@ -114,7 +114,7 @@ function DataInput(props) {
         break;
       case 'unit':
         data.unit = event.target.value;
-        console.log("unitChange")
+        console.log("unitChange");
         break;
       case 'ext':
         data.ext = event.target.value;
