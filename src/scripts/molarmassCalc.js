@@ -1,9 +1,7 @@
-import axios from "axios";
 
+import db from "../json/data.json"
 //dohvacenje elemenata iz databaze
-let elements;
-await axios.get("http://localhost:3001/table").then(res => elements = res.data.elements);
-fetch("../json/table.json").then(res => res.json()).then(data => elements = data.elements);
+let elements = db.table.elements;
 
 //razdvajanje formule u djelove
 function GetFormula(formula) {

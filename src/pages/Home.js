@@ -1,10 +1,10 @@
 //imports
-import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import '../main.css';
 import '../Home.css';
 import closeI from '../assets/imgs/close.svg';
 import searchI from '../assets/imgs/search.svg';
+import db from '../json/data.json'
 
 function Home() {
   const [elements, setElements] = useState([]);
@@ -34,10 +34,8 @@ function Home() {
 
   useEffect(() => {
     //dohvacenje elemenata iz databaze za koristenje u periodnom
-    axios.get("http://localhost:3001/table").then(res => {
-      setElements(res.data.elements);
-      setElementTypes({ ...elementTypes, nonmetals: res.data.nonmetals, halfmetals: res.data.halfmetals });
-    });
+    setElements(db.table.elements);
+    setElementTypes({ ...elementTypes, nonmetals: db.table.nonmetals, halfmetals: db.table.halfmetals });
   }, []);
 
   //povecani prikaz
