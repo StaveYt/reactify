@@ -49,6 +49,7 @@ function Navbar() {
   return (
     <>
       <nav className="navbar relative w-full mb-1 flex text-2xl flex-row justify-between font-red-hat">
+        {/* desktop prikaz */}
         <div className="max-sm:hidden">
           <ul className="flex flex-row items-center gap-4">
             <li><Link className=" font-bold" to="/">Home</Link></li>
@@ -84,6 +85,8 @@ function Navbar() {
           </ul>
 
         </div>
+
+        {/* mobilni prikaz */}
         <button ref={hamBtnRef} onClick={MobNavbar} className="sm:hidden relative aspect-square">
           <img className={mobNavShow ? "w-[31px] transition-250ms flip-x" : "w-[31px] transition-250ms"} src={hamburger} />
         </button>

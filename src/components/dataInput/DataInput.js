@@ -137,9 +137,11 @@ function DataInput(props) {
           </td>
           <td>
             <Select className='w-[95%] h-[95%]' disabled={newUsedSymbols[newUsedSymbols[newUsedSymbols.length - 1].indexOf(data.symbol)].envOnly ? true : false} id='chem' onChange={handleInputChange}>
-              {props.vars.chemicals.map((chem) => (
-                <Option selected={chem === data.chem} value={chem} />
-              ))}
+              {props.vars.chemicals.map((chem) => {
+                if (!(["x", "phi", "w"].includes(data.symbol) && chem === "otp")) {
+                  return <Option selected={chem === data.chem} value={chem} />;
+                }
+              })}
               {newUsedSymbols[newUsedSymbols[newUsedSymbols.length - 1].indexOf(data.symbol)].env === true && <Option selected={'mixture' === data.chem} value={'mixture'} />}
             </Select>
           </td>

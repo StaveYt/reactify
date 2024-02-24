@@ -40,6 +40,7 @@ function Home() {
     });
   }, []);
 
+  //povecani prikaz
   function ShowElCard(el) {
     //prije povecanog prikaza izabrani element se sprema u varijablu
     if (!clicked) { setClickedEl(el); }
@@ -66,11 +67,22 @@ function Home() {
     elCardRef.current.className = classList.join(" ");
   }
 
+  //pretrazivanje
   function HandleSearch() {
     setNotFound(false);
     let searchValue = elSearchRef.current.value;
     let searchType = !isNaN(parseInt(searchValue)) ? "number" : searchValue.length < 3 ? "symbol" : "name";
-    let searchedElement = elements.filter(el => searchType === "name" ? el.name.split(", ")[0].toLowerCase() === searchValue.toLowerCase() || el.name.split(", ")[1].toLowerCase() === searchValue.toLowerCase() ? true : false : el[searchType] === searchValue ? true : false)[0];
+    let searchedElement = elements.filter(el => {
+      //ako korisnik pretrazuje preko imena
+      if(searchType ==="name"){
+        if(el.name.split(", ")[0].toLowerCase() === searchValue.toLowerCase()){ return true } //eng ime
+        else if (el.name.split(", ")[1].toLowerCase() === searchValue.toLowerCase()) {return true} //hrv ime
+        else {return false}
+      } // ako korisnik pretrazuje preko broja ili simbola
+      else if(String(el[searchType]).toLowerCase() === searchValue.toLowerCase()) {
+        return true
+      } else {return false}
+    })[0];
 
     //prikazuje povecani element
     if (searchedElement !== undefined) {
@@ -93,8 +105,9 @@ function Home() {
     }
   }
 
-  function CapitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+  //povecano prvo slovo za bolje formatiranje u povecanom prikazu
+  function CapitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   return (
@@ -104,8 +117,8 @@ function Home() {
         <h1 className="main-text text-lg max-md:hidden">Pogledajte naše <strong>Kalkulatore</strong> za sve Vaše kemijske potrebe ili pogledajte naš interaktivni periodni sustav!</h1>
         <h1 className="main-text text-lg md:hidden">Pogledajte naše <strong>Kalkulatore</strong> za sve Vaše kemijske potrebe ili pretražite element periodnog sustava!</h1>
       </div>
-      <div className="relative flex flex-col mx-4 items-center mt-4">
 
+      <div className="relative flex flex-col mx-4 items-center mt-4">
         {/* periodni sustav */}
         <div ref={periodicTableRef}
           className={`${clicked ? "blur-sm" : ""} max-md:hidden rounded-xl p-3 text-white grid grid-rows-[repeat(9,45px)] grid-cols-[repeat(18,45px)]`}
@@ -126,7 +139,7 @@ function Home() {
           )}
         </div>
 
-        {/* pretrazivacka traka */}
+        {/* pretrazivacka traka (samo na mobitelu) */}
         <div className={`flex md:hidden flex-col ${clicked ? "blur-sm" : ""}`}>
           <label htmlFor='formulaInput text-xl'>Unesite protonski broj, ime ili simbol elementa</label>
           <div className="w-full flex text-black md:text-xl">
@@ -141,10 +154,12 @@ function Home() {
 
         {/* povecani prikaz */}
         <div ref={elCardRef} className={`text-black shadow-sm border-black border rounded-md b max-sm:w-[300px] hidden max-w-[450px] grow p-2 gap-2 items-center absolute md:transform-center bottom-[-5%] flex flex-col`}>
+          {/* ime elementa i botun za maknit prikaz */}
           <div className='w-[95%] flex items-center justify-start  relative grow'>
             <h1 className='text-2xl font-bold ml-auto'>{clickedEl.name.split(", ")[1]}</h1>
             <a onClick={() => ShowElCard(1)} className='justify-self-end ml-auto' role='button'><img className='w-7' src={closeI} /></a>
           </div>
+          {/* simbol i informacije o elementu */}
           <div className='flex flex-row border-b-2 border-black justify-between grow w-[95%]'>
             <h2 className='text-5xl self-start'>{clickedEl.symbol}</h2>
             <div className='flex flex-col justify-center'>
@@ -157,10 +172,11 @@ function Home() {
 
             </div>
           </div>
+          {/* opis elementa */}
           <div className='flex w-[95%] max-h-[200px] gap-3'>
-
             <span className='overflow-auto'>{clickedEl.hrv_summary}</span>
           </div>
+          {/* dodatne informacije */}
           <div className='w-[95%] flex gap-1 flex-col'>
             <h2>Ljuske: <strong>{clickedEl.shells.join(" ")}</strong></h2>
             <h2>Afinitet: <strong>{clickedEl.electron_affinity}</strong></h2>

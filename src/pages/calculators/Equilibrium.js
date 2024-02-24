@@ -9,8 +9,6 @@ import '../../main.css';
 
 function EquilibriumCalc() {
   const [reactants, setReactants] = useState([]);
-  const [nReactants, setNReactants] = useState(0);
-  const [nProducts, setNProducts] = useState(0);
   const [products, setProducts] = useState([]);
   const [usedSymbols, setUsedSymbols] = useState([
     { symbol: 'c', envOnly: false, env: false, ext: ['final', 'start'] },
@@ -22,10 +20,12 @@ function EquilibriumCalc() {
     { symbol: 'Kc', envOnly: true, env: true, ext: [] },
     { symbol: 'Kp', envOnly: true, env: true, ext: [] },
     ['c', 'V', 'n', 'T', 'p', 'm', 'Kc', 'Kp']
-  ]);
+  ]); //podaci koji korisnik moze unijeti
   const [known, setKnown] = useState([]);
-  const [nKnown, setNKnown] = useState(0);
   const [simpleEquation, setSimpleEquation] = useState([]);
+  const [nKnown, setNKnown] = useState(0);
+  const [nReactants, setNReactants] = useState(0);
+  const [nProducts, setNProducts] = useState(0);
   const [calculated, setCalculated] = useState(undefined);
   const [currStep, setCurrStep] = useState(1);
 
@@ -60,7 +60,7 @@ function EquilibriumCalc() {
       let productsInput = [...products];
       let knownTemp = [];
 
-      //svakom elementu dodaje njihove podatke za lakse sortiranje
+      //svakom elementu dodaje njihove podatke za laksi pristup
       reactants.forEach((el, ind) => { 
         knownTemp = known.filter(knownEl => knownEl.chem === el.element ? true : false); 
         el.known = [...knownTemp]; reactantsInput[ind] = el; 
@@ -70,7 +70,7 @@ function EquilibriumCalc() {
         el.known = [...knownTemp]; productsInput[ind] = el; 
       });
 
-      //odvaja one stvari koje se odnose na cijelu reakciju kao toplina
+      //odvaja podatke koje se odnose na cijelu reakciju
       let extra = known.filter((el) => el.chem === 'mixture');
       let calculatedConstant = calcConstant(reactantsInput, productsInput, extra, nKnown);
 
@@ -206,10 +206,10 @@ function EquilibriumCalc() {
               <button className="flex p-1 items-center justify-center rounded-sm bg-light-green clip-t shadow-sm" onClick={Calculate}>Izračunaj</button>
             </> : <>
               {/* rezultat */}
-              <h2>Rezultat:</h2>
+              <h2 className="text-xl">Rezultat:</h2>
               {calculated !== undefined ? <div>
-                <h1>Kc: {calculated.Kc.quantity}</h1>
-                <h1>Kp: {calculated.Kp.quantity}</h1>
+                <h1 className="text-lg">{calculated.Kc!==0?`Kc: ${Number(calculated.Kc.quantity).toFixed(4)} ${calculated.Kc.unit}`:"Nismo uspijeli izračunati Kc"}</h1>
+                <h1 className="text-lg">{calculated.Kp!==0?`Kp: ${Number(calculated.Kp.quantity).toFixed(4)} ${calculated.Kp.unit}`:"Nismo uspijeli izračunati Kp"}</h1>
               </div> : <></>}
             </>}
           </div>

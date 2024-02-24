@@ -22,6 +22,7 @@ function KnownInfo(id, symbol, chem, quantity, unit) {
   this.unit = unit;
 }
 
+//racunanje za odredenu tvar
 function CalcChemData(data, chem, type, nRows) {
   // console.log(chem);
 
@@ -424,57 +425,17 @@ function CalcSolution(known, formulaOtapStr, formulaOtvStr, plinCheck, nRows) {
   } else {
     let M = prompt("Unesite molarnu masu otopljene tvari, ako je nemate upišite ne");
     if (M !== "ne") { data.otv.M = new KnownInfo(nRows, "M", "otv", M, "g/mol"); nRows++; }
-  }
+  } 
 
   //sortiranje unesenih podataka
   known.forEach(el => {
-    switch (el.symbol) {
-      case "V":
-        if (el.chem === "otap") {
-          if (plinCheck.checked) {
-            data.otp.V = el;
-          }
-          data.otap.V = el;
-        }
-        else if (el.chem === "otv") { data.otv.V = el; }
-        else { data.otp.V = el; }
-        break;
-      case "m":
-        if (el.chem === "otap") { data.otap.m = el; }
-        else if (el.chem === "otv") { data.otv.m = el; }
-        else { data.otp.m = el; }
-        break;
-      case "n":
-        if (el.chem === "otap") { data.otap.n = el; }
-        else if (el.chem === "otv") { data.otv.n = el; }
-        else { data.otp.n = el; }
-        break;
-      case "D":
-        if (el.chem === "otap") { data.otap.D = el; }
-        else if (el.chem === "otv") { data.otv.D = el; }
-        else { data.otp.D = el; }
-        break;
-      case "w":
-        if (el.chem === "otap") { data.otap.w = el; }
-        else { data.otv.w = el; }
-        break;
-      case "x":
-        if (el.chem === "otap") { data.otap.x = el; }
-        else { data.otv.x = el; }
-        break;
-      case "phi":
-        if (el.chem === "otap") { data.otap.phi = el; }
-        else { data.otv.phi = el; }
-        break;
-      case "c":
-        data.ext.c = el;
-        break;
-      case "y":
-        data.ext.y = el;
-        break;
-      case "b":
-        data.ext.b = el;
-        break;
+    if(el.symbol === "c" || el.symbol === "y" || el.symbol === "b"){
+      data.ext[el.symbol] = el
+    } else if (el.symbol === "V" && plinCheck && el.chem==="otap"){
+      data.otp.V = el
+      data.otap.V = el;
+    } else {
+      data[el.chem][el.symbol] = el
     }
   });
 

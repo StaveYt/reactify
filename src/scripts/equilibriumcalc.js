@@ -3,10 +3,38 @@ import CalcM from "./molarmassCalc";
 
 const R = 8.314;
 
-function CalcSameData(env, chem, type, nRows) {
+//konstruktorske funckije
+function ElementInfo(element, ind, id, type, M, coefficient, state) {
+  this.element = element;
+  this.ind = ind;
+  this.id = id;
+  this.type = type;
+  this.coefficient = coefficient;
+  this.state = state;
+  this.c0 = 0;
+  this.c1 = 0;
+  this.n0 = 0;
+  this.n1 = 0;
+  this.V = 0;
+  this.m0 = 0;
+  this.m1 = 0;
+  this.M = M;
+  this.x = 0;
+  this.p = 0;
+}
+function KnownInfo(id, symbol, chem, quantity, unit) {
+  this.id = id;
+  this.symbol = symbol;
+  this.chem = chem;
+  this.quantity = quantity;
+  this.unit = unit;
+}
+
+//racunanje za odredenu tvar
+function CalcChemData(env, chem, type, nRows) {
   // console.log(chem);
   for (let i = 0; i < 3; i++) {
-    //START Mass
+    //START masa
     if (chem.m0 !== 0) {
       if (chem.M !== 0 && chem.n === 0) {
         let calculated = chem.m0.quantity / chem.M.quantity;
@@ -16,7 +44,7 @@ function CalcSameData(env, chem, type, nRows) {
 
     } else {
     }
-    //FINAL Mass
+    //FINAL masa
     if (chem.m1 !== 0) {
       if (chem.M !== 0 && chem.n === 0) {
         let calculated = chem.m0.quantity / chem.M.quantity;
@@ -24,8 +52,8 @@ function CalcSameData(env, chem, type, nRows) {
         nRows++;
       }
     }
-    //START Amount of substance
-    if (chem.n0 !== 0) { //has n0
+    //START mnozina
+    if (chem.n0 !== 0) { //imamo n0
       if (chem.m0 === 0 && chem.M !== 0) {
         let calculated = chem.n0.quantity * chem.M.quantity;
         chem.m0 = new KnownInfo(nRows, "m", chem.element, calculated, "g");
@@ -52,15 +80,15 @@ function CalcSameData(env, chem, type, nRows) {
         nRows++;
       }
 
-    } else { //no n0
+    } else { //nemamo n0
       if (chem.c0 !== 0 && env.V !== 0) {
         let calculated = chem.c.quantity * env.V.quantity;
         chem.n0 = new KnownInfo(nRows, "n", chem.element, calculated, "mol");
         nRows++;
       }
     }
-    //FINAL Amount of substance
-    if (chem.n1 !== 0) {
+    //FINAL mnozina
+    if (chem.n1 !== 0) { //imamo n1
       if (chem.m1 === 0 && chem.M !== 0) {
         let calculated = chem.n1.quantity * chem.M.quantity;
         chem.m1 = new KnownInfo(nRows, "m", type, calculated, "g");
@@ -100,7 +128,7 @@ function CalcSameData(env, chem, type, nRows) {
         }
       }
 
-    } else { //no n1
+    } else { //nemamo n1
       if (type !== "product" && chem.x !== 0 && env.X !== 0) {
         let n0;
         let x1 = 1 - (chem.x.quantity / 100);
@@ -123,15 +151,15 @@ function CalcSameData(env, chem, type, nRows) {
       }
     }
 
-    if (chem.V !== 0) {
+    if (chem.V !== 0) { //imamo volumen
       if (chem.n0 === 0 && env.T !== 0 && env.p !== 0) {
         let calculated = (env.p.quantity * chem.V.quantity) / (R * env.T.quantity);
         chem.n0 = new KnownInfo(nRows, "n", chem.element, calculated, "mol");
         nRows++;
       }
 
-    } else {
-    }
+    } 
+
     if (chem.c0 !== 0 && chem.c1 !== 0 && env.X === 0) {
       let calculated;
       if (chem.type === 'product') {
@@ -153,37 +181,50 @@ function CalcSameData(env, chem, type, nRows) {
       chem.c0 = new KnownInfo(nRows, "c", chem.element, calculated, "mol/dm3");
       nRows++;
     }
-    console.log(chem, chem.c1, chem.c0, env.X);
+
     if (chem.c1 === 0 && chem.c0 !== 0 && env.X !== 0) {
-      console.log("whae");
       let calculated;
       if (chem.type === 'product') {
         calculated = chem.c0.quantity + env.X.quantity;
       } else if (chem.type === 'reactant') {
         calculated = chem.c0.quantity - env.X.quantity;
       }
+
       chem.c1 = new KnownInfo(nRows, "c", chem.element, calculated, "mol/dm3");
       nRows++;
     }
-
   }
-
 }
 
-function CalcUnit() { }
+//racunanje mjerne jedinice konstante
+function CalcUnit(reactants, products, type) {
+  let coefDiff;
+  let unit;
 
+  coefDiff = products.reduce((acc, el) => (acc += el.coefficient)) - reactants.reduce((acc, el) => (acc += el.coefficient));
+
+  if (type === "Kp") {
+    unit = coefDiff !== 0 ? `kPa${coefDiff > 1 ? '^' + String(coefDiff) : ""}` : "";
+  } else {
+    unit = coefDiff !== 0 ? `mol${coefDiff > 1 ? '^' + String(coefDiff) : ""}/L${coefDiff > 1 ? '^' + String(coefDiff) : ""}` : "";
+  }
+
+  return unit;
+}
+
+//racunanje koncentracijske konsatnte
 function CalcKc(reactants, products, data, allC, nRows) {
-  if (data.Kp !== 0 && data.T !== 0 && !allC) {
+  if (data.Kp !== 0 && data.T !== 0 && !allC) { //dobivanje preko tlacne konstante
     let calculated = data.Kp.quantity / (data.T.quantity * R) ** data.dCoef;
     data.Kc = new KnownInfo(nRows, "Kc", 'mixture', calculated, 'mol/dm3');
     nRows++;
-  } else if (allC) {
+  } else if (allC) { //dobivanje preko formule
     let calculated = products.reduce((acc, el) => (acc *= el.c1.quantity ** el.coefficient), 1) / reactants.reduce((acc, el) => (acc *= el.c1.quantity ** el.coefficient), 1);
     console.log(products, reactants);
     products.reduce((acc, el) => { console.log(el); return (acc *= el.c1.quantity ** el.coefficient); }, 1);
-    data.Kc = new KnownInfo(nRows, "Kc", 'mixture', calculated, 'mol/dm3');
+    data.Kc = new KnownInfo(nRows, "Kc", 'mixture', calculated, CalcUnit(reactants, products, "Kc"));
     nRows++;
-    if (data.Kp === 0 && data.T !== 0) {
+    if (data.Kp === 0 && data.T !== 0) { //dobivanje tlacne konstante
       let kP = calculated * (data.T.quantity * R) ** data.dCoef;
       data.Kp = new KnownInfo(nRows, "Kp", 'mixture', kP, 'kPa');
       nRows++;
@@ -191,17 +232,18 @@ function CalcKc(reactants, products, data, allC, nRows) {
   }
 }
 
+//racunanje tlacne konstante
 function CalcKp(reactants, products, data, allP, nRows) {
-  if (data.Kc !== 0 && data.T !== 0 && !allP) {
+  if (data.Kc !== 0 && data.T !== 0 && !allP) { //dobivanje preko koncentracijske konstante
     let calculated = data.Kc.quantity * (data.T.quantity * R) ** data.dCoef;
     console.log(calculated, 'Kp', data.Kc.quantity, data.T.quantity, R, data.dCoef);
-    data.Kp = new KnownInfo(nRows, "Kp", 'mixture', calculated, 'Pa');
+    data.Kp = new KnownInfo(nRows, "Kp", 'mixture', calculated, 'kPa');
     nRows++;
-  } else if (allP) {
+  } else if (allP) { //dobivnje preko formule
     let calculated = products.reduce((acc, el) => (acc *= el.p.quantity ** el.coefficient), 1) / reactants.reduce((acc, el) => (acc *= el.p.quantity ** el.coefficient), 1);
-    data.Kp = new KnownInfo(nRows, "Kp", 'mixture', calculated, 'Pa');
+    data.Kp = new KnownInfo(nRows, "Kp", 'mixture', calculated, CalcUnit(reactants, products, "Kp"));
     nRows++;
-    if (data.Kc === 0 && data.T !== 0) {
+    if (data.Kc === 0 && data.T !== 0) { //dobivanje koncentracijske konstante
       let kC = calculated / (data.T.quantity * R) ** data.dCoef;
       data.Kc = new KnownInfo(nRows, "Kc", 'mixture', kC, 'mol/dm3');
       nRows++;
@@ -209,35 +251,7 @@ function CalcKp(reactants, products, data, allP, nRows) {
   }
 }
 
-function ElementInfo(element, ind, id, type, M, coefficient, state) {
-  this.element = element;
-  this.ind = ind;
-  this.id = id;
-  this.type = type;
-  this.coefficient = coefficient;
-  this.state = state;
-  this.c0 = 0;
-  this.c1 = 0;
-  this.n0 = 0;
-  this.n1 = 0;
-  this.V = 0;
-  this.m0 = 0;
-  this.m1 = 0;
-  this.M = M;
-  this.x = 0;
-  this.p = 0;
-}
-
-function KnownInfo(id, symbol, chem, quantity, unit) {
-  this.id = id;
-  this.symbol = symbol;
-  this.chem = chem;
-  this.quantity = quantity;
-  this.unit = unit;
-}
-
 function CalcConstant(reactants, products, extra, nRows) {
-  console.log(reactants, products);
   /*reactants =[
     {state: 'g', element: 'I2', coefficient: '1', id: 0, type: 'reactant', known:[{id:0,symbol:c,chem:'H2',quantity:0.222,ext:'final',unit:'mol/dm3}]}
     {state: 'g', element: 'H2', coefficient: '1', id: 1, type: 'reactant', known:[{id:0,symbol:c,chem:'I2',quantity:0.222,ext:'final',unit:'mol/dm3}]}
@@ -251,10 +265,8 @@ function CalcConstant(reactants, products, extra, nRows) {
   let elementsFinal = [];
   let reactantsC = [];
   let productsC = [];
-  let allC = false;
   let reactantsP = [];
   let productsP = [];
-  let allP = false;
   let extraFinal = {
     V: 0,
     T: 0,
@@ -264,49 +276,20 @@ function CalcConstant(reactants, products, extra, nRows) {
     Kc: 0,
     Kp: 0
   };
+  let allC = false;
+  let allP = false;
 
+  //sortiranje podataka
   allElements.forEach((elementEl, ind) => {
     elementsFinal.push(new ElementInfo(elementEl.element, ind, elementEl.id, elementEl.type, CalcM(elementEl.element), elementEl.coefficient, elementEl.state));
     elementEl.known.forEach((el, ind) => {
-      console.log(el);
       let element = elementsFinal[elementsFinal.length - 1];
-      switch (el.symbol) {
-        case "V":
-          element.V = el;
-          break;
-        case "m":
-          if (el.ext === "final") {
-            element.m1 = el;
-          } else {
-            element.m0 = el;
-          }
-          break;
-        case "n":
-          if (el.ext === "final") {
-            element.n1 = el;
-          } else {
-            element.n0 = el;
-          }
-          break;
-        case "c":
-          if (el.ext === "final") {
-            element.c1 = el;
-          } else {
-            element.c0 = el;
-          }
-          break;
-        case "w":
-          element.w = el;
-          break;
-        case "x":
-          element.x = el;
-          break;
-        case "p":
-          element.p = el;
-          break;
-      }
+      if(["m","n","c"].includes(el.symbol)){
+        if(el.ext==="final"){element[`${el.symbol}1`] = el}
+        else{element[`${el.symbol}0`]= el}
+      } else {element[el.symbol] = el}
     });
-    console.log(elementEl);
+
     if (elementEl.type === 'reactant') {
       extraFinal.dCoef -= elementEl.coefficient;
     } else if (elementEl.type === 'product') {
@@ -314,56 +297,42 @@ function CalcConstant(reactants, products, extra, nRows) {
     }
     convertUnit(elementsFinal[elementsFinal.length - 1]);
   });
-
-  console.log(extra);
   extra.forEach((el) => {
-    switch (el.symbol) {
-      case "V":
-        extraFinal.V = el;
-        break;
-      case "p":
-        extraFinal.p = el;
-        break;
-      case "Kc":
-        extraFinal.Kc = el;
-        break;
-      case "Kp":
-        extraFinal.Kp = el;
-        break;
-      case "T":
-        extraFinal.T = el;
-        break;
-    }
+    extraFinal[el.symbol]=el
   }
   );
 
   let allReqElC = elementsFinal.filter(el => el.state === 'g' || el.state === 'aq' ? true : false).map(el => el.element);
   let allReqElP = elementsFinal.filter(el => el.state === 'g' ? true : false).map(el => el.element);
-  elementsFinal.forEach((el) => { CalcSameData(extraFinal, el, el.type, newNRows); });
+
+  //racuanje podataka
+  elementsFinal.forEach((el) => { CalcChemData(extraFinal, el, el.type, newNRows); });
   elementsFinal.forEach((el) => {
     let i = 0;
     while ((el.c1 === 0 && i < 3)) {
-      CalcSameData(extraFinal, el, el.type, newNRows);
+      CalcChemData(extraFinal, el, el.type, newNRows);
       i++;
     }
 
+    //razvrstavanje vaznih podataka
     if (el.type === 'reactant') {
-      // console.log(el, reactants[el.ind].state);
       if (el.c1 !== 0 && (reactants[el.ind].state === 'g' || reactants[el.ind].state === 'aq')) { reactantsC.push(el); }
       if (el.p !== 0 && reactants[el.ind].state === 'g') { reactantsP.push(el); }
     }
     else if (el.type === 'product') {
-      // console.log(el, el.state);
       if (el.c1 !== 0 && (el.state === 'g' || el.state === 'aq')) { productsC.push(el); }
       if (el.p !== 0 && el.state === 'g') { ; productsP.push(el); }
     }
   });
+
+  //provjeravnaje imamo li sve potrebne podatke
   if (allReqElC.length === (reactantsC.length + productsC.length)) { allC = true; }
   if (allReqElP.length === (reactantsP.length + productsP.length)) { allP = true; }
+
+  //racunanje konstanti
   CalcKc(reactantsC, productsC, extraFinal, allC, newNRows);
   CalcKp(reactantsP, productsP, extraFinal, allP, newNRows);
 
-  console.log(extraFinal.Kc, extraFinal.Kp);
   return extraFinal;
 }
 
