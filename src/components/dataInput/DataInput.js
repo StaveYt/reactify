@@ -85,38 +85,36 @@ function DataInput(props) {
   const [blank, setBlank] = useState(false);
   const [newUsedSymbols, setNewUsedSymbols] = useState(props.usedSymbols.map((el, ind) => {
     if (ind < props.usedSymbols.length - 1) {
-      let filteredSymbols = symbols.filter(symbol => symbol.symbol == el.symbol ? true : false)[0];
+      let filteredSymbols = symbols.filter(symbol => symbol.symbol === el.symbol ? true : false)[0];
       return ({ ...el, units: filteredSymbols.units, varied: filteredSymbols.varied });
     } else {
       return (el);
     }
   }));
-  useEffect(() => {
-    console.log(symbols);
-    if (props.vars.known.length != 0) { console.log(newUsedSymbols[newUsedSymbols[newUsedSymbols.length - 1].indexOf(props.vars.known[0].symbol)]); }
-  });
 
   function SymbolChange(event) {
     let targetRow = event.target.parentElement.parentElement;
     let data = props.vars.known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
+    let defaultUnit = symbols.filter(el => el.symbol === event.target.value ? true : false)[0].units[0];
     data.symbol = event.target.value;
+    data.unit = defaultUnit;
     if (newUsedSymbols[newUsedSymbols[newUsedSymbols.length - 1].indexOf(data.symbol)].envOnly === true) { data.chem = 'mixture'; }
     setBlank(!blank);
   }
   function handleInputChange(event) {
     let targetRow = event.target.parentElement.parentElement;
     let data = props.vars.known.filter(el => el.id === parseInt(targetRow.id) ? true : false)[0];
+    console.log(data);
     switch (event.target.id) {
       case 'chem':
-        // console.log(event.target.value)
         data.chem = event.target.value;
         break;
-
       case 'quantity':
         data.quantity = parseFloat(event.target.value);
         break;
       case 'unit':
         data.unit = event.target.value;
+        console.log("unitChange");
         break;
       case 'ext':
         data.ext = event.target.value;
@@ -134,14 +132,16 @@ function DataInput(props) {
           <td>
             <Select className='w-[95%] h-[95%]' id='symbol' onChange={SymbolChange}>
 
-              {symbols.map((symbolEl) => { if (props.usedSymbols[props.usedSymbols.length - 1].indexOf(symbolEl.symbol) != -1) { return (<Option selected={symbolEl.symbol == data.symbol} value={symbolEl.symbol} />); } })}
+              {symbols.map((symbolEl) => { if (props.usedSymbols[props.usedSymbols.length - 1].indexOf(symbolEl.symbol) !== -1) { return (<Option selected={symbolEl.symbol === data.symbol} value={symbolEl.symbol} />); } })}
             </Select>
           </td>
           <td>
             <Select className='w-[95%] h-[95%]' disabled={newUsedSymbols[newUsedSymbols[newUsedSymbols.length - 1].indexOf(data.symbol)].envOnly ? true : false} id='chem' onChange={handleInputChange}>
-              {props.vars.chemicals.map((chem) => (
-                <Option selected={chem === data.chem} value={chem} />
-              ))}
+              {props.vars.chemicals.map((chem) => {
+                if (!(["x", "phi", "w"].includes(data.symbol) && chem === "otp")) {
+                  return <Option selected={chem === data.chem} value={chem} />;
+                }
+              })}
               {newUsedSymbols[newUsedSymbols[newUsedSymbols.length - 1].indexOf(data.symbol)].env === true && <Option selected={'mixture' === data.chem} value={'mixture'} />}
             </Select>
           </td>
@@ -159,7 +159,7 @@ function DataInput(props) {
             </Select>
           </td>
           <td>
-            <button onClick={DelKnown} className="p-2 w-10 rounded-sm bg-[#FFC591] aspect-square text-white">-</button>
+            <button onClick={DelKnown} className="p-2 w-10 rounded-sm bg-red-400 aspect-square text-white">-</button>
           </td>
         </tr>
       );
