@@ -6,6 +6,4 @@ Website for learning chemistry and for solving chemistry tasks!
 
 ### Molar mass calculator
 ### Solution calculator
-
-## Upcoming features
 ### Equlibrium constant calculator
